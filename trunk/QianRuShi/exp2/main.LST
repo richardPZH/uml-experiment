@@ -1,0 +1,180 @@
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 00:06:35 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<REG52.H>
+   2          #include<intrins.h>
+   3          
+   4          //Global define switches to control the program behavior to satified the needs.
+   5          #define USE_MODULE1 1 
+   6          #define USE_MODULE2 0
+   7          #define USE_MODULE3 0
+   8          
+   9          #define LED_PORT1 P1
+  10          
+  11          #define DEAY_MS 150
+  12          
+  13          
+  14          //delay function, no timer engaged which means it's inaccurate.
+  15          void delay( unsigned int ucMs );
+  16          
+  17          int main( void )
+  18          {
+  19   1      
+  20   1              unsigned char cycle;
+  21   1              unsigned char ledStatus;
+  22   1      
+  23   1      
+  24   1              //module 1 entrance
+  25   1      #if USE_MODULE1
+  26   1      
+  27   1              //choose the external trigger mode
+  28   1              IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
+  29   1              IT0 = 1; //Try it. Man
+  30   1      
+  31   1              //external interrupt enable
+  32   1              EX0 = 1; //external 0 allowed
+  33   1              EX1 = 1; //external 1 allowed
+  34   1      
+  35   1              //global interrupt enable
+  36   1              EA = 1;  //Global interrupt on!
+  37   1      
+  38   1              while( 1 )
+  39   1              {
+  40   2                      ledStatus = 0x01;
+  41   2                      LED_PORT1 = ~ledStatus;
+  42   2                      delay( DEAY_MS );
+  43   2      
+  44   2                      for( cycle=1 ; cycle<8 ; cycle++ )
+  45   2                      {
+  46   3                              ledStatus <<=1;
+  47   3                              LED_PORT1 =~ledStatus;
+  48   3                              delay( DEAY_MS );
+  49   3                      }
+  50   2      
+  51   2              }
+  52   1      
+  53   1      #endif
+  54   1      
+  55   1              //module 2 entrance
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 00:06:35 PAGE 2   
+
+  56   1      #if USE_MODULE2
+              
+                      //choose the external trigger mode
+                      //IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
+                      IT0 = 1; //Try it. Man
+              
+                      //external interrupt enable
+                      EX0 = 1; //external 0 allowed
+                      //EX1 = 1; //external 1 allowed
+              
+                      //global interrupt enable
+                      EA = 1;  //Global interrupt on!
+              
+                      ledStatus = 0x01;
+                      LED_PORT1 = ~ledStatus;
+                      delay( DEAY_MS );
+              
+                      while( 1 )
+                      {
+              
+                              for( cycle=1 ; cycle<8 ; cycle++ )
+                              {
+                                  ledStatus = crol( ledStatus , 1 );  
+                                      LED_PORT1 =~ledStatus;
+                                      delay( DEAY_MS );
+                              }
+              
+                      }
+              #endif
+  85   1              
+  86   1      
+  87   1      
+  88   1              return 0;
+  89   1      }
+  90          
+  91          
+  92          //a delay function
+  93          void delay( unsigned int ucMs )
+  94          {
+  95   1      //running at 11.0592MHz ?
+  96   1      #define DELAYTIMES 239 
+  97   1      
+  98   1              unsigned char ucCounter;
+  99   1      
+ 100   1              while( ucMs != 0 )
+ 101   1              {
+ 102   2                      for( ucCounter=0; ucCounter < DELAYTIMES ; ucCounter ++ ){}
+ 103   2                      ucMs--;
+ 104   2              }
+ 105   1      }
+ 106          
+ 107          
+ 108          #if USE_MODULE1
+ 109          
+ 110          //external 0 interrupt edge trigger no need to clear the interrupt bit
+ 111          void ext0( void ) interrupt 0
+ 112          {
+ 113   1          unsigned char c;
+ 114   1      
+ 115   1              EA = 0; //no interrupt me
+ 116   1      
+ 117   1              for( c=0 ; c<3 ; c++ )
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 00:06:35 PAGE 3   
+
+ 118   1              {
+ 119   2                      P0 = 0xF0;
+ 120   2                      delay( DEAY_MS );
+ 121   2                      P0 = 0xFF;
+ 122   2                      delay( DEAY_MS );
+ 123   2              }
+ 124   1              
+ 125   1              EA = 1; //interrupt on
+ 126   1      }
+ 127          
+ 128          //external 1 interrupt edge trigger no need to clear the interrupt bit
+ 129          void ext1( void ) interrupt 2
+ 130          {
+ 131   1              unsigned char c;
+ 132   1      
+ 133   1              EA = 0; //no interrupt me
+ 134   1      
+ 135   1              for( c=0 ; c<6 ; c++ )
+ 136   1              {
+ 137   2                      P2 = 0xF0;
+ 138   2                      delay( 50 );
+ 139   2                      P2 = 0xFF;
+ 140   2                      delay( DEAY_MS );
+ 141   2      
+ 142   2              }
+ 143   1      
+ 144   1      
+ 145   1              EA = 1; //interrupt on
+ 146   1      }
+ 147          
+ 148          #endif
+ 149          
+ 150          #if USE_MODULE2
+              
+              #endif
+ 153          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    170    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
