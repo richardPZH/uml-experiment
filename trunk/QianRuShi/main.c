@@ -20,6 +20,7 @@ int main( void )
 	unsigned long ledStatus;
 	unsigned char cycle;
 
+	//turn off all the leds
 	LED_PORT1 = 0xFF;
 	LED_PORT2 = 0xFF;
 	LED_PORT3 = 0xFF;
@@ -36,9 +37,9 @@ int main( void )
 
 	    for( cycle=1 ; cycle < 32 ; cycle++ )
 	    {
-		ledStatus = _lrol_( ledStatus , 1 ); //long left shift
+			ledStatus = _lrol_( ledStatus , 1 ); //long left shift. She is right. Before using any function, must reference it. man help. This is a circle
 	        updateLedStatus( ledStatus );	     //update to port
-	        time( 200 );			     //delay 200ms
+	        time( 200 );			     		 //delay 200ms
 
 	    }
 
@@ -49,18 +50,17 @@ int main( void )
 
 	    for( cycle=1 ; cycle <= 32 ; cycle++ )
 	    {
-		ledStatus = _lror_( ledStatus , 1 );
-			ledStatus |= 0x80000000;  //unsigned long for 32bits unsafe
+			ledStatus = _lror_( ledStatus , 1 );	//remember it's rotate...
+			ledStatus |= 0x80000000;  				//unsigned long for 32bits unsafe 
 			updateLedStatus( ledStatus );
 			time( 200 );
 	    }
 
 	    //start (3) VD1 ~ VD32 off
-		//ledStatus = 0xFFFFFFFE;
 	    for( cycle=1 ; cycle <= 32 ; cycle++ )
 	    {
-		ledStatus = _lrol_( ledStatus , 1 ); //long left shift
-		ledStatus &= ~ 0x01;
+			ledStatus = _lrol_( ledStatus , 1 ); 	//long left shift
+			ledStatus &= ~ 0x01;					//CSAPP, It needed to be tested...
 			updateLedStatus( ledStatus );
 			time( 200 );
 	    }
