@@ -6,27 +6,26 @@
 #define USE_MODULE2 0
 #define USE_MODULE3 0
 
-#if USE_MODULE1 
-#error "error of switches..."
+#if ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) > 1 || ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) == 0
+#error "error of switches. Try to modify the USE_MODULE1 or USE_MODULE2 or USE_MODULE3" // 001 010 100 is acceptable
 #endif
 
 #define LED_PORT1 P1
-
 #define DEAY_MS 150
 
 
 //delay function, no timer engaged which means it's inaccurate.
 void delay( unsigned int ucMs );
 
+
+//module 1 entrance
+#if USE_MODULE1
+
 int main( void )
 {
 
 	unsigned char cycle;
 	unsigned char ledStatus;
-
-
-	//module 1 entrance
-#if USE_MODULE1
 
 	//choose the external trigger mode
 	IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
@@ -38,6 +37,11 @@ int main( void )
 
 	//global interrupt enable
 	EA = 1;  //Global interrupt on!
+
+	//initial off all the leds
+	P0 = 0xFF;
+	P2 = 0xFF;
+	LED_PORT1 = 0xFF;
 
 	while( 1 )
 	{
@@ -54,11 +58,21 @@ int main( void )
 
 	}
 
+
+	return 0;
+}
+
 #endif
 
-	//module 2 entrance
+
+//module 2 entrance
 #if USE_MODULE2
 
+bit mode;                  //evil global variable, indicate the mode we use here
+unsigned long ledStatus;   //We handle with care, But is there a risk of race like that in Operaton System?
+
+int main( void )
+{
 	//choose the external trigger mode
 	//IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
 	IT0 = 1; //Try it. Man
@@ -71,26 +85,23 @@ int main( void )
 	EA = 1;  //Global interrupt on!
 
 	ledStatus = 0x01;
+	mode = 0;
 	LED_PORT1 = ~ledStatus;
 	delay( DEAY_MS );
 
 	while( 1 )
 	{
-
-		for( cycle=1 ; cycle<8 ; cycle++ )
-		{
-		    ledStatus = crol( ledStatus , 1 );	
-			LED_PORT1 =~ledStatus;
-			delay( DEAY_MS );
-		}
-
+	    ledStatus = _crol_( ledStatus , 1 + ( unsigned char )mode );	  //C51 libary provide a lot of useful function. Shall Google it...
+		LED_PORT1 =~ledStatus;
+		delay( DEAY_MS );
 	}
-#endif
-	
-
 
 	return 0;
 }
+
+#endif
+	
+
 
 
 //a delay function
