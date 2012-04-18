@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 11:08:17 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 11:20:14 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -48,6 +48,11 @@ line level    source
                       //global interrupt enable
                       EA = 1;  //Global interrupt on!
               
+                      //initial off all the leds
+                      P0 = 0xFF;
+                      P2 = 0xFF;
+                      LED_PORT1 = 0xFF;
+              
                       while( 1 )
                       {
                               ledStatus = 0x01;
@@ -57,81 +62,87 @@ line level    source
                               for( cycle=1 ; cycle<8 ; cycle++ )
                               {
                                       ledStatus <<=1;
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 11:20:14 PAGE 2   
+
                                       LED_PORT1 =~ledStatus;
                                       delay( DEAY_MS );
                               }
               
                       }
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 11:08:17 PAGE 2   
-
               
               
                       return 0;
               }
               
               #endif
-  61          
-  62          
-  63          //module 2 entrance
-  64          #if USE_MODULE2
-  65          
-  66          bit mode;                  //evil global variable, indicate the mode we use here
-  67          unsigned long ledStatus;   //We handle with care, But is there a risk of race like that in Operaton System
+  66          
+  67          
+  68          //module 2 entrance
+  69          #if USE_MODULE2
+  70          
+  71          bit mode;                  //evil global variable, indicate the mode we use here
+  72          unsigned long ledStatus;   //We handle with care, But is there a risk of race like that in Operaton System
              -?
-  68          
-  69          int main( void )
-  70          {
-  71   1              //choose the external trigger mode
-  72   1              //IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
-  73   1              IT0 = 1; //Try it. Man
-  74   1      
-  75   1              //external interrupt enable
-  76   1              EX0 = 1; //external 0 allowed
-  77   1              //EX1 = 1; //external 1 allowed
-  78   1      
-  79   1              //global interrupt enable
-  80   1              EA = 1;  //Global interrupt on!
-  81   1      
-  82   1              ledStatus = 0x01;
-  83   1              mode = 0;
-  84   1              LED_PORT1 = ~ledStatus;
-  85   1              delay( DEAY_MS );
-  86   1      
-  87   1              while( 1 )
-  88   1              {
-  89   2                  ledStatus = _crol_( ledStatus , 1 + ( unsigned char )mode );          //C51 libary provide a lot of useful f
+  73          
+  74          int main( void )
+  75          {
+  76   1              //choose the external trigger mode
+  77   1              //IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
+  78   1              IT0 = 1; //Try it. Man
+  79   1      
+  80   1              //external interrupt enable
+  81   1              EX0 = 1; //external 0 allowed
+  82   1              //EX1 = 1; //external 1 allowed
+  83   1      
+  84   1              //global interrupt enable
+  85   1              EA = 1;  //Global interrupt on!
+  86   1              
+  87   1      
+  88   1              //initial off all the leds
+  89   1              P0 = 0xFF;
+  90   1              P2 = 0xFF;
+  91   1              LED_PORT1 = 0xFF;
+  92   1      
+  93   1              ledStatus = 0x01;
+  94   1              mode = 0;
+  95   1              LED_PORT1 = ~ledStatus;
+  96   1              delay( DEAY_MS );
+  97   1      
+  98   1              while( 1 )
+  99   1              {
+ 100   2                  ledStatus = _crol_( ledStatus , 1 + ( unsigned char )mode );          //C51 libary provide a lot of useful f
              -unction. Shall Google it...
-  90   2                      LED_PORT1 =~ledStatus;
-  91   2                      delay( DEAY_MS );
-  92   2              }
-  93   1      
-  94   1              return 0;
-  95   1      }
-  96          
-  97          #endif
-  98                  
-  99          
- 100          
- 101          
- 102          //a delay function
- 103          void delay( unsigned int ucMs )
- 104          {
- 105   1      //running at 11.0592MHz ?
- 106   1      #define DELAYTIMES 239 
- 107   1      
- 108   1              unsigned char ucCounter;
- 109   1      
- 110   1              while( ucMs != 0 )
- 111   1              {
- 112   2                      for( ucCounter=0; ucCounter < DELAYTIMES ; ucCounter ++ ){}
- 113   2                      ucMs--;
- 114   2              }
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 11:08:17 PAGE 3   
+ 101   2                      LED_PORT1 =~ledStatus;
+ 102   2                      delay( DEAY_MS );
+ 103   2              }
+ 104   1      
+ 105   1              return 0;
+ 106   1      }
+ 107          
+ 108          #endif
+ 109                  
+ 110          
+ 111          
+ 112          
+ 113          //a delay function
+ 114          void delay( unsigned int ucMs )
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 11:20:14 PAGE 3   
 
- 115   1      }
- 116          
- 117          
- 118          #if USE_MODULE1
+ 115          {
+ 116   1      //running at 11.0592MHz ?
+ 117   1      #define DELAYTIMES 239 
+ 118   1      
+ 119   1              unsigned char ucCounter;
+ 120   1      
+ 121   1              while( ucMs != 0 )
+ 122   1              {
+ 123   2                      for( ucCounter=0; ucCounter < DELAYTIMES ; ucCounter ++ ){}
+ 124   2                      ucMs--;
+ 125   2              }
+ 126   1      }
+ 127          
+ 128          
+ 129          #if USE_MODULE1
               
               //external 0 interrupt edge trigger no need to clear the interrupt bit
               void ext0( void ) interrupt 0
@@ -172,15 +183,36 @@ line level    source
               }
               
               #endif
- 159          
- 160          #if USE_MODULE2
- 161          
- 162          #endif
- 163          
+ 170          
+ 171          #if USE_MODULE2
+ 172          
+ 173          //external 0 interrupt edge trigger no need to clrea the interrupt bit
+ 174          void etx0( void ) interrupt 0
+ 175          {
+ 176   1              EA = 0; //no interrupt me
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 11:20:14 PAGE 4   
+
+ 177   1      
+ 178   1              if( mode )   // mode == 1 means current is two leds, next status one led
+ 179   1              {
+ 180   2                      ledStatus = ledStatus & _crol_( ledStatus , 1 ) ;      //must use the  char rotate in a circle style
+ 181   2              }
+ 182   1              else         // mode == 0 means current is one led, next status two leds
+ 183   1              {
+ 184   2                      ledStatus = ledStatus | _crol_( ledStatus , 1 ) ;      //must use the char rotate to get a circle
+ 185   2              }
+ 186   1      
+ 187   1              mode = ~mode;
+ 188   1      
+ 189   1              EA = 1; //global interrupt on again
+ 190   1      }
+ 191          
+ 192          #endif
+ 193          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     85    ----
+   CODE SIZE        =    178    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

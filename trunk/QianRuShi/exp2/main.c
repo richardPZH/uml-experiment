@@ -2,8 +2,8 @@
 #include<intrins.h>
 
 //Global define switches to control the program behavior to satified the needs.
-#define USE_MODULE1 1 
-#define USE_MODULE2 0
+#define USE_MODULE1 0 
+#define USE_MODULE2 1
 #define USE_MODULE3 0
 
 #if ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) > 1 || ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) == 0
@@ -83,6 +83,12 @@ int main( void )
 
 	//global interrupt enable
 	EA = 1;  //Global interrupt on!
+	
+
+	//initial off all the leds
+	P0 = 0xFF;
+	P2 = 0xFF;
+	LED_PORT1 = 0xFF;
 
 	ledStatus = 0x01;
 	mode = 0;
@@ -163,6 +169,25 @@ void ext1( void ) interrupt 2
 #endif
 
 #if USE_MODULE2
+
+//external 0 interrupt edge trigger no need to clrea the interrupt bit
+void etx0( void ) interrupt 0
+{
+	EA = 0; //no interrupt me
+
+	if( mode )   // mode == 1 means current is two leds, next status one led
+	{
+		ledStatus = ledStatus & _crol_( ledStatus , 1 ) ;      //must use the  char rotate in a circle style
+	}
+	else         // mode == 0 means current is one led, next status two leds
+	{
+		ledStatus = ledStatus | _crol_( ledStatus , 1 ) ;      //must use the char rotate to get a circle
+	}
+
+	mode = ~mode;
+
+	EA = 1; //global interrupt on again
+}
 
 #endif
 
