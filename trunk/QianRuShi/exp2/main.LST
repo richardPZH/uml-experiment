@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 12:31:43 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 17:32:47 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -11,9 +11,9 @@ line level    source
    2          #include<intrins.h>
    3          
    4          //Global define switches to control the program behavior to satified the needs.
-   5          #define USE_MODULE1 0 
+   5          #define USE_MODULE1 1 
    6          #define USE_MODULE2 0
-   7          #define USE_MODULE3 1
+   7          #define USE_MODULE3 0
    8          
    9          #if ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) > 1 || ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) == 0
               #error "error of switches. Try to modify the USE_MODULE1 or USE_MODULE2 or USE_MODULE3" //only 001 010 100
@@ -30,53 +30,53 @@ line level    source
   20          
   21          //module 1 entrance
   22          #if USE_MODULE1
-              
-              #define DEAY_MS 150
-              
-              int main( void )
-              {
-              
-                      unsigned char cycle;
-                      unsigned char ledStatus;
-              
-                      //choose the external trigger mode
-                      IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
-                      IT0 = 1; //Try it. Man
-              
-                      //external interrupt enable
-                      EX0 = 1; //external 0 allowed
-                      EX1 = 1; //external 1 allowed
-              
-                      //global interrupt enable
-                      EA = 1;  //Global interrupt on!
-              
-                      //initial off all the leds
-                      P0 = 0xFF;
-                      P2 = 0xFF;
-                      LED_PORT1 = 0xFF;
-              
-                      while( 1 )
-                      {
-                              ledStatus = 0x01;
-                              LED_PORT1 = ~ledStatus;
-                              delay( DEAY_MS );
-              
-                              for( cycle=1 ; cycle<8 ; cycle++ )
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 12:31:43 PAGE 2   
+  23          
+  24          #define DEAY_MS 150
+  25          
+  26          int main( void )
+  27          {
+  28   1      
+  29   1              unsigned char cycle;
+  30   1              unsigned char ledStatus;
+  31   1      
+  32   1              //choose the external trigger mode
+  33   1              IT1 = 0; //Can we use bit addressing? It's 88H. Now that int0 int1 are edage trigger
+  34   1              IT0 = 1; //Try it. Man
+  35   1      
+  36   1              //external interrupt enable
+  37   1              EX0 = 1; //external 0 allowed
+  38   1              EX1 = 1; //external 1 allowed
+  39   1      
+  40   1              //global interrupt enable
+  41   1              EA = 1;  //Global interrupt on!
+  42   1      
+  43   1              //initial off all the leds
+  44   1              P0 = 0xFF;
+  45   1              P2 = 0xFF;
+  46   1              LED_PORT1 = 0xFF;
+  47   1      
+  48   1              while( 1 )
+  49   1              {
+  50   2                      ledStatus = 0x01;
+  51   2                      LED_PORT1 = ~ledStatus;
+  52   2                      delay( DEAY_MS );
+  53   2      
+  54   2                      for( cycle=1 ; cycle<8 ; cycle++ )
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 17:32:47 PAGE 2   
 
-                              {
-                                      ledStatus <<=1;
-                                      LED_PORT1 =~ledStatus;
-                                      delay( DEAY_MS );
-                              }
-              
-                      }
-              
-              
-                      return 0;
-              }
-              
-              #endif
+  55   2                      {
+  56   3                              ledStatus <<=1;
+  57   3                              LED_PORT1 =~ledStatus;
+  58   3                              delay( DEAY_MS );
+  59   3                      }
+  60   2      
+  61   2              }
+  62   1      
+  63   1      
+  64   1              return 0;
+  65   1      }
+  66          
+  67          #endif
   68          
   69          
   70          //module 2 entrance
@@ -126,135 +126,135 @@ line level    source
  112          
  113          
  114          #if USE_MODULE3
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 12:31:43 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 17:32:47 PAGE 3   
 
- 115          
- 116          #define DEAY_MS 180
- 117          
- 118          
- 119          volatile unsigned char ledStatus;    //change the ledStatus
- 120          volatile mode;                       //has been interrupted?
- 121          
- 122          int main( void )
- 123          {
- 124   1      
- 125   1              unsigned char cycle;
- 126   1      
- 127   1              //off all the leds
- 128   1              P0 = 0xFF;
- 129   1              P2 = 0xFF;
- 130   1              LED_PORT1 = 0xFF;
- 131   1      
- 132   1              //choose the external trigger mode
- 133   1              //Can we use bit addressing? It's 88H. Now that int1 edage trigger
- 134   1              IT1 = 1; //Try it. Man
- 135   1      
- 136   1              //external interrupt enable
- 137   1              EX1 = 1; //external 1 allowed
- 138   1      
- 139   1              //global interrupt enable
- 140   1              EA = 1;  //Global interrupt on!
- 141   1      
- 142   1              mode = 0;
- 143   1      
- 144   1              while( 1 )
- 145   1              {
- 146   2                      if( ! mode )
- 147   2                      {
- 148   3                              ledStatus = 0xFF;
- 149   3                              P0 = 0xFF;
- 150   3                              P2 = 0xFF;
- 151   3      
- 152   3                              LED_PORT1 = ~ledStatus;
- 153   3                              delay( DEAY_MS );
- 154   3      
- 155   3                              for( cycle=0 ; cycle < 8 ; cycle++ )
- 156   3                              {
- 157   4                                      ledStatus >>= 1;
- 158   4                                      LED_PORT1 = ~ledStatus;
- 159   4                                      delay( DEAY_MS );
- 160   4                              }
- 161   3                      }
- 162   2                      else{
- 163   3      
- 164   3                              ledStatus = 0x03;
- 165   3                              LED_PORT1 = ~ledStatus;
- 166   3                              P0 = 0xF0;
- 167   3                              P2 = 0xFF;
- 168   3                              delay( DEAY_MS );
- 169   3      
- 170   3                              for( cycle=0 ; cycle < 4 ; cycle++ )
- 171   3                              {
- 172   4                                      ledStatus <<=2;
- 173   4      
- 174   4                                      LED_PORT1 = ~ledStatus;
- 175   4                                      P0 = ~P0;
- 176   4                                      P2 = ~P2;
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 12:31:43 PAGE 4   
+              
+              #define DEAY_MS 180
+              
+              
+              volatile unsigned char ledStatus;    //change the ledStatus
+              volatile mode;                       //has been interrupted?
+              
+              int main( void )
+              {
+              
+                      unsigned char cycle;
+              
+                      //off all the leds
+                      P0 = 0xFF;
+                      P2 = 0xFF;
+                      LED_PORT1 = 0xFF;
+              
+                      //choose the external trigger mode
+                      //Can we use bit addressing? It's 88H. Now that int1 edage trigger
+                      IT1 = 1; //Try it. Man
+              
+                      //external interrupt enable
+                      EX1 = 1; //external 1 allowed
+              
+                      //global interrupt enable
+                      EA = 1;  //Global interrupt on!
+              
+                      mode = 0;
+              
+                      while( 1 )
+                      {
+                              if( ! mode )
+                              {
+                                      ledStatus = 0xFF;
+                                      P0 = 0xFF;
+                                      P2 = 0xFF;
+              
+                                      LED_PORT1 = ~ledStatus;
+                                      delay( DEAY_MS );
+              
+                                      for( cycle=0 ; cycle < 8 ; cycle++ )
+                                      {
+                                              ledStatus >>= 1;
+                                              LED_PORT1 = ~ledStatus;
+                                              delay( DEAY_MS );
+                                      }
+                              }
+                              else{
+              
+                                      ledStatus = 0x03;
+                                      LED_PORT1 = ~ledStatus;
+                                      P0 = 0xF0;
+                                      P2 = 0xFF;
+                                      delay( DEAY_MS );
+              
+                                      for( cycle=0 ; cycle < 4 ; cycle++ )
+                                      {
+                                              ledStatus <<=2;
+              
+                                              LED_PORT1 = ~ledStatus;
+                                              P0 = ~P0;
+                                              P2 = ~P2;
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 17:32:47 PAGE 4   
 
- 177   4                                      delay( DEAY_MS );
- 178   4                              }
- 179   3      
- 180   3      
- 181   3                      }
- 182   2      
- 183   2              }
- 184   1      
- 185   1      
- 186   1              return 0;
- 187   1      
- 188   1      }
- 189          
- 190          #endif
+                                              delay( DEAY_MS );
+                                      }
+              
+              
+                              }
+              
+                      }
+              
+              
+                      return 0;
+              
+              }
+              
+              #endif
  191                  
  192          
  193          
  194          #if USE_MODULE1
-              
-              //external 0 interrupt edge trigger no need to clear the interrupt bit
-              void ext0( void ) interrupt 0
-              {
-                  unsigned char c;
-              
-                      EA = 0; //no interrupt me
-              
-                      for( c=0 ; c<3 ; c++ )
-                      {
-                              P0 = 0xF0;
-                              delay( DEAY_MS );
-                              P0 = 0xFF;
-                              delay( DEAY_MS );
-                      }
-                      
-                      EA = 1; //interrupt on
-              }
-              
-              //external 1 interrupt level trigger no much we can do if the levle is still on 
-              void ext1( void ) interrupt 2
-              {
-                      unsigned char c;
-              
-                      EA = 0; //no interrupt me
-              
-                      for( c=0 ; c<6 ; c++ )
-                      {
-                              P2 = 0xF0;
-                              delay( 50 );
-                              P2 = 0xFF;
-                              delay( DEAY_MS );
-              
-                      }
-              
-              
-                      EA = 1; //interrupt on
-              }
-              
-              #endif
+ 195          
+ 196          //external 0 interrupt edge trigger no need to clear the interrupt bit
+ 197          void ext0( void ) interrupt 0
+ 198          {
+ 199   1          unsigned char c;
+ 200   1      
+ 201   1              EA = 0; //no interrupt me
+ 202   1      
+ 203   1              for( c=0 ; c<3 ; c++ )
+ 204   1              {
+ 205   2                      P0 = 0xF0;
+ 206   2                      delay( DEAY_MS );
+ 207   2                      P0 = 0xFF;
+ 208   2                      delay( DEAY_MS );
+ 209   2              }
+ 210   1              
+ 211   1              EA = 1; //interrupt on
+ 212   1      }
+ 213          
+ 214          //external 1 interrupt level trigger no much we can do if the levle is still on 
+ 215          void ext1( void ) interrupt 2
+ 216          {
+ 217   1              unsigned char c;
+ 218   1      
+ 219   1              EA = 0; //no interrupt me
+ 220   1      
+ 221   1              for( c=0 ; c<6 ; c++ )
+ 222   1              {
+ 223   2                      P2 = 0xF0;
+ 224   2                      delay( 50 );
+ 225   2                      P2 = 0xFF;
+ 226   2                      delay( DEAY_MS );
+ 227   2      
+ 228   2              }
+ 229   1      
+ 230   1      
+ 231   1              EA = 1; //interrupt on
+ 232   1      }
+ 233          
+ 234          #endif
  235          
  236          #if USE_MODULE2
               
               //external 0 interrupt edge trigger no need to clear the interrupt bit
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 12:31:43 PAGE 5   
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 17:32:47 PAGE 5   
 
               void etx0( void ) interrupt 0
               {
@@ -278,18 +278,18 @@ line level    source
  258          
  259          
  260          #if USE_MODULE3
- 261          
- 262          //external 1 interrupt edge trigger no need to clear the interrupt bit
- 263          void ext1( void ) interrupt 2
- 264          {
- 265   1              EA = 0; //global interrupt off
- 266   1      
- 267   1              mode = ~mode;
- 268   1      
- 269   1              EA = 1; //global interrupt on
- 270   1      }
- 271          
- 272          #endif
+              
+              //external 1 interrupt edge trigger no need to clear the interrupt bit
+              void ext1( void ) interrupt 2
+              {
+                      EA = 0; //global interrupt off
+              
+                      mode = ~mode;
+              
+                      EA = 1; //global interrupt on
+              }
+              
+              #endif
  273          
  274          
  275          //a delay function
@@ -310,16 +310,16 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    152    ----
+   CODE SIZE        =    247    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      3       1
+   DATA SIZE        =   ----       4
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V7.50   MAIN                                                                  04/18/2012 12:31:43 PAGE 6   
+C51 COMPILER V7.50   MAIN                                                                  04/18/2012 17:32:47 PAGE 6   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
