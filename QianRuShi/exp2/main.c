@@ -6,6 +6,10 @@
 #define USE_MODULE2 0
 #define USE_MODULE3 0
 
+#if USE_MODULE1 
+#error "error of switches..."
+#endif
+
 #define LED_PORT1 P1
 
 #define DEAY_MS 150
