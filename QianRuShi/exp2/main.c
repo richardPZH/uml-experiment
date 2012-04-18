@@ -2,9 +2,9 @@
 #include<intrins.h>
 
 //Global define switches to control the program behavior to satified the needs.
-#define USE_MODULE1 0 
+#define USE_MODULE1 1 
 #define USE_MODULE2 0
-#define USE_MODULE3 1
+#define USE_MODULE3 0
 
 #if ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) > 1 || ( USE_MODULE1 + USE_MODULE2 + USE_MODULE3 ) == 0
 #error "error of switches. Try to modify the USE_MODULE1 or USE_MODULE2 or USE_MODULE3" //only 001 010 100 is acceptable
