@@ -87,7 +87,12 @@
 		stereotype 	"Actor")
 	    (object Class "Teacher"
 		quid       	"4F85262303B9"
-		stereotype 	"Actor")
+		stereotype 	"Actor"
+		visible_modules 	(list dependency_list
+		    (object Dependency_Relationship
+			quid       	"4F8E7892003E"
+			supplier   	"Use Case View::发布消息"
+			quidu      	"4F8E7841002E")))
 	    (object Class "Father"
 		quid       	"4F8528720138"
 		documentation 	
@@ -158,6 +163,9 @@
 		stereotype 	"Actor")
 	    (object Class "customer"
 		quid       	"4F8E6A0500FA"
+		stereotype 	"Actor")
+	    (object Class "Administrator"
+		quid       	"4F8E77BD00CB"
 		stereotype 	"Actor")
 	    (object UseCase "Borrow Books"
 		quid       	"4F85281803B9")
@@ -263,6 +271,20 @@
 			stereotype 	"include"
 			supplier   	"Use Case View::Choose Product Condition"
 			quidu      	"4F8E6A1C0271")))
+	    (object UseCase "查找"
+		quid       	"4F8E77E2038A")
+	    (object UseCase "下载文件"
+		quid       	"4F8E77EC0128")
+	    (object UseCase "上传文件"
+		quid       	"4F8E77F70280")
+	    (object UseCase "浏览内容"
+		quid       	"4F8E7813037A")
+	    (object UseCase "发布消息"
+		quid       	"4F8E7841002E")
+	    (object UseCase "维护页面"
+		quid       	"4F8E78620186")
+	    (object UseCase "处理注册申请"
+		quid       	"4F8E786A034B")
 	    (object Association "use call"
 		quid       	"4F85282303B9"
 		roles      	(list role_list
@@ -547,7 +569,79 @@
 		    (object Role "$UNNAMED$70"
 			quid       	"4F8E6A5F02C1"
 			supplier   	"Use Case View::customer"
-			quidu      	"4F8E6A0500FA"))))
+			quidu      	"4F8E6A0500FA")))
+	    (object Association "$UNNAMED$71"
+		quid       	"4F8E787F0222"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$72"
+			quid       	"4F8E78800222"
+			supplier   	"Use Case View::浏览内容"
+			quidu      	"4F8E7813037A"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$73"
+			quid       	"4F8E78800224"
+			supplier   	"Use Case View::Student"
+			quidu      	"4F8525F0030D")))
+	    (object Association "$UNNAMED$74"
+		quid       	"4F8E78820290"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$75"
+			quid       	"4F8E788301D4"
+			supplier   	"Use Case View::查找"
+			quidu      	"4F8E77E2038A"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$76"
+			quid       	"4F8E788301D6"
+			supplier   	"Use Case View::Student"
+			quidu      	"4F8525F0030D")))
+	    (object Association "$UNNAMED$77"
+		quid       	"4F8E788801C5"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$78"
+			quid       	"4F8E78890138"
+			supplier   	"Use Case View::下载文件"
+			quidu      	"4F8E77EC0128"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$79"
+			quid       	"4F8E7889013A"
+			supplier   	"Use Case View::Student"
+			quidu      	"4F8525F0030D")))
+	    (object Association "$UNNAMED$80"
+		quid       	"4F8E7894033C"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$81"
+			quid       	"4F8E78950213"
+			supplier   	"Use Case View::上传文件"
+			quidu      	"4F8E77F70280"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$82"
+			quid       	"4F8E78950215"
+			supplier   	"Use Case View::Teacher"
+			quidu      	"4F85262303B9")))
+	    (object Association "$UNNAMED$83"
+		quid       	"4F8E789703A9"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$84"
+			quid       	"4F8E78980251"
+			supplier   	"Use Case View::维护页面"
+			quidu      	"4F8E78620186"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$85"
+			quid       	"4F8E78980253"
+			supplier   	"Use Case View::Administrator"
+			quidu      	"4F8E77BD00CB")))
+	    (object Association "$UNNAMED$86"
+		quid       	"4F8E789A0186"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$87"
+			quid       	"4F8E789B008C"
+			supplier   	"Use Case View::处理注册申请"
+			quidu      	"4F8E786A034B"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$88"
+			quid       	"4F8E789B008E"
+			supplier   	"Use Case View::Administrator"
+			quidu      	"4F8E77BD00CB"))))
 	logical_presentations 	(list unit_reference_list
 	    (object UseCaseDiagram "Main"
 		quid       	"4F8520D600BC"
@@ -2681,6 +2775,472 @@
 				quidu      	"4F8E6A5F02C1"
 				client     	@126
 				supplier   	@122
+				line_style 	0)))))
+	    (object UseCaseDiagram "software"
+		quid       	"4F8E779D0213"
+		title      	"software"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object UseCaseView "Use Case View::发布消息" @129
+			location   	(1071, 1134)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@129
+			    location   	(1071, 1272)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"发布消息")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E7841002E"
+			height     	118)
+		    (object UseCaseView "Use Case View::浏览内容" @130
+			location   	(1074, 156)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@130
+			    location   	(1074, 294)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"浏览内容")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E7813037A"
+			height     	118)
+		    (object UseCaseView "Use Case View::查找" @131
+			location   	(1081, 462)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@131
+			    location   	(1081, 600)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"查找")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E77E2038A"
+			height     	118)
+		    (object ClassView "Class" "Use Case View::Student" @132
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(272, 313)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@132
+			    location   	(272, 473)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	347
+			    justify    	0
+			    label      	"Student")
+			icon       	"Actor"
+			icon_style 	"Icon"
+			line_color 	3342489
+			quidu      	"4F8525F0030D"
+			annotation 	8
+			autoResize 	TRUE)
+		    (object AssociationViewNew "$UNNAMED$71" @133
+			location   	(646, 237)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E787F0222"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$72" @134
+				Parent_View 	@133
+				location   	(374, -76)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E78800222"
+				client     	@133
+				supplier   	@130
+				line_style 	0)
+			    (object RoleView "$UNNAMED$73" @135
+				Parent_View 	@133
+				location   	(374, -76)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E78800224"
+				client     	@133
+				supplier   	@132
+				line_style 	0)))
+		    (object AssociationViewNew "$UNNAMED$74" @136
+			location   	(649, 379)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E78820290"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$75" @137
+				Parent_View 	@136
+				location   	(377, 66)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E788301D4"
+				client     	@136
+				supplier   	@131
+				line_style 	0)
+			    (object RoleView "$UNNAMED$76" @138
+				Parent_View 	@136
+				location   	(377, 66)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E788301D6"
+				client     	@136
+				supplier   	@132
+				line_style 	0)))
+		    (object UseCaseView "Use Case View::下载文件" @139
+			location   	(1090, 753)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@139
+			    location   	(1090, 891)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"下载文件")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E77EC0128"
+			height     	118)
+		    (object AssociationViewNew "$UNNAMED$77" @140
+			location   	(656, 518)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E788801C5"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$78" @141
+				Parent_View 	@140
+				location   	(384, 205)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E78890138"
+				client     	@140
+				supplier   	@139
+				line_style 	0)
+			    (object RoleView "$UNNAMED$79" @142
+				Parent_View 	@140
+				location   	(384, 205)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E7889013A"
+				client     	@140
+				supplier   	@132
+				line_style 	0)))
+		    (object ClassView "Class" "Use Case View::Teacher" @143
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(300, 1197)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@143
+			    location   	(300, 1357)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	358
+			    justify    	0
+			    label      	"Teacher")
+			icon       	"Actor"
+			icon_style 	"Icon"
+			line_color 	3342489
+			quidu      	"4F85262303B9"
+			annotation 	8
+			autoResize 	TRUE)
+		    (object DependencyView "" @144
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E7892003E"
+			client     	@143
+			supplier   	@129
+			line_style 	0)
+		    (object UseCaseView "Use Case View::上传文件" @145
+			location   	(1068, 1418)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@145
+			    location   	(1068, 1556)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"上传文件")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E77F70280"
+			height     	118)
+		    (object AssociationViewNew "$UNNAMED$80" @146
+			location   	(657, 1298)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E7894033C"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$81" @147
+				Parent_View 	@146
+				location   	(357, 101)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E78950213"
+				client     	@146
+				supplier   	@145
+				line_style 	0)
+			    (object RoleView "$UNNAMED$82" @148
+				Parent_View 	@146
+				location   	(357, 101)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E78950215"
+				client     	@146
+				supplier   	@143
+				line_style 	0)))
+		    (object UseCaseView "Use Case View::维护页面" @149
+			location   	(2177, 637)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@149
+			    location   	(2177, 775)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"维护页面")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E78620186"
+			height     	118)
+		    (object ClassView "Class" "Use Case View::Administrator" @150
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(3247, 847)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@150
+			    location   	(3247, 1007)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	361
+			    justify    	0
+			    label      	"Administrator")
+			icon       	"Actor"
+			icon_style 	"Icon"
+			line_color 	3342489
+			quidu      	"4F8E77BD00CB"
+			annotation 	8
+			autoResize 	TRUE)
+		    (object AssociationViewNew "$UNNAMED$83" @151
+			location   	(2736, 744)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E789703A9"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$84" @152
+				Parent_View 	@151
+				location   	(-511, -103)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E78980251"
+				client     	@151
+				supplier   	@149
+				line_style 	0)
+			    (object RoleView "$UNNAMED$85" @153
+				Parent_View 	@151
+				location   	(-511, -103)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E78980253"
+				client     	@151
+				supplier   	@150
+				line_style 	0)))
+		    (object UseCaseView "Use Case View::处理注册申请" @154
+			location   	(2180, 1131)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@154
+			    location   	(2180, 1269)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"处理注册申请")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E786A034B"
+			height     	118)
+		    (object AssociationViewNew "$UNNAMED$86" @155
+			location   	(2737, 979)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E789A0186"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$87" @156
+				Parent_View 	@155
+				location   	(-510, 132)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E789B008C"
+				client     	@155
+				supplier   	@154
+				line_style 	0)
+			    (object RoleView "$UNNAMED$88" @157
+				Parent_View 	@155
+				location   	(-510, 132)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E789B008E"
+				client     	@155
+				supplier   	@150
 				line_style 	0)))))))
     root_category 	(object Class_Category "Logical View"
 	quid       	"4F8520CF034C"
@@ -2786,6 +3346,46 @@
 			quid       	"4F8E6E69007D"
 			supplier   	"Logical View::Product"
 			quidu      	"4F8E6DA90128")))
+	    (object Class "NewInterface"
+		quid       	"4F8E703500FA"
+		stereotype 	"Interface")
+	    (object Class "Account"
+		quid       	"4F8E705C034B")
+	    (object Class "Owner"
+		quid       	"4F8E706500BB")
+	    (object Class "Company"
+		quid       	"4F8E706D02FD"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"4F8E70AE0242"
+			supplier   	"Logical View::Owner"
+			quidu      	"4F8E706500BB")))
+	    (object Class "Person"
+		quid       	"4F8E7076004E"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"4F8E70C502DE"
+			supplier   	"Logical View::Owner"
+			quidu      	"4F8E706500BB")))
+	    (object Class "BigPlan"
+		quid       	"4F8E70EA02CE")
+	    (object Class "Store"
+		quid       	"4F8E70F3004E"
+		stereotype 	"Interface")
+	    (object Class "QuickStore"
+		quid       	"4F8E70FE00EA"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"4F8E710B030D"
+			supplier   	"Logical View::Store"
+			quidu      	"4F8E70F3004E")))
+	    (object Class "OfflineStore"
+		quid       	"4F8E714C02BF"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"4F8E715C00DA"
+			supplier   	"Logical View::Store"
+			quidu      	"4F8E70F3004E")))
 	    (object Association "WorkFor"
 		quid       	"4F8E6D2102FD"
 		roles      	(list role_list
@@ -2799,7 +3399,33 @@
 			quid       	"4F8E6D2202FF"
 			label      	"1"
 			supplier   	"Logical View::employee"
-			quidu      	"4F8E6CFD006D"))))
+			quidu      	"4F8E6CFD006D")))
+	    (object Association "$UNNAMED$89"
+		quid       	"4F8E708502EE"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$90"
+			quid       	"4F8E70860203"
+			supplier   	"Logical View::Owner"
+			quidu      	"4F8E706500BB"
+			client_cardinality 	(value cardinality "1"))
+		    (object Role "$UNNAMED$91"
+			quid       	"4F8E70860205"
+			supplier   	"Logical View::Account"
+			quidu      	"4F8E705C034B"
+			client_cardinality 	(value cardinality "0..*"))))
+	    (object Association "$UNNAMED$92"
+		quid       	"4F8E71260138"
+		stereotype 	"use"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$93"
+			quid       	"4F8E71270109"
+			supplier   	"Logical View::Store"
+			quidu      	"4F8E70F3004E"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$94"
+			quid       	"4F8E7127010B"
+			supplier   	"Logical View::BigPlan"
+			quidu      	"4F8E70EA02CE"))))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"4F8520D600DA"
@@ -2819,7 +3445,7 @@
 		origin_x   	0
 		origin_y   	0
 		items      	(list diagram_item_list
-		    (object ClassView "Class" "Logical View::Order" @129
+		    (object ClassView "Class" "Logical View::Order" @158
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -2835,7 +3461,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@129
+			    Parent_View 	@158
 			    location   	(2166, 133)
 			    fill_color 	13434879
 			    nlines     	1
@@ -2847,7 +3473,7 @@
 			fill_color 	13434879
 			quidu      	"4F8E6B2F00AB"
 			compartment 	(object Compartment
-			    Parent_View 	@129
+			    Parent_View 	@158
 			    location   	(2166, 200)
 			    font       	(object Font
 				size       	10
@@ -2867,7 +3493,7 @@
 			height     	644
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::employee" @130
+		    (object ClassView "Class" "Logical View::employee" @159
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -2882,7 +3508,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@130
+			    Parent_View 	@159
 			    location   	(84, 1115)
 			    fill_color 	13434879
 			    nlines     	1
@@ -2897,7 +3523,7 @@
 			height     	136
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::Department" @131
+		    (object ClassView "Class" "Logical View::Department" @160
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -2912,7 +3538,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@131
+			    Parent_View 	@160
 			    location   	(565, 915)
 			    fill_color 	13434879
 			    nlines     	1
@@ -2927,7 +3553,7 @@
 			height     	136
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "WorkFor" @132
+		    (object AssociationViewNew "WorkFor" @161
 			location   	(479, 1070)
 			font       	(object Font
 			    size       	12
@@ -2938,8 +3564,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @133
-			    Parent_View 	@132
+			label      	(object SegLabel @162
+			    Parent_View 	@161
 			    location   	(479, 1011)
 			    font       	(object Font
 				size       	12
@@ -2963,8 +3589,8 @@
 			line_color 	3342489
 			quidu      	"4F8E6D2102FD"
 			roleview_list 	(list RoleViews
-			    (object RoleView "10" @134
-				Parent_View 	@132
+			    (object RoleView "10" @163
+				Parent_View 	@161
 				location   	(71, 92)
 				font       	(object Font
 				    size       	12
@@ -2975,8 +3601,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @135
-				    Parent_View 	@134
+				label      	(object SegLabel @164
+				    Parent_View 	@163
 				    location   	(529, 1006)
 				    font       	(object Font
 					size       	12
@@ -2999,11 +3625,11 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4F8E6D2202FD"
-				client     	@132
-				supplier   	@131
+				client     	@161
+				supplier   	@160
 				line_style 	0)
-			    (object RoleView "1" @136
-				Parent_View 	@132
+			    (object RoleView "1" @165
+				Parent_View 	@161
 				location   	(71, 92)
 				font       	(object Font
 				    size       	12
@@ -3014,8 +3640,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @137
-				    Parent_View 	@136
+				label      	(object SegLabel @166
+				    Parent_View 	@165
 				    location   	(399, 1058)
 				    font       	(object Font
 					size       	12
@@ -3038,10 +3664,10 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4F8E6D2202FF"
-				client     	@132
-				supplier   	@130
+				client     	@161
+				supplier   	@159
 				line_style 	0)))
-		    (object ClassView "Class" "Logical View::Product" @138
+		    (object ClassView "Class" "Logical View::Product" @167
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -3056,7 +3682,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@138
+			    Parent_View 	@167
 			    location   	(1370, 1097)
 			    anchor_loc 	1
 			    nlines     	2
@@ -3069,7 +3695,7 @@
 			fill_color 	13434879
 			quidu      	"4F8E6DA90128"
 			compartment 	(object Compartment
-			    Parent_View 	@138
+			    Parent_View 	@167
 			    location   	(1209, 1141)
 			    font       	(object Font
 				size       	10
@@ -3089,7 +3715,7 @@
 			height     	58
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::Sledge" @139
+		    (object ClassView "Class" "Logical View::Sledge" @168
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -3104,7 +3730,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@139
+			    Parent_View 	@168
 			    location   	(705, 1508)
 			    fill_color 	13434879
 			    nlines     	1
@@ -3116,7 +3742,7 @@
 			fill_color 	13434879
 			quidu      	"4F8E6DF700DA"
 			compartment 	(object Compartment
-			    Parent_View 	@139
+			    Parent_View 	@168
 			    location   	(705, 1575)
 			    font       	(object Font
 				size       	10
@@ -3136,14 +3762,14 @@
 			height     	194
 			annotation 	8
 			autoResize 	TRUE)
-		    (object RealizeView "" @140
+		    (object RealizeView "" @169
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"4F8E6E2E0167"
-			client     	@139
-			supplier   	@138
+			client     	@168
+			supplier   	@167
 			line_style 	0)
-		    (object ClassView "Class" "Logical View::Motocycle" @141
+		    (object ClassView "Class" "Logical View::Motocycle" @170
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -3158,7 +3784,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@141
+			    Parent_View 	@170
 			    location   	(1462, 1555)
 			    fill_color 	13434879
 			    nlines     	1
@@ -3173,19 +3799,448 @@
 			height     	136
 			annotation 	8
 			autoResize 	TRUE)
-		    (object RealizeView "" @142
+		    (object RealizeView "" @171
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"4F8E6E69007D"
-			client     	@141
-			supplier   	@138
+			client     	@170
+			supplier   	@167
 			line_style 	0)
-		    (object InheritView "" @143
+		    (object InheritView "" @172
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"4F8E6E7B0186"
-			client     	@139
-			supplier   	@131
+			client     	@168
+			supplier   	@160
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::Company" @173
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(753, 565)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@173
+			    location   	(602, 511)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	302
+			    justify    	0
+			    label      	"Company")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E706D02FD"
+			width      	320
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Person" @174
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1163, 569)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@174
+			    location   	(1046, 515)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	234
+			    justify    	0
+			    label      	"Person")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E7076004E"
+			width      	252
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Account" @175
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(297, 234)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@175
+			    location   	(174, 180)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	246
+			    justify    	0
+			    label      	"Account")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E705C034B"
+			width      	264
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Owner" @176
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(969, 234)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@176
+			    location   	(862, 180)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	214
+			    justify    	0
+			    label      	"Owner")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E706500BB"
+			width      	232
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object AssociationViewNew "$UNNAMED$89" @177
+			location   	(640, 234)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E708502EE"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$90" @178
+				Parent_View 	@177
+				location   	(343, 0)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E70860203"
+				client     	@177
+				supplier   	@176
+				line_style 	0
+				label      	(object SegLabel @179
+				    Parent_View 	@178
+				    location   	(831, 288)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor     	2
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	15
+				    justify    	0
+				    label      	"1"
+				    pctDist    	0.900000
+				    height     	54
+				    orientation 	1))
+			    (object RoleView "$UNNAMED$91" @180
+				Parent_View 	@177
+				location   	(343, 0)
+				font       	(object Font
+				    size       	12
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E70860205"
+				client     	@177
+				supplier   	@175
+				line_style 	0
+				label      	(object SegLabel @181
+				    Parent_View 	@180
+				    location   	(450, 288)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor     	2
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	15
+				    justify    	0
+				    label      	"0..*"
+				    pctDist    	0.900000
+				    height     	54
+				    orientation 	0))))
+		    (object InheritTreeView "" @182
+			location   	(954, 394)
+			line_color 	3342489
+			fill_color 	13434879
+			supplier   	@176
+			vertices   	(list Points
+			    (954, 394)
+			    (954, 302)))
+		    (object InheritView "" @183
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E70AE0242"
+			client     	@173
+			supplier   	@176
+			line_style 	3
+			origin_attachment 	(750, 496)
+			terminal_attachment 	(750, 394)
+			drawSupplier 	@182)
+		    (object InheritView "" @184
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E70C502DE"
+			client     	@174
+			supplier   	@176
+			line_style 	3
+			origin_attachment 	(1163, 501)
+			terminal_attachment 	(1163, 394)
+			drawSupplier 	@182)
+		    (object ClassView "Class" "Logical View::QuickStore" @185
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2266, 1512)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@185
+			    location   	(2104, 1458)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	324
+			    justify    	0
+			    label      	"QuickStore")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E70FE00EA"
+			width      	342
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::BigPlan" @186
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1951, 1131)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@186
+			    location   	(1831, 1077)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	240
+			    justify    	0
+			    label      	"BigPlan")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E70EA02CE"
+			width      	258
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Store" @187
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2452, 1139)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@187
+			    location   	(2451, 1247)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	328
+			    justify    	0
+			    label      	"Store")
+			icon       	"Interface"
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E70F3004E"
+			width      	58
+			height     	58
+			annotation 	8
+			autoResize 	TRUE)
+		    (object AssociationViewNew "$UNNAMED$92" @188
+			location   	(2252, 1133)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @189
+			    Parent_View 	@188
+			    location   	(2252, 1014)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor     	10
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"<<use>>"
+			    pctDist    	0.500000
+			    height     	120
+			    orientation 	0)
+			line_color 	3342489
+			quidu      	"4F8E71260138"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$93" @190
+				Parent_View 	@188
+				location   	(301, 2)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E71270109"
+				client     	@188
+				supplier   	@187
+				line_style 	0)
+			    (object RoleView "$UNNAMED$94" @191
+				Parent_View 	@188
+				location   	(301, 2)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4F8E7127010B"
+				client     	@188
+				supplier   	@186
+				line_style 	0)))
+		    (object ClassView "Class" "Logical View::OfflineStore" @192
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2740, 1509)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@192
+			    location   	(2569, 1455)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	342
+			    justify    	0
+			    label      	"OfflineStore")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4F8E714C02BF"
+			width      	360
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @193
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E710B030D"
+			client     	@185
+			supplier   	@187
+			line_style 	0)
+		    (object RealizeView "" @194
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4F8E715C00DA"
+			client     	@192
+			supplier   	@187
 			line_style 	0)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"4F8520CF034E"
