@@ -1,14 +1,14 @@
 VAL			EQU 0AAH  ;¸³Öµ£Á£Á£È
 
 	ORG		0000H
-	LJMP	MAIN	
+	LJMP	MA	
 
 
 ;
 ;Main entrance...
 ;
 	ORG	100H
-MAIN:
+MA:
 	MOV 30H,#VAL  ;30h -> 0AAH
 	MOV 40H,#03H  ;40h -> 02H
 	MOV A,30H
