@@ -11,8 +11,9 @@ int main( void )
 	X = 0xAA;
 	Y = 0x03;
 
-	Shang = X/Y;
-	Remain = X%Y;
+	X = X^Y;		  //Maybe a exchanged is better?!
+	Y = X^Y;
+	X = X^Y;
 
 	while( 1 )
 	{

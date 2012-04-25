@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  04/25/2012 19:44:42 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  04/25/2012 19:52:48 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -20,19 +20,20 @@ line level    source
   11   1              X = 0xAA;
   12   1              Y = 0x03;
   13   1      
-  14   1              Shang = X/Y;
-  15   1              Remain = X%Y;
-  16   1      
-  17   1              while( 1 )
-  18   1              {
-  19   2              }
-  20   1      
-  21   1              return 0;
-  22   1      }
+  14   1              X = X^Y;                  //Maybe a exchanged is better?!
+  15   1              Y = X^Y;
+  16   1              X = X^Y;
+  17   1      
+  18   1              while( 1 )
+  19   1              {
+  20   2              }
+  21   1      
+  22   1              return 0;
+  23   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     31    ----
+   CODE SIZE        =     47    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V5.12                                                        04/25/2012  19:44:52  PAGE 1
+BL51 BANKED LINKER/LOCATER V5.12                                                        04/25/2012  19:52:57  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
@@ -25,8 +25,8 @@ LINK MAP OF MODULE:  experimental (?C_STARTUP)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     001FH     UNIT         ?PR?MAIN?MAIN
-            CODE    0022H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0003H     002FH     UNIT         ?PR?MAIN?MAIN
+            CODE    0032H     000CH     UNIT         ?C_C51STARTUP
 
 
 
@@ -47,7 +47,7 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:0022H         SEGMENT       ?C_C51STARTUP
+  C:0032H         SEGMENT       ?C_C51STARTUP
   I:0008H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
@@ -57,9 +57,9 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:0025H         SYMBOL        IDATALOOP
+  C:0035H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
-BL51 BANKED LINKER/LOCATER V5.12                                                      04/25/2012  19:44:52  PAGE 2
+BL51 BANKED LINKER/LOCATER V5.12                                                      04/25/2012  19:52:57  PAGE 2
 
 
   N:0000H         SYMBOL        PBPSTACKTOP
@@ -69,18 +69,18 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:0022H         SYMBOL        STARTUP1
+  C:0032H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         92
-  C:0022H         LINE#         99
-  C:0024H         LINE#         100
-  C:0025H         LINE#         101
-  C:0026H         LINE#         102
-  C:0028H         LINE#         151
-  C:002BH         LINE#         155
+  C:0032H         LINE#         99
+  C:0034H         LINE#         100
+  C:0035H         LINE#         101
+  C:0036H         LINE#         102
+  C:0038H         LINE#         151
+  C:003BH         LINE#         155
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        MAIN
@@ -100,12 +100,13 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
   C:0003H         LINE#         11
   C:0007H         LINE#         12
   C:000BH         LINE#         14
-  C:0016H         LINE#         15
-  C:0020H         LINE#         17
-  C:0020H         LINE#         18
-  C:0020H         LINE#         19
+  C:0018H         LINE#         15
+  C:0023H         LINE#         16
+  C:0030H         LINE#         18
+  C:0030H         LINE#         19
+  C:0030H         LINE#         20
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
-Program Size: data=9.0 xdata=0 code=46
+Program Size: data=9.0 xdata=0 code=62
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
