@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 18:20:31 PAGE     1
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 18:37:45 PAGE     1
 
 
 MACRO ASSEMBLER A51 V7.10
@@ -24,19 +24,19 @@ LOC  OBJ            LINE     SOURCE
                       15     
 0100                  16             ORG     100H
 0100                  17     MAIN:
-0100 D2D4             18             SETB RS1
-0102 75814F           19             MOV SP,#4FH 
-0105 7850             20             MOV R0,#DATA_ADDR       ;Ê¾Ý¿éÊ×µØÖ·DATA_ADDR ¸³Öµ¸øµØÖ·Ö¸ÕëR0
-0107 7A0A             21             MOV R2,#COUNT           ;Ñ­»·´ÎÊ0AH¸¶¸ø¼ÆÊÆ÷R2
-                      22     
-0109                  23     LOOP:
-0109 76AA             24             MOV @R0, #VAL           ;¸ø£¨R0£©µ¥Ôª¸³ÖµVAL
-010B 08               25             INC R0                          ;µØÖ·Ö¸ÕëR0¼Ó1
-010C 1A               26             DEC     R2                              ;¼ÆËãÆ÷R2¼õ1
-010D BA00F9           27             CJNE R2,#00H,LOOP       ;ÅÐ¶ÏR2ÊÇ·ñÎª0£¬·Ç0×ªLOOP¼ÌÐøÇë0
-0110 80FE             28             SJMP $
+0100 C3               18             CLR C
+0101 C2D4             19             CLR RS1
+0103 C2D3             20             CLR RS0
+0105 7438             21             MOV A,#38H
+0107 F8               22             MOV R0,A
+0108 8829             23             MOV 29H,R0
+010A D2D3             24             SETB RS0
+010C F9               25             MOV R1,A
+010D F526             26             MOV 26H,A
+010F 9228             27             MOV 28H,C
+0111 80FE             28             SJMP $
                       29     END
-A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 18:20:31 PAGE     2
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 18:37:45 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -46,10 +46,9 @@ N A M E             T Y P E  V A L U E   ATTRIBUTES
 
 COUNT. . . . . . .  N NUMB   000AH   A   
 DATA_ADDR. . . . .  N NUMB   0050H   A   
-LOOP . . . . . . .  C ADDR   0109H   A   
 MAIN . . . . . . .  C ADDR   0100H   A   
+RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
-SP . . . . . . . .  D ADDR   0081H   A   
 VAL. . . . . . . .  N NUMB   00AAH   A   
 
 

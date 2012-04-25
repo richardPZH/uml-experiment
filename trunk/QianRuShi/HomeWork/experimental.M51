@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V5.12                                                        04/25/2012  18:20:36  PAGE 1
+BL51 BANKED LINKER/LOCATER V5.12                                                        04/25/2012  18:37:50  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
@@ -22,8 +22,8 @@ LINK MAP OF MODULE:  experimental (?C_STARTUP)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-* OVERLAP * CODE    0000H     0112H     ABSOLUTE     
-            CODE    0112H     000CH     UNIT         ?C_C51STARTUP
+* OVERLAP * CODE    0000H     0113H     ABSOLUTE     
+            CODE    0113H     000CH     UNIT         ?C_C51STARTUP
 
 
 
@@ -38,7 +38,7 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:0112H         SEGMENT       ?C_C51STARTUP
+  C:0113H         SEGMENT       ?C_C51STARTUP
   I:0008H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
@@ -48,7 +48,7 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:0115H         SYMBOL        IDATALOOP
+  C:0116H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0000H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -57,41 +57,42 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:0112H         SYMBOL        STARTUP1
+  C:0113H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
-BL51 BANKED LINKER/LOCATER V5.12                                                      04/25/2012  18:20:36  PAGE 2
+BL51 BANKED LINKER/LOCATER V5.12                                                      04/25/2012  18:37:50  PAGE 2
 
 
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         92
-  C:0112H         LINE#         99
-  C:0114H         LINE#         100
-  C:0115H         LINE#         101
-  C:0116H         LINE#         102
-  C:0118H         LINE#         151
-  C:011BH         LINE#         155
+  C:0113H         LINE#         99
+  C:0115H         LINE#         100
+  C:0116H         LINE#         101
+  C:0117H         LINE#         102
+  C:0119H         LINE#         151
+  C:011CH         LINE#         155
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        MAIN
   N:000AH         SYMBOL        COUNT
   N:0050H         SYMBOL        DATA_ADDR
-  C:0109H         SYMBOL        LOOP
   C:0100H         SYMBOL        MAIN
+  B:00D0H.3       SYMBOL        RS0
   B:00D0H.4       SYMBOL        RS1
-  D:0081H         SYMBOL        SP
   N:00AAH         SYMBOL        VAL
   C:0000H         LINE#         6
   C:0100H         LINE#         18
-  C:0102H         LINE#         19
-  C:0105H         LINE#         20
-  C:0107H         LINE#         21
-  C:0109H         LINE#         24
-  C:010BH         LINE#         25
-  C:010CH         LINE#         26
-  C:010DH         LINE#         27
-  C:0110H         LINE#         28
+  C:0101H         LINE#         19
+  C:0103H         LINE#         20
+  C:0105H         LINE#         21
+  C:0107H         LINE#         22
+  C:0108H         LINE#         23
+  C:010AH         LINE#         24
+  C:010CH         LINE#         25
+  C:010DH         LINE#         26
+  C:010FH         LINE#         27
+  C:0111H         LINE#         28
   -------         ENDMOD        MAIN
 
 *** WARNING L5: CODE SPACE MEMORY OVERLAP
@@ -105,7 +106,7 @@ SYMBOL TABLE OF MODULE:  experimental (?C_STARTUP)
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  ?C_START
     MODULE:  STARTUP.obj (?C_STARTUP)
-    ADDRESS: 011CH
+    ADDRESS: 011DH
 
-Program Size: data=9.0 xdata=0 code=289
+Program Size: data=9.0 xdata=0 code=290
 LINK/LOCATE RUN COMPLETE.  3 WARNING(S),  0 ERROR(S)
