@@ -1,46 +1,45 @@
-A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 19:17:25 PAGE     1
+C51 COMPILER V7.50   MAIN                                                                  04/25/2012 19:44:42 PAGE 1   
 
 
-MACRO ASSEMBLER A51 V7.10
+C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
-ASSEMBLER INVOKED BY: E:\keil\C51\BIN\A51.EXE main.s SET(SMALL) DEBUG EP
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
 
-LOC  OBJ            LINE     SOURCE
+line level    source
 
-  00AA                 1     VAL                     EQU 0AAH  ;¸³Öµ£Á£Á£È
-                       2     
-0000                   3             ORG             0000H
-0000 020100            4             LJMP    MAIN    
-                       5     
-                       6     
-                       7     ;
-                       8     ;Main entrance...
-                       9     ;
-0100                  10             ORG     100H
-0100                  11     MAIN:
-0100 7530AA           12             MOV 30H,#VAL  ;30h -> 0AAH
-0103 754003           13             MOV 40H,#03H  ;40h -> 02H
-0106 E530             14             MOV A,30H
-0108 8540F0           15             MOV B,40H
-010B 84               16             DIV AB            ;A/B -> A , B
-010C F550             17             MOV 50H,A
-010E 85F051           18             MOV 51H,B
-0111 80FE             19             SJMP $
-                      20     END
-A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 19:17:25 PAGE     2
-
-SYMBOL TABLE LISTING
------- ----- -------
+   1          #include<REG52.H>
+   2          #include<absacc.h>
+   3          
+   4          #define X (DBYTE[0x30])
+   5          #define Y (DBYTE[0x40])
+   6          #define Shang (DBYTE[0x50])
+   7          #define Remain (DBYTE[0x51])
+   8          
+   9          int main( void )
+  10          {
+  11   1              X = 0xAA;
+  12   1              Y = 0x03;
+  13   1      
+  14   1              Shang = X/Y;
+  15   1              Remain = X%Y;
+  16   1      
+  17   1              while( 1 )
+  18   1              {
+  19   2              }
+  20   1      
+  21   1              return 0;
+  22   1      }
 
 
-N A M E             T Y P E  V A L U E   ATTRIBUTES
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     31    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
 
-B. . . . . . . . .  D ADDR   00F0H   A   
-MAIN . . . . . . .  C ADDR   0100H   A   
-VAL. . . . . . . .  N NUMB   00AAH   A   
 
-
-REGISTER BANK(S) USED: 0 
-
-
-ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
