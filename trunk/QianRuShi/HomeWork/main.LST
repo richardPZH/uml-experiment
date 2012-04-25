@@ -1,0 +1,59 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 18:20:31 PAGE     1
+
+
+MACRO ASSEMBLER A51 V7.10
+OBJECT MODULE PLACED IN main.OBJ
+ASSEMBLER INVOKED BY: E:\keil\C51\BIN\A51.EXE main.s SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0050                 1     DATA_ADDR       EQU 50H   ;Ê¾Ý¿éÊ×µØÖ·
+  000A                 2     COUNT           EQU 0AH   ;Ñ­»·´ÎÊ
+  00AA                 3     VAL                     EQU 0AAH  ;¸³Öµ£Á£Á£È
+                       4     
+0000                   5             ORG             0000H
+0000 020100            6             LJMP    MAIN    
+                       7     
+                       8     ;****************
+                       9     ;*
+                      10     ;*
+                      11     ;* Main
+                      12     ;*
+                      13     ;*
+                      14     ;****************
+                      15     
+0100                  16             ORG     100H
+0100                  17     MAIN:
+0100 D2D4             18             SETB RS1
+0102 75814F           19             MOV SP,#4FH 
+0105 7850             20             MOV R0,#DATA_ADDR       ;Ê¾Ý¿éÊ×µØÖ·DATA_ADDR ¸³Öµ¸øµØÖ·Ö¸ÕëR0
+0107 7A0A             21             MOV R2,#COUNT           ;Ñ­»·´ÎÊ0AH¸¶¸ø¼ÆÊÆ÷R2
+                      22     
+0109                  23     LOOP:
+0109 76AA             24             MOV @R0, #VAL           ;¸ø£¨R0£©µ¥Ôª¸³ÖµVAL
+010B 08               25             INC R0                          ;µØÖ·Ö¸ÕëR0¼Ó1
+010C 1A               26             DEC     R2                              ;¼ÆËãÆ÷R2¼õ1
+010D BA00F9           27             CJNE R2,#00H,LOOP       ;ÅÐ¶ÏR2ÊÇ·ñÎª0£¬·Ç0×ªLOOP¼ÌÐøÇë0
+0110 80FE             28             SJMP $
+                      29     END
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2012 18:20:31 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+COUNT. . . . . . .  N NUMB   000AH   A   
+DATA_ADDR. . . . .  N NUMB   0050H   A   
+LOOP . . . . . . .  C ADDR   0109H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+RS1. . . . . . . .  B ADDR   00D0H.4 A   
+SP . . . . . . . .  D ADDR   0081H   A   
+VAL. . . . . . . .  N NUMB   00AAH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
