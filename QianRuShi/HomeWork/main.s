@@ -1,29 +1,20 @@
-DATA_ADDR	EQU 50H   ;数据块首地址
-COUNT		EQU 0AH   ;循环次数
 VAL			EQU 0AAH  ;赋值ＡＡＨ
 
 	ORG		0000H
 	LJMP	MAIN	
 
-;****************
-;*
-;*
-;* Main
-;*
-;*
-;****************
 
+;
+;Main entrance...
+;
 	ORG	100H
 MAIN:
-	CLR C
-	CLR RS1
-	CLR RS0
-	MOV A,#38H
-	MOV R0,A
-	MOV 29H,R0
-	SETB RS0
-	MOV R1,A
-	MOV 26H,A
-	MOV 28H,C
+	MOV 30H,#VAL  ;30h -> 0AAH
+	MOV 40H,#03H  ;40h -> 02H
+	MOV A,30H
+	MOV B,40H
+	DIV AB		  ;A/B -> A , B
+	MOV 50H,A
+	MOV 51H,B
 	SJMP $
 END
