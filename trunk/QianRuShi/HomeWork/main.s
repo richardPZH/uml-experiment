@@ -1,0 +1,1 @@
+DATA_ADDR	EQU 50H   ;数据块首地址
