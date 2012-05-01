@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/01/2012 16:10:24 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/01/2012 16:15:13 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -61,11 +61,11 @@ line level    source
   52   1              for( c=0 ; c<3 ; c++ )
   53   1              {
   54   2                      LED_PORT1 = 0xF0;
-  55   2                      time( 50 );
-C51 COMPILER V7.50   MAIN                                                                  05/01/2012 16:10:24 PAGE 2   
+  55   2                      time( 150 );
+C51 COMPILER V7.50   MAIN                                                                  05/01/2012 16:15:13 PAGE 2   
 
   56   2                      LED_PORT1 = 0xFF;
-  57   2                      time( 50 );
+  57   2                      time( 150 );
   58   2              }
   59   1      
   60   1              EA = 1;
@@ -83,9 +83,9 @@ line level    source
   72   1              for( c=0 ; c<6 ; c++ )
   73   1              {
   74   2                      LED_PORT2 = 0xF0;
-  75   2                      time( 50 );
+  75   2                      time( 150 );
   76   2                      LED_PORT2 = 0xFF;
-  77   2                      time( 50 );
+  77   2                      time( 150 );
   78   2              }
   79   1      
   80   1              EA = 1; 

@@ -52,9 +52,9 @@ void counter0( void ) interrupt 1
 	for( c=0 ; c<3 ; c++ )
 	{
 		LED_PORT1 = 0xF0;
-		time( 50 );
+		time( 150 );
 		LED_PORT1 = 0xFF;
-		time( 50 );
+		time( 150 );
 	}
 
 	EA = 1;
@@ -72,9 +72,9 @@ void counter1( void ) interrupt 3
 	for( c=0 ; c<6 ; c++ )
 	{
 		LED_PORT2 = 0xF0;
-		time( 50 );
+		time( 150 );
 		LED_PORT2 = 0xFF;
-		time( 50 );
+		time( 150 );
 	}
 
 	EA = 1;	
