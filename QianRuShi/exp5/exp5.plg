@@ -7,10 +7,6 @@ E:\uml-experiment\QianRuShi\exp5\exp5.uv2
 Project File Date:  05/01/2012
 
 <h2>Output:</h2>
-Build target 'Target 1'
-assembling STARTUP.A51...
-compiling main.c...
-linking...
-Program Size: data=13.0 xdata=0 code=281
-creating hex file from "exp5"...
-"exp5" - 0 Error(s), 0 Warning(s).
+</pre>
+</body>
+</html>
