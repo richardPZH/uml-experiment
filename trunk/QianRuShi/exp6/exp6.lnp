@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"main.obj",
+"IMSutil.obj" 
+TO "exp6" 
+RAMSIZE(256) 

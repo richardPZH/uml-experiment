@@ -1,0 +1,50 @@
+C51 COMPILER V7.50   MAIN                                                                  05/01/2012 17:41:47 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<REG52.H>
+   2          #include<stdio.h>
+   3          #include<IMSutil.h>
+   4          
+   5          void initUart( void );
+   6          
+   7          
+   8          int main( void )
+   9          {
+  10   1              initUart();
+  11   1              while( 1 )
+  12   1              {
+  13   2                      delay_uc( 1000 );
+  14   2                      printf("Hello IMS!\n");
+  15   2              }
+  16   1              
+  17   1              return 0;
+  18   1      }
+  19          
+  20          void initUart( void )
+  21          {
+  22   1              SCON = 0x50;
+  23   1              TMOD |= 0x20;
+  24   1              TH1 = 0xFD;
+  25   1              TR1 = 1;
+  26   1              TI = 1;
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     35    ----
+   CONSTANT SIZE    =     12    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
