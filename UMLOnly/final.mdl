@@ -113,7 +113,13 @@
 	    (object UseCase "访问项目数据库"
 		quid       	"4FA10F8E016F")
 	    (object UseCase "计算员工工资"
-		quid       	"4FA111F901CE")
+		quid       	"4FA111F901CE"
+		visible_modules 	(list dependency_list
+		    (object Dependency_Relationship
+			quid       	"4FA1305903C4"
+			stereotype 	"include"
+			supplier   	"Use Case View::确认工资信息"
+			quidu      	"4FA10F450197")))
 	    (object UseCase "小时工计算方式"
 		quid       	"4FA11255039C"
 		superclasses 	(list inheritance_relationship_list
@@ -1198,7 +1204,8 @@
 			fill_color 	13434879
 			quidu      	"4FA111F901CE"
 			height     	118)
-		    (object DependencyView "" @56
+		    (object UseCaseView "Use Case View::小时工计算方式" @56
+			location   	(2062, 109)
 			font       	(object Font
 			    size       	12
 			    face       	"Arial"
@@ -1208,9 +1215,101 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			stereotype 	(object SegLabel @57
+			label      	(object ItemLabel
 			    Parent_View 	@56
-			    location   	(1117, 226)
+			    location   	(2062, 247)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"小时工计算方式")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FA11255039C"
+			height     	118)
+		    (object UseCaseView "Use Case View::普通员工计算方式" @57
+			location   	(2070, 337)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@57
+			    location   	(2070, 475)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"普通员工计算方式")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FA1126000EB"
+			height     	118)
+		    (object UseCaseView "Use Case View::销售人员计算方式" @58
+			location   	(2080, 578)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@58
+			    location   	(2080, 716)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	630
+			    justify    	0
+			    label      	"销售人员计算方式")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FA1126B00CB"
+			height     	118)
+		    (object InheritView "" @59
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FA112C10175"
+			client     	@56
+			supplier   	@55
+			line_style 	0)
+		    (object InheritView "" @60
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FA112C50265"
+			client     	@57
+			supplier   	@55
+			line_style 	0)
+		    (object InheritView "" @61
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FA112C8029D"
+			client     	@58
+			supplier   	@55
+			line_style 	0)
+		    (object DependencyView "" @62
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	(object SegLabel @63
+			    Parent_View 	@62
+			    location   	(1154, 244)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1226,106 +1325,13 @@
 			    max_width  	450
 			    justify    	0
 			    label      	"<<include>>"
-			    pctDist    	0.436921
-			    height     	50
-			    orientation 	0)
+			    pctDist    	0.463139
+			    height     	33
+			    orientation 	1)
 			line_color 	3342489
-			quidu      	"4FA1123D0228"
-			client     	@51
-			supplier   	@55
-			line_style 	0)
-		    (object UseCaseView "Use Case View::小时工计算方式" @58
-			location   	(2062, 109)
-			font       	(object Font
-			    size       	12
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@58
-			    location   	(2062, 247)
-			    anchor_loc 	1
-			    nlines     	2
-			    max_width  	630
-			    justify    	0
-			    label      	"小时工计算方式")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4FA11255039C"
-			height     	118)
-		    (object UseCaseView "Use Case View::普通员工计算方式" @59
-			location   	(2070, 337)
-			font       	(object Font
-			    size       	12
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@59
-			    location   	(2070, 475)
-			    anchor_loc 	1
-			    nlines     	2
-			    max_width  	630
-			    justify    	0
-			    label      	"普通员工计算方式")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4FA1126000EB"
-			height     	118)
-		    (object UseCaseView "Use Case View::销售人员计算方式" @60
-			location   	(2080, 578)
-			font       	(object Font
-			    size       	12
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@60
-			    location   	(2080, 716)
-			    anchor_loc 	1
-			    nlines     	2
-			    max_width  	630
-			    justify    	0
-			    label      	"销售人员计算方式")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4FA1126B00CB"
-			height     	118)
-		    (object InheritView "" @61
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4FA112C10175"
-			client     	@58
-			supplier   	@55
-			line_style 	0)
-		    (object InheritView "" @62
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4FA112C50265"
-			client     	@59
-			supplier   	@55
-			line_style 	0)
-		    (object InheritView "" @63
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4FA112C8029D"
-			client     	@60
-			supplier   	@55
+			quidu      	"4FA1305903C4"
+			client     	@55
+			supplier   	@51
 			line_style 	0)))
 	    (object UseCaseDiagram "员工"
 		quid       	"4FA115E200D2"
