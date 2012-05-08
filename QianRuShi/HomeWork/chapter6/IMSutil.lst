@@ -1,10 +1,9 @@
-C51 COMPILER V7.50   IMSUTIL                                                               05/08/2012 18:21:16 PAGE 1   
+C51 COMPILER V7.50   IMSUTIL                                                               05/08/2012 19:38:37 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE IMSUTIL
-OBJECT MODULE PLACED IN .\IMSutil.obj
-COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE ..\..\experiment\exp6\IMSutil.c BROWSE DEBUG OBJECTEXTEND PRINT(.\IMSutil.l
-                    -st) OBJECT(.\IMSutil.obj)
+OBJECT MODULE PLACED IN IMSutil.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE IMSutil.c BROWSE DEBUG OBJECTEXTEND
 
 line level    source
 

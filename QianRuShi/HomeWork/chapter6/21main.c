@@ -28,7 +28,7 @@ int main( void )
 	for( c=0 ; c<= 0xFF; c++ )
 	{
 		sendByte( xArrayAt3000[c] );
-		delay_uc( 100 );
+		//delay_uc( 100 );
 	}
 
 	while( 1 );

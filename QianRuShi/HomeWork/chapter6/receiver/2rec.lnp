@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"2reciver.obj" 
+TO "2rec" 
+RAMSIZE(256) 
