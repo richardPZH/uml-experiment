@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"22transifier.obj",
+"IMSutil.obj" 
+TO "22" 
+RAMSIZE(256) 

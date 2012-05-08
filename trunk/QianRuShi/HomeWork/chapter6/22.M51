@@ -1,0 +1,208 @@
+BL51 BANKED LINKER/LOCATER V5.12                                                        05/08/2012  19:38:42  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
+E:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, 22transifier.obj, IMSutil.obj TO 22 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  22transifier.obj (22TRANSIFIER)
+  IMSutil.obj (IMSUTIL)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?ULCMP)
+
+
+LINK MAP OF MODULE:  22 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?22TRANSIFIER
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+                    0000H     3000H                  *** GAP ***
+            XDATA   3000H     0100H     ABSOLUTE     
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0017H     UNIT         ?PR?INITUART?22TRANSIFIER
+                    001AH     0009H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     007DH     UNIT         ?PR?UARTINTERRUPT?22TRANSIFIER
+            CODE    00A3H     0063H     UNIT         ?PR?MAIN?22TRANSIFIER
+            CODE    0106H     0012H     UNIT         ?PR?_DELAY_UC?IMSUTIL
+            CODE    0118H     0011H     UNIT         ?C?LIB_CODE
+            CODE    0129H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   22 (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?22TRANSIFIER
+
+?PR?MAIN?22TRANSIFIER
+  +--> ?PR?INITUART?22TRANSIFIER
+  +--> ?PR?_DELAY_UC?IMSUTIL
+
+
+
+SYMBOL TABLE OF MODULE:  22 (?C_STARTUP)
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/08/2012  19:38:42  PAGE 2
+
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0129H         SEGMENT       ?C_C51STARTUP
+  I:000CH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:012CH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0129H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:0129H         LINE#         99
+  C:012BH         LINE#         100
+  C:012CH         LINE#         101
+  C:012DH         LINE#         102
+  C:012FH         LINE#         151
+  C:0132H         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        22TRANSIFIER
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0026H         PUBLIC        uartInterrupt
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:00A3H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/08/2012  19:38:42  PAGE 3
+
+
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0098H.5       PUBLIC        SM2
+  C:0003H         PUBLIC        initUart
+  B:0088H.6       PUBLIC        TR1
+  D:0008H         PUBLIC        c
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  X:3000H         PUBLIC        xArrayAt3000
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:00A3H         LINE#         12
+  C:00A3H         LINE#         13
+  C:00A3H         LINE#         15
+  C:00A6H         LINE#         18
+  C:00ADH         LINE#         21
+  C:00CAH         LINE#         22
+  C:00CAH         LINE#         23
+  C:00DAH         LINE#         24
+  C:00F5H         LINE#         26
+  C:00FEH         LINE#         28
+  C:0100H         LINE#         29
+  C:0102H         LINE#         31
+  C:0104H         LINE#         33
+  -------         ENDPROC       MAIN
+  -------         PROC          INITUART
+  C:0003H         LINE#         39
+  C:0003H         LINE#         40
+  C:0003H         LINE#         41
+  C:0006H         LINE#         42
+  C:0009H         LINE#         43
+  C:000FH         LINE#         44
+  C:0011H         LINE#         45
+  C:0013H         LINE#         46
+  C:0015H         LINE#         47
+  C:0017H         LINE#         49
+  C:0019H         LINE#         50
+  -------         ENDPROC       INITUART
+  -------         PROC          UARTINTERRUPT
+  C:0026H         LINE#         53
+  C:0043H         LINE#         55
+  C:0046H         LINE#         56
+  C:0046H         LINE#         57
+  C:0048H         LINE#         59
+  C:005CH         LINE#         60
+  C:005CH         LINE#         61
+  C:006BH         LINE#         62
+  C:0084H         LINE#         63
+  C:0084H         LINE#         65
+  C:0086H         LINE#         67
+  C:0086H         LINE#         68
+  C:0088H         LINE#         69
+  C:0088H         LINE#         71
+  -------         ENDPROC       UARTINTERRUPT
+  -------         ENDMOD        22TRANSIFIER
+
+  -------         MODULE        IMSUTIL
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/08/2012  19:38:42  PAGE 4
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0106H         PUBLIC        _delay_uc
+  -------         PROC          _DELAY_UC
+  D:0006H         SYMBOL        ucMs
+  -------         DO            
+  D:0005H         SYMBOL        ucCounter
+  -------         ENDDO         
+  C:0106H         LINE#         3
+  C:0106H         LINE#         4
+  C:0106H         LINE#         8
+  C:010AH         LINE#         9
+  C:010AH         LINE#         10
+  C:0110H         LINE#         11
+  C:0115H         LINE#         12
+  C:0117H         LINE#         13
+  -------         ENDPROC       _DELAY_UC
+  -------         ENDMOD        IMSUTIL
+
+  -------         MODULE        ?C?ULCMP
+  C:0118H         PUBLIC        ?C?ULCMP
+  -------         ENDMOD        ?C?ULCMP
+
+Program Size: data=13.0 xdata=256 code=300
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
