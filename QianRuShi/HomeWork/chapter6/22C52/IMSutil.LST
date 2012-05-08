@@ -1,0 +1,41 @@
+C51 COMPILER V7.50   IMSUTIL                                                               05/08/2012 22:46:18 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE IMSUTIL
+OBJECT MODULE PLACED IN IMSutil.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE IMSutil.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          
+   2          //A delay function used to work at 11.0952MHz
+   3          void delay_uc( unsigned int ucMs )
+   4          {
+   5   1      #define DELAYTIMES 239
+   6   1          unsigned char ucCounter;
+   7   1      
+   8   1          while( ucMs != 0 )
+   9   1          {
+  10   2              for( ucCounter = 0 ; ucCounter < DELAYTIMES; ucCounter++ ){}
+  11   2              ucMs--;
+  12   2          }
+  13   1      }
+  14          
+  15          
+  16          
+  17          
+  18          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     18    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
