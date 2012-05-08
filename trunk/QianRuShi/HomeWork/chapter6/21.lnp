@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"21main.obj",
+".\IMSutil.obj" 
+TO "21" 
+RAMSIZE(256) 
