@@ -1,0 +1,148 @@
+C51 COMPILER V7.50   MAIN                                                                  05/08/2012 22:46:29 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<REG52.H>
+   2          #include<string.h>
+   3          #include<IMSutil.h>
+   4          
+   5          #define TRANS 0
+   6          #define RECEI 1
+   7          #define ACK 0xAA
+   8          
+   9          //read the port1 ant 0 bit
+  10          sbit type = P1^0;
+  11          
+  12          //global evil variable, I should change my behavior
+  13          volatile unsigned long location;
+  14          volatile unsigned char idata *p;
+  15          volatile unsigned char whoAmI;
+  16          
+  17          
+  18          void initUart( void );
+  19          
+  20          int main( void )
+  21          {
+  22   1              char *hello = "Greeting From IMS@SCUT. rem";
+  23   1              unsigned char cnt;
+  24   1      
+  25   1              //1200baud use timer1 
+  26   1              initUart( );
+  27   1      
+  28   1              cnt = 0x4F - 0x30 + 1;
+  29   1              location = 0;
+  30   1      
+  31   1              ES = 1; //enable uart interrupt
+  32   1              EA = 1; //enable golbal inteerupt
+  33   1      
+  34   1              whoAmI = (unsigned char )type;
+  35   1      
+  36   1              if( TRANS == whoAmI )   //I am the transifer I will transfer 30H~4FH idata
+  37   1              {
+  38   2                      //let the receiver get a little ready
+  39   2                      delay_uc( 50 );
+  40   2      
+  41   2                      //first initial the 30H~4FH idata to the data I want
+  42   2                      p = 0x30;
+  43   2                      memcpy( p , hello , strlen(hello) );
+  44   2                      memset( p+strlen(hello) , 'L' , cnt - strlen(hello ));
+  45   2      
+  46   2                      SBUF = p[location++];
+  47   2                      //use interrupt to transfer;
+  48   2      
+  49   2              }
+  50   1              else                                    //I am the receiver I will receive an put at 50H~6FH
+  51   1              {
+  52   2                      p = 0x50;
+  53   2                      memset( p , 'R' , cnt );
+  54   2      
+  55   2              }
+C51 COMPILER V7.50   MAIN                                                                  05/08/2012 22:46:29 PAGE 2   
+
+  56   1      
+  57   1      
+  58   1      
+  59   1              while( 1 );
+  60   1      
+  61   1      
+  62   1              return 0;
+  63   1      }
+  64          
+  65          //interrupter uart routine 
+  66          void uartInterrupt( void ) interrupt 4
+  67          {
+  68   1              unsigned char rec;
+  69   1      
+  70   1              EA = 0;
+  71   1      
+  72   1              switch( whoAmI )
+  73   1              {
+  74   2                      case RECEI : {
+  75   3                                                       if( RI )
+  76   3                                                       {
+  77   4                                                               RI = 0;
+  78   4                                                               p[location++] = SBUF;
+  79   4                                                               SBUF = ACK; 
+  80   4                                                       }else
+  81   3                                                       {
+  82   4                                                               TI = 0;
+  83   4                                                       }
+  84   3      
+  85   3                                               }
+  86   2                              ;break;
+  87   2      
+  88   2                      case TRANS : {
+  89   3                                                       if( RI )
+  90   3                                                       {
+  91   4                                                               RI = 0;
+  92   4                                                               rec = SBUF;
+  93   4                                                               if( rec == ACK )
+  94   4                                                                       SBUF = p[location++];
+  95   4                                                       }
+  96   3                                                       else
+  97   3                                                       {
+  98   4                                                               TI = 0;
+  99   4                                                       }
+ 100   3      
+ 101   3                                               }
+ 102   2                              ;break;
+ 103   2                      default : ;
+ 104   2              }
+ 105   1      
+ 106   1              EA = 1;
+ 107   1      }
+ 108          
+ 109          //use timer1 @mode1 @1200 baud
+ 110          void initUart( void )
+ 111          {
+ 112   1              TMOD = 0x20;
+ 113   1              TH1 = TL1 = 0xE8;
+ 114   1              SM0 = 0;
+ 115   1              SM1 = 1;
+ 116   1              SM2 = 0;
+ 117   1              REN = 1;
+C51 COMPILER V7.50   MAIN                                                                  05/08/2012 22:46:29 PAGE 3   
+
+ 118   1      
+ 119   1              TR1 = 1;
+ 120   1      }
+ 121          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    269    ----
+   CONSTANT SIZE    =     28    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

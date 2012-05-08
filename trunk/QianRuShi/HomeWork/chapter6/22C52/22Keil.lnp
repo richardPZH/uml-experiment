@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"IMSutil.obj",
+"main.obj" 
+TO "22Keil" 
+RAMSIZE(256) 
