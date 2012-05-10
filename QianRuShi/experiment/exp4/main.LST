@@ -1,0 +1,73 @@
+C51 COMPILER V7.50   MAIN                                                                  05/10/2012 17:09:02 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<REG52.H>
+   2          #include<IMSutil.h>
+   3          
+   4          #define RUNNING_COUNTER 0
+   5          #define BASKETBALL_COUNTER 0
+   6          
+   7          #define RUNNING_INITIAL_10MS 0  
+   8          #define BASKETBALL_ROUND_TIMEUP_10MS 12*60*100 //12 minutes
+   9          
+  10          #define MINUTE_LED P3
+  11          #define SECOND_LED P2
+  12          #define MICRO_10MS_LED P1
+  13          
+  14          sbit bStart = P0^0;
+  15          sbit bPauseContinue = P0^1;
+  16          bit running;
+  17          
+  18          sbit bClear = P0^2;
+  19          sbit bExit = P0^3;
+  20          
+  21          #if RUNNING_COUNTER 
+              //unsigned long is 32 bit...good
+              volatile unsigned long currentTicksIn10ms;
+              
+              int main( void )
+              {
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                      return 0;
+              }
+              
+              #endif 
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V7.50   MAIN                                                                  05/10/2012 17:09:02 PAGE 2   
+
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
