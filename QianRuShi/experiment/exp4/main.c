@@ -1,16 +1,17 @@
 #include<REG52.H>
 #include<IMSutil.h>
 
-#define RUNNING_COUNTER 1
-#define BASKETBALL_COUNTER 0
+#define RUNNING_COUNTER 0
+#define BASKETBALL_COUNTER 1
 #define KEY_FILTER_MS 2
 
 #define RUNNING_INITIAL_10MS 0	
-#define BASKETBALL_ROUND_TIMEUP_10MS 12*60*100 //12 minutes
+#define BASKETBALL_ROUND_TIMEUP_10MS 72000
 
 #define MINUTE_LED P3
 #define SECOND_LED P2
 #define MICRO_10MS_LED P1
+
 
 sbit bStart = P0^0;
 sbit bPauseContinue = P0^1;
@@ -20,7 +21,7 @@ bit running;
 sbit bClear = P0^2;
 sbit bExit = P0^3;
 
-#if RUNNING_COUNTER 
+#if RUNNING_COUNTER || BASKETBALL_COUNTER 
 //unsigned long is 32 bit...good
 volatile unsigned long currentTicksIn10ms;
 
@@ -34,7 +35,15 @@ int main( void )
 {
 	running = 0;
 	outPut = 1;
+
+#if RUNNING_COUNTER
 	currentTicksIn10ms = RUNNING_INITIAL_10MS;
+#elif BASKETBALL_COUNTER
+	currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
+#else
+#error "Not currect option"
+#endif
+
 	update7SEG();
 
 	setTimer2_10ms();
@@ -69,7 +78,15 @@ int main( void )
 			{
 				EA = 0;
 				while( ! bClear );
+
+#if RUNNING_COUNTER
 				currentTicksIn10ms = RUNNING_INITIAL_10MS;
+#elif BASKETBALL_COUNTER
+				currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
+#else
+#error "Not currect Option"
+#endif
+
 				update7SEG();
 				EA = 1;
 			}
@@ -87,7 +104,15 @@ void timer2Interrupt( void ) interrupt 5
 
 	if( running )
 	{
-		currentTicksIn10ms ++;
+
+#if RUNNING_COUNTER
+				currentTicksIn10ms++;
+#elif BASKETBALL_COUNTER
+				currentTicksIn10ms--;
+#else 
+#error "Not currect Option"
+#endif
+
 		update7SEG();
 	}
 	
@@ -108,17 +133,17 @@ void setTimer2_10ms( void )
 
 void update7SEG( void )
 {
-	unsigned char min;
-	unsigned char sec;
-	unsigned char ms10;
+	unsigned long min;   //if i don't use the long it will fail me, trust me. why??? It seem it use the 2Byte int to minus
+	unsigned long sec;
+	unsigned long ms10;
 
 	min = currentTicksIn10ms / ( 1 * 60 * 100 );
 	sec =( currentTicksIn10ms - ( 1 * 60 * 100 * min ) ) / ( 100 );
 	ms10 = currentTicksIn10ms - ( 1 * 60 * 100 * min ) - 100 * sec;
 
-	MINUTE_LED = ( (min/10) *16 + (min%10) ); 
-	SECOND_LED = ( (sec/10) *16 + (sec%10) );
-	MICRO_10MS_LED = ( (ms10/10) *16 + (ms10%10) );
+	MINUTE_LED = char2BCD( min );
+	SECOND_LED = char2BCD( sec );
+	MICRO_10MS_LED = char2BCD( ms10 ); 
 
 }
 
