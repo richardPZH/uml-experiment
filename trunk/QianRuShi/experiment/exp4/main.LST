@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/10/2012 21:16:31 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/10/2012 22:02:36 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -10,140 +10,166 @@ line level    source
    1          #include<REG52.H>
    2          #include<IMSutil.h>
    3          
-   4          #define RUNNING_COUNTER 1
-   5          #define BASKETBALL_COUNTER 0
+   4          #define RUNNING_COUNTER 0
+   5          #define BASKETBALL_COUNTER 1
    6          #define KEY_FILTER_MS 2
    7          
    8          #define RUNNING_INITIAL_10MS 0  
-   9          #define BASKETBALL_ROUND_TIMEUP_10MS 12*60*100 //12 minutes
+   9          #define BASKETBALL_ROUND_TIMEUP_10MS 72000
   10          
   11          #define MINUTE_LED P3
   12          #define SECOND_LED P2
   13          #define MICRO_10MS_LED P1
   14          
-  15          sbit bStart = P0^0;
-  16          sbit bPauseContinue = P0^1;
-  17          sbit outPut = P0^7;
-  18          bit running;
-  19          
-  20          sbit bClear = P0^2;
-  21          sbit bExit = P0^3;
-  22          
-  23          #if RUNNING_COUNTER 
-  24          //unsigned long is 32 bit...good
-  25          volatile unsigned long currentTicksIn10ms;
-  26          
-  27          //set the timer 2 interrupt at every 10ms
-  28          void setTimer2_10ms( void );
-  29          
-  30          //update the 7-SEG led using the global ticks
-  31          void update7SEG( void );
-  32          
-  33          int main( void )
-  34          {
-  35   1              running = 0;
-  36   1              outPut = 1;
-  37   1              currentTicksIn10ms = RUNNING_INITIAL_10MS;
-  38   1              update7SEG();
-  39   1      
-  40   1              setTimer2_10ms();
-  41   1      
-  42   1              EA = 1;
-  43   1              while( 1 )
-  44   1              {
-  45   2                      if( ! bStart )
-  46   2                      {
-  47   3                              delay_ms( KEY_FILTER_MS );
-  48   3                              if( ! bStart ) //the button is on !!
-  49   3                              {
-  50   4                                      while( ! bStart );
-  51   4                                      running = 1;
-  52   4                              }
-  53   3                      }
-  54   2      
-  55   2                      if( ! bPauseContinue )
-C51 COMPILER V7.50   MAIN                                                                  05/10/2012 21:16:31 PAGE 2   
+  15          
+  16          sbit bStart = P0^0;
+  17          sbit bPauseContinue = P0^1;
+  18          sbit outPut = P0^7;
+  19          bit running;
+  20          
+  21          sbit bClear = P0^2;
+  22          sbit bExit = P0^3;
+  23          
+  24          #if RUNNING_COUNTER || BASKETBALL_COUNTER 
+  25          //unsigned long is 32 bit...good
+  26          volatile unsigned long currentTicksIn10ms;
+  27          
+  28          //set the timer 2 interrupt at every 10ms
+  29          void setTimer2_10ms( void );
+  30          
+  31          //update the 7-SEG led using the global ticks
+  32          void update7SEG( void );
+  33          
+  34          int main( void )
+  35          {
+  36   1              running = 0;
+  37   1              outPut = 1;
+  38   1      
+  39   1      #if RUNNING_COUNTER
+                      currentTicksIn10ms = RUNNING_INITIAL_10MS;
+              #elif BASKETBALL_COUNTER
+  42   1              currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
+  43   1      #else
+              #error "Not currect option"
+              #endif
+  46   1      
+  47   1              update7SEG();
+  48   1      
+  49   1              setTimer2_10ms();
+  50   1      
+  51   1              EA = 1;
+  52   1              while( 1 )
+  53   1              {
+  54   2                      if( ! bStart )
+  55   2                      {
+C51 COMPILER V7.50   MAIN                                                                  05/10/2012 22:02:36 PAGE 2   
 
-  56   2                      {
-  57   3                              delay_ms( KEY_FILTER_MS );
-  58   3                              if( ! bPauseContinue ) //the button is on !!
-  59   3                              {
-  60   4                                      while( ! bPauseContinue );
-  61   4                                      running = ~running;
-  62   4                              }
-  63   3                      }
-  64   2      
-  65   2                      if( ! bClear )
-  66   2                      {
-  67   3                              delay_ms( KEY_FILTER_MS );
-  68   3                              if( ! bClear ) //the button is on !!
-  69   3                              {
-  70   4                                      EA = 0;
-  71   4                                      while( ! bClear );
-  72   4                                      currentTicksIn10ms = RUNNING_INITIAL_10MS;
-  73   4                                      update7SEG();
-  74   4                                      EA = 1;
-  75   4                              }
-  76   3                      }
-  77   2              }
-  78   1              
-  79   1              return 0;
-  80   1      }
-  81          
-  82          //timer 2 interrupt routine
-  83          void timer2Interrupt( void ) interrupt 5
-  84          {
-  85   1              EA = 0;
-  86   1              TF2 = 0;
-  87   1      
-  88   1              if( running )
-  89   1              {
-  90   2                      currentTicksIn10ms ++;
-  91   2                      update7SEG();
-  92   2              }
-  93   1              
-  94   1              outPut = ~outPut;
-  95   1              EA = 1;
-  96   1      }
-  97          
-  98          //set the timer 
-  99          void setTimer2_10ms( void )
- 100          {
- 101   1              T2CON = 0x00;
- 102   1              TH2 = RCAP2H = 0xD8 ;   //run at 12MHz at 1us percycle 65536 - 10000 
- 103   1              TL2 = RCAP2L = 0xF0 ;
+  56   3                              delay_ms( KEY_FILTER_MS );
+  57   3                              if( ! bStart ) //the button is on !!
+  58   3                              {
+  59   4                                      while( ! bStart );
+  60   4                                      running = 1;
+  61   4                              }
+  62   3                      }
+  63   2      
+  64   2                      if( ! bPauseContinue )
+  65   2                      {
+  66   3                              delay_ms( KEY_FILTER_MS );
+  67   3                              if( ! bPauseContinue ) //the button is on !!
+  68   3                              {
+  69   4                                      while( ! bPauseContinue );
+  70   4                                      running = ~running;
+  71   4                              }
+  72   3                      }
+  73   2      
+  74   2                      if( ! bClear )
+  75   2                      {
+  76   3                              delay_ms( KEY_FILTER_MS );
+  77   3                              if( ! bClear ) //the button is on !!
+  78   3                              {
+  79   4                                      EA = 0;
+  80   4                                      while( ! bClear );
+  81   4      
+  82   4      #if RUNNING_COUNTER
+                                              currentTicksIn10ms = RUNNING_INITIAL_10MS;
+              #elif BASKETBALL_COUNTER
+  85   4                                      currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
+  86   4      #else
+              #error "Not currect Option"
+              #endif
+  89   4      
+  90   4                                      update7SEG();
+  91   4                                      EA = 1;
+  92   4                              }
+  93   3                      }
+  94   2              }
+  95   1              
+  96   1              return 0;
+  97   1      }
+  98          
+  99          //timer 2 interrupt routine
+ 100          void timer2Interrupt( void ) interrupt 5
+ 101          {
+ 102   1              EA = 0;
+ 103   1              TF2 = 0;
  104   1      
- 105   1              ET2 = 1;  //enable the timer 2 interrupt
- 106   1              TR2 = 1;  //start the timer     
- 107   1      }
- 108          
- 109          void update7SEG( void )
- 110          {
- 111   1              unsigned char min;
- 112   1              unsigned char sec;
- 113   1              unsigned char ms10;
- 114   1      
- 115   1              min = currentTicksIn10ms / ( 1 * 60 * 100 );
- 116   1              sec =( currentTicksIn10ms - ( 1 * 60 * 100 * min ) ) / ( 100 );
- 117   1              ms10 = currentTicksIn10ms - ( 1 * 60 * 100 * min ) - 100 * sec;
-C51 COMPILER V7.50   MAIN                                                                  05/10/2012 21:16:31 PAGE 3   
+ 105   1              if( running )
+ 106   1              {
+ 107   2      
+ 108   2      #if RUNNING_COUNTER
+                                              currentTicksIn10ms++;
+              #elif BASKETBALL_COUNTER
+ 111   2                                      currentTicksIn10ms--;
+ 112   2      #else 
+              #error "Not currect Option"
+              #endif
+ 115   2      
+ 116   2                      update7SEG();
+ 117   2              }
+C51 COMPILER V7.50   MAIN                                                                  05/10/2012 22:02:36 PAGE 3   
 
- 118   1      
- 119   1              MINUTE_LED = ( (min/10) *16 + (min%10) ); 
- 120   1              SECOND_LED = ( (sec/10) *16 + (sec%10) );
- 121   1              MICRO_10MS_LED = ( (ms10/10) *16 + (ms10%10) );
- 122   1      
- 123   1      }
- 124          
- 125          #endif 
+ 118   1              
+ 119   1              outPut = ~outPut;
+ 120   1              EA = 1;
+ 121   1      }
+ 122          
+ 123          //set the timer 
+ 124          void setTimer2_10ms( void )
+ 125          {
+ 126   1              T2CON = 0x00;
+ 127   1              TH2 = RCAP2H = 0xD8 ;   //run at 12MHz at 1us percycle 65536 - 10000 
+ 128   1              TL2 = RCAP2L = 0xF0 ;
+ 129   1      
+ 130   1              ET2 = 1;  //enable the timer 2 interrupt
+ 131   1              TR2 = 1;  //start the timer     
+ 132   1      }
+ 133          
+ 134          void update7SEG( void )
+ 135          {
+ 136   1              unsigned long min;   //if i don't use the long it will fail me, trust me. why??? It seem it use the 2Byte
+             - int to minus
+ 137   1              unsigned long sec;
+ 138   1              unsigned long ms10;
+ 139   1      
+ 140   1              min = currentTicksIn10ms / ( 1 * 60 * 100 );
+ 141   1              sec =( currentTicksIn10ms - ( 1 * 60 * 100 * min ) ) / ( 100 );
+ 142   1              ms10 = currentTicksIn10ms - ( 1 * 60 * 100 * min ) - 100 * sec;
+ 143   1      
+ 144   1              MINUTE_LED = char2BCD( min );
+ 145   1              SECOND_LED = char2BCD( sec );
+ 146   1              MICRO_10MS_LED = char2BCD( ms10 ); 
+ 147   1      
+ 148   1      }
+ 149          
+ 150          #endif 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    337    ----
+   CODE SIZE        =    531    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      4       1
+   DATA SIZE        =      4      12
    IDATA SIZE       =   ----    ----
    BIT SIZE         =      1    ----
 END OF MODULE INFORMATION.
