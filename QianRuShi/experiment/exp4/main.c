@@ -24,6 +24,7 @@ sbit bExit = P0^3;
 #if RUNNING_COUNTER || BASKETBALL_COUNTER 
 //unsigned long is 32 bit...good
 volatile unsigned long currentTicksIn10ms;
+volatile bit basketball;
 
 //set the timer 2 interrupt at every 10ms
 void setTimer2_10ms( void );
@@ -35,14 +36,12 @@ int main( void )
 {
 	running = 0;
 	outPut = 1;
+	basketball = 0;
 
-#if RUNNING_COUNTER
-	currentTicksIn10ms = RUNNING_INITIAL_10MS;
-#elif BASKETBALL_COUNTER
-	currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
-#else
-#error "Not currect option"
-#endif
+	if( !basketball )
+		currentTicksIn10ms = RUNNING_INITIAL_10MS;
+	else
+		currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
 
 	update7SEG();
 
@@ -79,14 +78,34 @@ int main( void )
 				EA = 0;
 				while( ! bClear );
 
-#if RUNNING_COUNTER
-				currentTicksIn10ms = RUNNING_INITIAL_10MS;
-#elif BASKETBALL_COUNTER
-				currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
-#else
-#error "Not currect Option"
-#endif
+				if( !basketball )
+					currentTicksIn10ms = RUNNING_INITIAL_10MS;
+				else
+					currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
+				
+				update7SEG();
+				EA = 1;
+			}
+		}
 
+		if( ! bExit )
+		{
+			delay_ms( KEY_FILTER_MS );
+			if( ! bExit )
+			{
+				EA = 0;
+				while( ! bExit );
+
+				if( !basketball )
+				{
+					basketball = 1;
+					currentTicksIn10ms = BASKETBALL_ROUND_TIMEUP_10MS;
+				}
+				else
+				{
+					basketball = 0;
+					currentTicksIn10ms = RUNNING_INITIAL_10MS;
+				}
 				update7SEG();
 				EA = 1;
 			}
@@ -104,14 +123,10 @@ void timer2Interrupt( void ) interrupt 5
 
 	if( running )
 	{
-
-#if RUNNING_COUNTER
-				currentTicksIn10ms++;
-#elif BASKETBALL_COUNTER
-				currentTicksIn10ms--;
-#else 
-#error "Not currect Option"
-#endif
+		if( !basketball )
+			currentTicksIn10ms++;
+		else
+			currentTicksIn10ms--;
 
 		update7SEG();
 	}
