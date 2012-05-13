@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:08:13 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:17:18 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
                       setTimer2_10ms();
               
                       EA = 1;
-C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:08:13 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:17:18 PAGE 2   
 
                       while( 1 )
                       {
@@ -126,7 +126,7 @@ line level    source
                                               EA = 1;
                                       }
                               }
-C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:08:13 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:17:18 PAGE 3   
 
                       }
                       
@@ -190,7 +190,7 @@ line level    source
  176          
  177          #define SECOND_LED P3
  178          #define MICRO_100MS_LED P2
-C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:08:13 PAGE 4   
+C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:17:18 PAGE 4   
 
  179          #define MICRO_1MS_LED P1
  180          
@@ -254,7 +254,7 @@ line level    source
  238   4                              }
  239   3                      }
  240   2      
-C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:08:13 PAGE 5   
+C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:17:18 PAGE 5   
 
  241   2                      if( ! bPauseContinue )
  242   2                      {
@@ -318,7 +318,7 @@ line level    source
  300   5                                      }
  301   4                                      update7SEG();
  302   4                                      EA = 1;
-C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:08:13 PAGE 6   
+C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:17:18 PAGE 6   
 
  303   4                              }
  304   3                      }
@@ -382,7 +382,7 @@ line level    source
  362   1              outPut = ~outPut;
  363   1              EA = 1;
  364   1      }
-C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:08:13 PAGE 7   
+C51 COMPILER V7.50   MAIN                                                                  05/14/2012 00:17:18 PAGE 7   
 
  365          
  366          //set the timer2 interrupt every 1ms  
