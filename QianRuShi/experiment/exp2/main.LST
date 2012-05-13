@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/11/2012 23:25:37 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/13/2012 22:56:12 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   52   2                      delay( DEAY_MS );
   53   2      
   54   2                      for( cycle=1 ; cycle<8 ; cycle++ )
-C51 COMPILER V7.50   MAIN                                                                  05/11/2012 23:25:37 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  05/13/2012 22:56:12 PAGE 2   
 
   55   2                      {
   56   3                              ledStatus <<=1;
@@ -126,7 +126,7 @@ line level    source
  112          
  113          
  114          #if USE_MODULE3
-C51 COMPILER V7.50   MAIN                                                                  05/11/2012 23:25:37 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  05/13/2012 22:56:12 PAGE 3   
 
               
               #define DEAY_MS 180
@@ -190,7 +190,7 @@ line level    source
                                               LED_PORT1 = ~ledStatus;
                                               P0 = ~P0;
                                               P2 = ~P2;
-C51 COMPILER V7.50   MAIN                                                                  05/11/2012 23:25:37 PAGE 4   
+C51 COMPILER V7.50   MAIN                                                                  05/13/2012 22:56:12 PAGE 4   
 
                                               delay( DEAY_MS );
                                       }
@@ -254,7 +254,7 @@ line level    source
  236          #if USE_MODULE2
               
               //external 0 interrupt edge trigger no need to clear the interrupt bit
-C51 COMPILER V7.50   MAIN                                                                  05/11/2012 23:25:37 PAGE 5   
+C51 COMPILER V7.50   MAIN                                                                  05/13/2012 22:56:12 PAGE 5   
 
               void etx0( void ) interrupt 0
               {
@@ -319,7 +319,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V7.50   MAIN                                                                  05/11/2012 23:25:37 PAGE 6   
+C51 COMPILER V7.50   MAIN                                                                  05/13/2012 22:56:12 PAGE 6   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
