@@ -1,8 +1,8 @@
 #include<REG52.H>
 #include<IMSutil.h>
 
-#define RUNNING_BASKETBALL_COUNTER 1
-#define COUNTER_1MS 0
+#define RUNNING_BASKETBALL_COUNTER 0
+#define COUNTER_1MS 1
 
 
 #if ( ( RUNNING_BASKETBALL_COUNTER + COUNTER_1MS ) != 1 )
@@ -172,11 +172,14 @@ void update7SEG( void )
 #if COUNTER_1MS 
 //running at counter mode can count up and count down
 
+#define KEY_FILTER_MS 0
+
 #define SECOND_LED P3
+#define MICRO_100MS_LED P2
 #define MICRO_1MS_LED P1
 
 #define UP_INITIAL_1MS 0
-#define DOWN_INITIAL_1MS 99*1000 + 999
+#define DOWN_INITIAL_1MS ( 0x1869F )
 
 sbit bStart = P0^0;				//start button
 sbit bPauseContinue = P0^1;     //Pause Continue button
@@ -203,6 +206,8 @@ int main( void )
 		currentTicksIn1ms = DOWN_INITIAL_1MS;
 	else
 		currentTicksIn1ms = UP_INITIAL_1MS;
+
+	update7SEG();
 	
 	setTimer2_1ms();
 
@@ -263,7 +268,7 @@ int main( void )
 				else
 				{
 					up = 0;
-					currentTicksIn10ms = DOWN_INITIAL_1MS; 
+					currentTicksIn1ms = DOWN_INITIAL_1MS; 
 				}
 				update7SEG();
 				EA = 1;
@@ -318,10 +323,12 @@ void update7SEG( void )
 	unsigned long ms1;
 
 	sec = currentTicksIn1ms / ( 1000 );
-	ms1 = currentTicksIn10ms - sec*1000 ;
+	ms1 = currentTicksIn1ms - sec*1000 ;
 
+	SECOND_LED = char2BCD( sec );              //this piece of code run up to 5ms????? it's unusal
+	MICRO_1MS_LED = char2BCD( ms1 % 100 );
+	MICRO_100MS_LED = char2BCD( ms1 / 100 );		
 	
-
 }
 
 #endif
