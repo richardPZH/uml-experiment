@@ -190,8 +190,12 @@ sbit bClear = P0^2;             //clear button
 sbit bExit = P0^3;				//mode switch button
 
 //unsigned long is 32 bit...good
-volatile unsigned long currentTicksIn1ms;
+//volatile unsigned long currentTicksIn1ms;   //will the volatile change my time?? It seems it won't
 volatile bit up;
+
+volatile unsigned char secCnt;
+volatile unsigned char ms100Cnt;
+volatile unsigned char ms1Cnt;
 
 void setTimer2_1ms( void );
 void update7SEG( void );
@@ -203,9 +207,19 @@ int main( void )
 	up = 0;
 
 	if( !up )
-		currentTicksIn1ms = DOWN_INITIAL_1MS;
+	{
+		//currentTicksIn1ms = DOWN_INITIAL_1MS;
+		secCnt = 99;
+		ms100Cnt = 9;
+		ms1Cnt = 99;
+	}
 	else
-		currentTicksIn1ms = UP_INITIAL_1MS;
+	{
+		//currentTicksIn1ms = UP_INITIAL_1MS;
+		secCnt = 0;
+		ms100Cnt = 0;
+		ms1Cnt = 0;
+	}
 
 	update7SEG();
 	
@@ -243,9 +257,19 @@ int main( void )
 				while( ! bClear );
 
 				if( !up )
-					currentTicksIn1ms = DOWN_INITIAL_1MS;
+				{
+					secCnt = 99;
+					ms100Cnt = 9;
+					ms1Cnt = 99;
+					//currentTicksIn1ms = DOWN_INITIAL_1MS;
+				}
 				else
-					currentTicksIn1ms = UP_INITIAL_1MS;
+				{
+					//currentTicksIn1ms = UP_INITIAL_1MS;
+					secCnt = 0;
+					ms100Cnt = 0;
+					ms1Cnt = 0;
+				}
 				
 				update7SEG();
 				EA = 1;
@@ -263,12 +287,16 @@ int main( void )
 				if( !up )
 				{
 					up = 1;
-					currentTicksIn1ms = UP_INITIAL_1MS;
+					secCnt = 0;
+					ms100Cnt = 0;
+					ms1Cnt = 0;
 				}
 				else
 				{
 					up = 0;
-					currentTicksIn1ms = DOWN_INITIAL_1MS; 
+					secCnt = 99;
+					ms100Cnt = 9;
+					ms1Cnt = 99;
 				}
 				update7SEG();
 				EA = 1;
@@ -292,11 +320,40 @@ void timer2Interrupt( void ) interrupt 5
 	{
 		if( up )
 		{
-			currentTicksIn1ms++;
+			//currentTicksIn1ms++;
+			ms1Cnt ++;
+			if( ms1Cnt >= 100 )
+			{
+				ms1Cnt = 0;
+				ms100Cnt ++;
+			}
+
+			if( ms100Cnt >= 10 )
+			{
+				ms100Cnt = 0;
+				secCnt ++;
+			}
 		}
 		else
 		{
-			currentTicksIn1ms--;
+			//currentTicksIn1ms--;
+			if( ms1Cnt == 0 )
+			{
+				ms1Cnt = 99;
+				if( ms100Cnt == 0 )
+				{
+					ms100Cnt = 9;
+					secCnt --;
+				}
+				else
+				{
+					ms100Cnt--;
+				}
+			}
+			else
+			{
+				ms1Cnt --;
+			}
 		}
 
 		update7SEG();
@@ -317,8 +374,14 @@ void setTimer2_1ms( void )
 	TR2 = 1;  //start the timer	
 }
 
-void update7SEG( void )
+void update7SEG( void )    //C51 c do not support inline???
 {
+	/*
+	 * This code just simply run too slow
+	 * It suddenly occur to me that The c hide a lots of thing that it will run very slow...
+	 * using the unsigned long in C51 is expensive and doing dividing multpling is expensive
+	 * using function call and some define will run very slow too!!!
+
 	unsigned long sec;   //if i don't use the long it will fail me, trust me. why??? It seem it use the 2Byte int to minus
 	unsigned long ms1;
 
@@ -328,6 +391,12 @@ void update7SEG( void )
 	SECOND_LED = char2BCD( sec );              //this piece of code run up to 5ms????? it's unusal
 	MICRO_1MS_LED = char2BCD( ms1 % 100 );
 	MICRO_100MS_LED = char2BCD( ms1 / 100 );		
+	*/
+
+	//This code will not exceed 1ms ! so it can count correctly
+	SECOND_LED = char2BCD( secCnt );
+	MICRO_100MS_LED = char2BCD( ms100Cnt );
+	MICRO_1MS_LED = char2BCD( ms1Cnt );
 	
 }
 
