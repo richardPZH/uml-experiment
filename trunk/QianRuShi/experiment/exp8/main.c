@@ -1,7 +1,13 @@
 #include<REG52.H>
+#include"IMSutil.h"
 
 #define KEY_PORT P1
+#define DataPort P0
+#define LedConPort P2
 
+unsigned char comNegative[]={ 0x3f , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d , 0x7d , 0x07 , 0x7f , 0x6f , 0x77 , 0x7c , 0x39 , 0x5e , 0x79 , 0x71 , 0x73 , 0x3e , 0xff , 0x00 };
+
+unsigned char code ch[8] = {0x76 , 0x79 , 0x38 , 0x38 , 0x3f , 0x40 , 0x6f , 0x4f };
 
 enum BUTTON_TYPE { B0 , B1 , B2 , B3 , B4 , B5 , B6 , B7 , B8 , B9 , CANCEL , CONFIRM , SET , RES0 , RES1 , RES2 , NON };
 
@@ -14,12 +20,23 @@ enum BUTTON_TYPE getKeyPressed( void );
 int main( void )
 {
 	enum BUTTON_TYPE button;
+	unsigned char cnt;
 
 	while( 1 )
 	{
 		button = getKeyPressed();
 		if( button != NON )
-			P2 = button << 4;
+		{
+			LedConPort= 0x00;
+			DataPort = comNegative[button];
+		}
+
+		for( cnt=0 ; cnt<8; cnt++ )
+		{
+			LedConPort = cnt;
+			DataPort = ch[cnt];
+			delay_ms( 5 );
+		}
 	}
 
 	return 0;

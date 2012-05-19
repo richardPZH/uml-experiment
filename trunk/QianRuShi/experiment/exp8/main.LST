@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 17:05:43 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/19/2012 18:45:01 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -8,113 +8,133 @@ COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
 line level    source
 
    1          #include<REG52.H>
-   2          
-   3          #define KEY_PORT P1
-   4          
-   5          
-   6          enum BUTTON_TYPE { B0 , B1 , B2 , B3 , B4 , B5 , B6 , B7 , B8 , B9 , CANCEL , CONFIRM , SET , RES0 , RES1 
-             -, RES2 , NON };
+   2          #include"IMSutil.h"
+   3          
+   4          #define KEY_PORT P1
+   5          #define DataPort P0
+   6          #define LedConPort P2
    7          
-   8          //This function acts like a factory, it map the raw input value into the enum type and return it
-   9          enum BUTTON_TYPE convertButton( unsigned char raw );
-  10          
-  11          //This function read the keyboad and return the key typed, NON when no key is pressed
-  12          enum BUTTON_TYPE getKeyPressed( void );
+   8          unsigned char comNegative[]={ 0x3f , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d , 0x7d , 0x07 , 0x7f , 0x6f , 0x77 ,
+             - 0x7c , 0x39 , 0x5e , 0x79 , 0x71 , 0x73 , 0x3e , 0xff , 0x00 };
+   9          
+  10          unsigned char code ch[8] = {0x76 , 0x79 , 0x38 , 0x38 , 0x3f , 0x40 , 0x6f , 0x4f };
+  11          
+  12          enum BUTTON_TYPE { B0 , B1 , B2 , B3 , B4 , B5 , B6 , B7 , B8 , B9 , CANCEL , CONFIRM , SET , RES0 , RES1 
+             -, RES2 , NON };
   13          
-  14          int main( void )
-  15          {
-  16   1              enum BUTTON_TYPE button;
-  17   1      
-  18   1              while( 1 )
-  19   1              {
-  20   2                      button = getKeyPressed();
-  21   2                      if( button != NON )
-  22   2                              P2 = button << 4;
-  23   2              }
+  14          //This function acts like a factory, it map the raw input value into the enum type and return it
+  15          enum BUTTON_TYPE convertButton( unsigned char raw );
+  16          
+  17          //This function read the keyboad and return the key typed, NON when no key is pressed
+  18          enum BUTTON_TYPE getKeyPressed( void );
+  19          
+  20          int main( void )
+  21          {
+  22   1              enum BUTTON_TYPE button;
+  23   1              unsigned char cnt;
   24   1      
-  25   1              return 0;
-  26   1      }
-  27          
-  28          
-  29          enum BUTTON_TYPE convertButton( unsigned char raw )
-  30          {
-  31   1              //use the simple if else stuff( switch case are essentially the same)
-  32   1              //can i figure out a classifier to compute and get raw to correct type more efficient?
-  33   1              switch( raw )
-  34   1              {
-  35   2                      case 0x11: return B7;break;
-  36   2                      case 0x21: return B8;break;
-  37   2                      case 0x41: return B9;break;
-  38   2                      case 0x81: return RES0;break;
-  39   2                      case 0x12: return B4;break;
-  40   2                      case 0x22: return B5;break;
-  41   2                      case 0x42: return B6;break;
-  42   2                      case 0x82: return CANCEL;break;
-  43   2                      case 0x14: return B1;break;
-  44   2                      case 0x24: return B2;break;
-  45   2                      case 0x44: return B3;break;
-  46   2                      case 0x84: return SET;break;
-  47   2                      case 0x18: return B0;break;
-  48   2                      case 0x28: return RES1;break;
-  49   2                      case 0x48: return RES2;break;
-  50   2                      case 0x88: return CONFIRM;break;
-  51   2                      default: return NON;
-  52   2              }
-  53   1      
-  54   1              return RES0;
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 17:05:43 PAGE 2   
+  25   1              while( 1 )
+  26   1              {
+  27   2                      button = getKeyPressed();
+  28   2                      if( button != NON )
+  29   2                      {
+  30   3                              LedConPort= 0x00;
+  31   3                              DataPort = comNegative[button];
+  32   3                      }
+  33   2      
+  34   2                      for( cnt=0 ; cnt<8; cnt++ )
+  35   2                      {
+  36   3                              LedConPort = cnt;
+  37   3                              DataPort = ch[cnt];
+  38   3                              delay_ms( 5 );
+  39   3                      }
+  40   2              }
+  41   1      
+  42   1              return 0;
+  43   1      }
+  44          
+  45          
+  46          enum BUTTON_TYPE convertButton( unsigned char raw )
+  47          {
+  48   1              //use the simple if else stuff( switch case are essentially the same)
+  49   1              //can i figure out a classifier to compute and get raw to correct type more efficient?
+  50   1              switch( raw )
+  51   1              {
+  52   2                      case 0x11: return B7;break;
+  53   2                      case 0x21: return B8;break;
+C51 COMPILER V7.50   MAIN                                                                  05/19/2012 18:45:01 PAGE 2   
 
-  55   1      }
-  56          
-  57          //This is a bad implementation 
-  58          //They have a bette approach 
-  59          //First read the key into firstKey    ( if first read faild, give up immediately)
-  60          //Second reread the key into secondKey 
-  61          //if they are the same so it is pressed 
-  62          //if not return NON
-  63          enum BUTTON_TYPE getKeyPressed( void )
-  64          {
-  65   1      #ifndef KEY_PORT
+  54   2                      case 0x41: return B9;break;
+  55   2                      case 0x81: return RES0;break;
+  56   2                      case 0x12: return B4;break;
+  57   2                      case 0x22: return B5;break;
+  58   2                      case 0x42: return B6;break;
+  59   2                      case 0x82: return CANCEL;break;
+  60   2                      case 0x14: return B1;break;
+  61   2                      case 0x24: return B2;break;
+  62   2                      case 0x44: return B3;break;
+  63   2                      case 0x84: return SET;break;
+  64   2                      case 0x18: return B0;break;
+  65   2                      case 0x28: return RES1;break;
+  66   2                      case 0x48: return RES2;break;
+  67   2                      case 0x88: return CONFIRM;break;
+  68   2                      default: return NON;
+  69   2              }
+  70   1      
+  71   1              return RES0;
+  72   1      }
+  73          
+  74          //This is a bad implementation 
+  75          //They have a bette approach 
+  76          //First read the key into firstKey    ( if first read faild, give up immediately)
+  77          //Second reread the key into secondKey 
+  78          //if they are the same so it is pressed 
+  79          //if not return NON
+  80          enum BUTTON_TYPE getKeyPressed( void )
+  81          {
+  82   1      #ifndef KEY_PORT
               #error "No KEY_PORT defined function getKeyPressed() can't work!!"
               #endif
-  68   1      
-  69   1              unsigned char x_temp,y_temp;
-  70   1      
-  71   1              KEY_PORT = 0x0F;
-  72   1      
-  73   1              x_temp = KEY_PORT;
-  74   1      
-  75   1              KEY_PORT = 0xF0;
-  76   1      
-  77   1              y_temp = KEY_PORT;
-  78   1      
-  79   1              x_temp = x_temp | y_temp;
-  80   1              
-  81   1              x_temp = ~x_temp;
-  82   1      
-  83   1              //wait for user to release the key
-  84   1              do
-  85   1              {
-  86   2                      KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very
+  85   1      
+  86   1              unsigned char x_temp,y_temp;
+  87   1      
+  88   1              KEY_PORT = 0x0F;
+  89   1      
+  90   1              x_temp = KEY_PORT;
+  91   1      
+  92   1              KEY_PORT = 0xF0;
+  93   1      
+  94   1              y_temp = KEY_PORT;
+  95   1      
+  96   1              x_temp = x_temp | y_temp;
+  97   1              
+  98   1              x_temp = ~x_temp;
+  99   1      
+ 100   1              //wait for user to release the key
+ 101   1              do
+ 102   1              {
+ 103   2                      KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very
              - easy, set a wait and let other run. when timeout check the value if fail..continue wait...
-  87   2              }
-  88   1              while( KEY_PORT != 0xF0 );
-  89   1              
-  90   1              
-  91   1              return ( convertButton(x_temp) );
-  92   1      }
-  93          
-  94          
-  95          
-  96          
+ 104   2              }
+ 105   1              while( KEY_PORT != 0xF0 );
+ 106   1              
+ 107   1              
+ 108   1              return ( convertButton(x_temp) );
+ 109   1      }
+ 110          
+ 111          
+ 112          
+ 113          
+
+C51 COMPILER V7.50   MAIN                                                                  05/19/2012 18:45:01 PAGE 3   
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    151    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =    185    ----
+   CONSTANT SIZE    =      8    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =     20       1
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
