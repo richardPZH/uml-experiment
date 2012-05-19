@@ -1,5 +1,7 @@
 #include<REG52.H>
 #include"IMSutil.h"
+#include<intrins.h>
+#include<string.h>
 
 #define KEY_PORT P1
 #define DataPort P0
@@ -17,10 +19,33 @@ enum BUTTON_TYPE convertButton( unsigned char raw );
 //This function read the keyboad and return the key typed, NON when no key is pressed
 enum BUTTON_TYPE getKeyPressed( void );
 
+//This function output the Graph buffer to the SEG-LED
+void updateSEGLED( void );
+
+//fun1 finish (1) and fun2 finish (2)
+void fun1( void );
+void fun2( void );
+
+//set the timer2 interrupt every 50ms
+void setTimer2_50ms( void );
+
+//handle the user input
+void handleUserInput( enum BUTTON_TYPE button );
+
 int main( void )
 {
+
+	//fun1();
+
+	fun2();
+	
+
+	return 0;
+}
+
+void fun1( void )
+{
 	enum BUTTON_TYPE button;
-	unsigned char cnt;
 
 	while( 1 )
 	{
@@ -31,16 +56,188 @@ int main( void )
 			DataPort = comNegative[button];
 		}
 
+		/*
 		for( cnt=0 ; cnt<8; cnt++ )
 		{
 			LedConPort = cnt;
 			DataPort = ch[cnt];
 			delay_ms( 5 );
 		}
+		*/
+	}
+}
+
+volatile unsigned char buff[8];
+volatile unsigned char ms50count;
+
+void fun2( void )
+{
+	enum BUTTON_TYPE button;
+
+	buff[0] = 0;
+	buff[1] = 9;
+	buff[2] = 0;
+	buff[3] = 0;
+	buff[4] = 3;
+	buff[5] = 0;
+	buff[6] = 2;
+	buff[7] = 0;
+
+	ms50count=0;
+
+	setTimer2_50ms();
+
+	EA = 1;
+	while( 1 )
+	{
+		button = getKeyPressed();
+
+		handleUserInput( button );
+
+		updateSEGLED();
 	}
 
-	return 0;
 }
+
+//set the timer2 interrupt every 50ms  
+void setTimer2_50ms( void )
+{
+	T2CON = 0x00;
+	TH2 = RCAP2H = 0x3C ;    
+	TL2 = RCAP2L = 0xB0 ;
+
+	ET2 = 1;  //enable the timer 2 interrupt
+	TR2 = 1;  //start the timer	
+}
+
+//timer2 interrup routine
+void timer2Interrupt ( void ) interrupt 5
+{
+	EA = 0;
+	TF2 = 0;
+
+	ms50count++;
+
+	if( 20 == ms50count )     //the timer is still running
+	{
+		ms50count = 0;
+		
+		buff[7]++;
+
+		if( 10 == buff[7] )
+		{
+			buff[7]=0;
+
+			buff[6]++;
+
+			if( 6 == buff[6] )
+			{
+				buff[6]=0;
+
+				buff[4]++;
+
+				if( 10 == buff[4] )
+				{
+					buff[4] = 0;
+
+					buff[3] ++;
+
+					if( 6 == buff[3] )
+					{
+						buff[3] = 0;
+
+						buff[1] ++;
+
+						if( 10 == buff[1] )
+						{
+							buff[1] =0;
+							buff[0] ++;
+						}
+					}
+				}
+
+			}
+		}
+	}
+
+
+	EA = 1;
+}
+
+
+void updateSEGLED( void )
+{
+	unsigned char cnt = sizeof( buff );    //remember the type of buff is an array !!
+	unsigned char c;
+
+	for( c=0 ; c<cnt ; c++ )
+	{
+
+		LedConPort = c;
+
+		if( ( c % 3 ) == 2 )
+		{
+			DataPort = 0x40;
+		}
+		else
+		{
+			DataPort = comNegative[buff[c]];
+		}
+
+		delay_ms( 2 );
+	}
+	
+}
+
+//handle the user input
+void handleUserInput( enum BUTTON_TYPE button )
+{
+	char bk[8];
+	unsigned char cnt;
+
+	EA = 0;   //no interrupt please
+
+	if( SET != button )
+	{
+		EA = 1;
+		return ;
+	}
+
+	//user hit the set button, so dota it.
+	memcpy( bk , buff , sizeof( buff ));
+	memset( buff , 0 , sizeof( buff ));
+
+	for( cnt=0 ; cnt<8; )
+	{
+		updateSEGLED();
+
+		button = getKeyPressed();
+
+		if( NON != button )
+		{
+			if( CANCEL == button )
+			{
+				cnt = 8;
+				memcpy( buff , bk , sizeof( buff ));
+			}else if( CONFIRM == button )
+			{
+				cnt = 8;
+			}
+	
+			if( cnt == 2 || cnt == 5 )
+				cnt++;
+	
+			buff[cnt] = (( unsigned char ) button )% 10;
+
+			cnt++;
+		}
+
+	}
+
+	
+	EA = 1;
+}
+
 
 
 enum BUTTON_TYPE convertButton( unsigned char raw )
@@ -101,6 +298,7 @@ enum BUTTON_TYPE getKeyPressed( void )
 	do
 	{
 		KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very easy, set a wait and let other run. when timeout check the value if fail..continue wait...
+		updateSEGLED();         //time sharing .. it's a good idea to have an OS support!!
 	}
 	while( KEY_PORT != 0xF0 );
 	
