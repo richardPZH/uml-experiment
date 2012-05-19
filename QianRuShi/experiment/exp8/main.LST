@@ -1,0 +1,123 @@
+C51 COMPILER V7.50   MAIN                                                                  05/19/2012 17:05:43 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<REG52.H>
+   2          
+   3          #define KEY_PORT P1
+   4          
+   5          
+   6          enum BUTTON_TYPE { B0 , B1 , B2 , B3 , B4 , B5 , B6 , B7 , B8 , B9 , CANCEL , CONFIRM , SET , RES0 , RES1 
+             -, RES2 , NON };
+   7          
+   8          //This function acts like a factory, it map the raw input value into the enum type and return it
+   9          enum BUTTON_TYPE convertButton( unsigned char raw );
+  10          
+  11          //This function read the keyboad and return the key typed, NON when no key is pressed
+  12          enum BUTTON_TYPE getKeyPressed( void );
+  13          
+  14          int main( void )
+  15          {
+  16   1              enum BUTTON_TYPE button;
+  17   1      
+  18   1              while( 1 )
+  19   1              {
+  20   2                      button = getKeyPressed();
+  21   2                      if( button != NON )
+  22   2                              P2 = button << 4;
+  23   2              }
+  24   1      
+  25   1              return 0;
+  26   1      }
+  27          
+  28          
+  29          enum BUTTON_TYPE convertButton( unsigned char raw )
+  30          {
+  31   1              //use the simple if else stuff( switch case are essentially the same)
+  32   1              //can i figure out a classifier to compute and get raw to correct type more efficient?
+  33   1              switch( raw )
+  34   1              {
+  35   2                      case 0x11: return B7;break;
+  36   2                      case 0x21: return B8;break;
+  37   2                      case 0x41: return B9;break;
+  38   2                      case 0x81: return RES0;break;
+  39   2                      case 0x12: return B4;break;
+  40   2                      case 0x22: return B5;break;
+  41   2                      case 0x42: return B6;break;
+  42   2                      case 0x82: return CANCEL;break;
+  43   2                      case 0x14: return B1;break;
+  44   2                      case 0x24: return B2;break;
+  45   2                      case 0x44: return B3;break;
+  46   2                      case 0x84: return SET;break;
+  47   2                      case 0x18: return B0;break;
+  48   2                      case 0x28: return RES1;break;
+  49   2                      case 0x48: return RES2;break;
+  50   2                      case 0x88: return CONFIRM;break;
+  51   2                      default: return NON;
+  52   2              }
+  53   1      
+  54   1              return RES0;
+C51 COMPILER V7.50   MAIN                                                                  05/19/2012 17:05:43 PAGE 2   
+
+  55   1      }
+  56          
+  57          //This is a bad implementation 
+  58          //They have a bette approach 
+  59          //First read the key into firstKey    ( if first read faild, give up immediately)
+  60          //Second reread the key into secondKey 
+  61          //if they are the same so it is pressed 
+  62          //if not return NON
+  63          enum BUTTON_TYPE getKeyPressed( void )
+  64          {
+  65   1      #ifndef KEY_PORT
+              #error "No KEY_PORT defined function getKeyPressed() can't work!!"
+              #endif
+  68   1      
+  69   1              unsigned char x_temp,y_temp;
+  70   1      
+  71   1              KEY_PORT = 0x0F;
+  72   1      
+  73   1              x_temp = KEY_PORT;
+  74   1      
+  75   1              KEY_PORT = 0xF0;
+  76   1      
+  77   1              y_temp = KEY_PORT;
+  78   1      
+  79   1              x_temp = x_temp | y_temp;
+  80   1              
+  81   1              x_temp = ~x_temp;
+  82   1      
+  83   1              //wait for user to release the key
+  84   1              do
+  85   1              {
+  86   2                      KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very
+             - easy, set a wait and let other run. when timeout check the value if fail..continue wait...
+  87   2              }
+  88   1              while( KEY_PORT != 0xF0 );
+  89   1              
+  90   1              
+  91   1              return ( convertButton(x_temp) );
+  92   1      }
+  93          
+  94          
+  95          
+  96          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    151    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
