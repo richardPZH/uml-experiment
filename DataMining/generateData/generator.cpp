@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 	if( argc < 4 )
 	{
 		print_usage();
-		exit( 1 );
+		exit( -1 );
 	}
 		
 	int rows,max_length,num_items;
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
         
         for( ; rows>0 ; rows-- )
         {
-            tansItems = rand() % max_length;
+            tansItems = rand() % max_length + 1;     //now tansItems from 1..maxlength
             
             //now we have a random accessable bottle
             vector<int>::iterator start,end;
@@ -77,9 +77,9 @@ int main(int argc, char** argv) {
             random_shuffle( start , end );
             
             ofile<<tansItems;
-            for( ; tansItems>=0 ; tansItems-- )
+            for( ; tansItems>0 ; tansItems-- )
             {
-                ofile<<" "<<v_array.at( tansItems );
+                ofile<<" "<<v_array.at( tansItems-1 );
             }
             
             ofile<<endl;
