@@ -7,6 +7,8 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 #include <fstream>
 #include <sys/types.h>
 #include <Math.h>
@@ -45,7 +47,7 @@ int main(int argc, char** argv) {
 	//every things is check now we can generate random rows
         ofstream ofile;
         
-        ofile.open( G_FILE_NAME , ios::out );
+        ofile.open( G_FILE_NAME , ios::out );          //remember ios::out will erase the file first
         if( !ofile )
         {
             cerr<<"File open fail "<<" FILE: "<<__FILE__<<" LINE: "<<__LINE__<<endl;
@@ -55,15 +57,32 @@ int main(int argc, char** argv) {
               
 	srand((unsigned) time(NULL));
 
-        int numOfItem;
-        for( ; rows>=0 ; rows-- )
+        int tansItems;
+        //use the vector the store num 1...num_items
+        vector<int> v_array;
+        for( ; num_items>0 ; num_items-- )
         {
-            numOfItem = rand() % max_length;
-            cout<<numOfItem;
-            for( ; numOfItem>=0 ; numOfItem++ )
+            v_array.push_back( num_items );
+        }
+        
+        for( ; rows>0 ; rows-- )
+        {
+            tansItems = rand() % max_length;
+            
+            //now we have a random accessable bottle
+            vector<int>::iterator start,end;
+            start = v_array.begin();
+            end = v_array.end();                 //begin end  not begin back
+            
+            random_shuffle( start , end );
+            
+            ofile<<tansItems;
+            for( ; tansItems>=0 ; tansItems-- )
             {
-                
+                ofile<<" "<<v_array.at( tansItems );
             }
+            
+            ofile<<endl;
         }
         
         
