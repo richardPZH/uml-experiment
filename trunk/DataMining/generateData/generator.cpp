@@ -27,6 +27,23 @@ int main(int argc, char** argv) {
 		exit( 1 );
 	}
 		
+	int rows,max_length;
+
+	rows = atoi( argv[1] );
+	max_length = atoi( argv[2] );
+
+	cout<<"rows = "<<rows<<"   max_length="<<max_length<<endl;
+
+	if( rows <=0 || max_length <=0 )
+	{
+		print_usage();
+		exit( 1 );
+	}
+
+	//every things is check now we can generate random rows
+	ofstream outfile;
+
+	srand((unsigned) time(NULL));
 
     return 0;
 }
