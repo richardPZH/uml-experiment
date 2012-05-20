@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <sys/types.h>
 #include <Math.h>
 
@@ -21,36 +22,59 @@ void print_usage( void );
 
 int main(int argc, char** argv) {
 
-	if( argc < 3 )
+	if( argc < 4 )
 	{
 		print_usage();
 		exit( 1 );
 	}
 		
-	int rows,max_length;
+	int rows,max_length,num_items;
 
 	rows = atoi( argv[1] );
 	max_length = atoi( argv[2] );
+	num_items = atoi( argv[3] );
 
-	cout<<"rows = "<<rows<<"   max_length="<<max_length<<endl;
+	cout<<"rows = "<<rows<<"   max_length="<<max_length<<"   num_items="<<num_items<<endl;
 
-	if( rows <=0 || max_length <=0 )
+	if( rows <=0 || max_length <=0 || ( max_length > num_items))
 	{
 		print_usage();
 		exit( 1 );
 	}
 
 	//every things is check now we can generate random rows
-	ofstream outfile;
-
+        ofstream ofile;
+        
+        ofile.open( G_FILE_NAME , ios::out );
+        if( !ofile )
+        {
+            cerr<<"File open fail "<<" FILE: "<<__FILE__<<" LINE: "<<__LINE__<<endl;
+            exit( 1 );            
+        }
+        
+              
 	srand((unsigned) time(NULL));
 
+        int numOfItem;
+        for( ; rows>=0 ; rows-- )
+        {
+            numOfItem = rand() % max_length;
+            cout<<numOfItem;
+            for( ; numOfItem>=0 ; numOfItem++ )
+            {
+                
+            }
+        }
+        
+        
+        ofile.close();
+        
     return 0;
 }
 
 void print_usage( void )
 {
 	cerr<<PROGRAM_NAME<<" usage :\nThis is a transacton generator;\n";	
-	cerr<<PROGRAM_NAME<<" num_of_transaction max_length_of_each_row\n";
+	cerr<<PROGRAM_NAME<<" rows_of_transaction max_length_of_each_row kinds_of_items\n";
 	cerr<<"This version of generator will not generate duplicate items\n";
 }
