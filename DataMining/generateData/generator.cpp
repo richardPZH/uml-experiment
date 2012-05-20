@@ -6,6 +6,9 @@
  */
 
 #include <cstdlib>
+#include <iostream>
+#include <sys/types.h>
+#include <Math.h>
 
 using namespace std;
 
