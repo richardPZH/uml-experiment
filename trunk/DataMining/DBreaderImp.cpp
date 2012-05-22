@@ -3,6 +3,9 @@
 bool DBreaderImp:: readOneRow( void )
 {
     int numOfitem , tmp;
+    
+    p_sr->clear();  //empty capisitor
+    
     if( ifile >> numOfitem )
     {
         for( int i=0; i<numOfitem; i++ )
@@ -10,6 +13,8 @@ bool DBreaderImp:: readOneRow( void )
             ifile>>tmp;
             p_sr->insert( tmp );
         }
+        
+        tRow++; 
         return true;
     }
     else  //read end of file
@@ -44,4 +49,9 @@ bool DBreaderImp:: moveToFront( void )
 bool DBreaderImp:: search(int& item)
 {
     return p_sr->search( item );
+}
+
+bool DBreaderImp:: totalRow( void )
+{
+    return tRow;
 }
