@@ -40,24 +40,8 @@ int main(int argc, char** argv) {
         exit(1);
     }
     
-    multiset<int> c1;
     
-    int numEachRow;
-    int tmp;
-    while( ifile >> numEachRow )
-    {
-        for( ; numEachRow >0 ; numEachRow-- )
-        {
-            ifile >> tmp;
-            c1.insert( tmp );
-        }
-    }
-    
-    
-    for( multiset<int>::iterator p=c1.begin(); p != c1.end() ;++p )
-    {
-        cout<<*p<<" times : "<<c1.count( *p )<<endl;
-    }
+
         
      return 0;
 }
