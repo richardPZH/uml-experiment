@@ -10,6 +10,8 @@
 
 #include<vector>
 
+#include "StoreRow.h"
+
 using namespace std;
 
 class StoreRowVector : public StoreRow

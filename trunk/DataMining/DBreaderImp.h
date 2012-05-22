@@ -33,7 +33,7 @@ public:
         rowNum=0;
     }
     
-    ~DBreaderImp(){ delete p_sr; }
+    ~DBreaderImp(){ ifile.close(); delete p_sr; }
     
     bool readOneRow( void );
     bool moveToFront( void );
