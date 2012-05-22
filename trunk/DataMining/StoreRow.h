@@ -13,6 +13,7 @@ class StoreRow
 public:
     virtual bool insert( int & item )=0;
     virtual bool search( int & item )=0;
+    virtual bool clear( void )=0;
 };
 
 
