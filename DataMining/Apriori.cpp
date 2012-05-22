@@ -7,10 +7,10 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <fstream>
-#include <set>
 #include <algorithm>
 
+#include"DBreader.h"
+#include"StoreRow.h"
 
 #define PROGRAM_NAME "Apriori"
 #define DATA_FILE "E:\\c\\DataMining\\generateData\\dist\\Debug\\Cygwin-Windows\\itemSet"
@@ -30,17 +30,7 @@ int main(int argc, char** argv) {
         exit( 1 );
     }
     
-    ifstream ifile;
-    ifile.open( DATA_FILE , ios::in );
-    //default is txt file right...but to me they are just squence of bytes
-    
-    if( !ifile )
-    {
-        cerr<<"Open file "<<DATA_FILE<<" Failed\n";
-        exit(1);
-    }
-    
-    
+  
 
         
      return 0;

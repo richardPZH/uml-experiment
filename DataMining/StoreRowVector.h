@@ -12,8 +12,9 @@
 
 using namespace std;
 
-class StoreRowVector :public StoreRow
+class StoreRowVector : public StoreRow
 {
+    
 public:
     bool insert( int & item );
     bool search( int & item );
