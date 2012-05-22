@@ -20,7 +20,7 @@ using namespace std;
 class DBreaderImp : public DBreader
 {
 public:
-    DBreader( char * fileName )
+    DBreaderImp( char * fileName )
     {
         ifile.open(fileName,ios::in);
         if( ! ifile )
@@ -32,7 +32,8 @@ public:
         p_sr= new StoreRowVector();
         rowNum=0;
     }
-    ~DBreader(){ delete p_sr; }
+    
+    ~DBreaderImp(){ delete p_sr; }
     
     bool readOneRow( void );
     bool moveToFront( void );
