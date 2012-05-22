@@ -9,3 +9,8 @@ bool StoreRowSet:: search(int& item)
 {
     return ( st.find( item ) != st.end() );
 }
+
+bool StoreRowSet:: clear( void )
+{
+    st.clear();
+}

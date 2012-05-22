@@ -20,7 +20,7 @@ class StoreRowVector : public StoreRow
 public:
     bool insert( int & item );
     bool search( int & item );
-    
+    bool clear( void );
 private:
     vector<int> vt;
 };

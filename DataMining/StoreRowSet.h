@@ -16,8 +16,9 @@ using namespace std;
 class StoreRowSet : public StoreRow
 {
 public:
-    bool insert( int & item )=0;
-    bool search( int & item )=0; 
+    bool insert( int & item );
+    bool search( int & item ); 
+    bool clear( void );
     
 private:
     set<int> st;

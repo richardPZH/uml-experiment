@@ -29,3 +29,8 @@ bool StoreRowVector:: search(int& item)
     
     return false;
 }
+
+bool StoreRowVector:: clear( void )
+{
+    vt.clear();
+}
