@@ -31,6 +31,7 @@ public:
         
         p_sr= new StoreRowVector();
         rowNum=0;
+        tRow=0;
     }
     
     ~DBreaderImp(){ ifile.close(); delete p_sr; }
@@ -39,11 +40,13 @@ public:
     bool moveToFront( void );
     bool readOneItem( int & item );
     bool search( int & item );
+    bool totalRow( void );
     
 private:
     StoreRow * p_sr;
     int rowNum;
     ifstream ifile;
+    int tRow;
 };
 
 
