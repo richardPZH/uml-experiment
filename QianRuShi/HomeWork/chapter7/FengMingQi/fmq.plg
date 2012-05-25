@@ -1,0 +1,100 @@
+<html>
+<body>
+<pre>
+<h1>µVision3 Build Log</h1>
+<h2>Project:</h2>
+E:\uml-experiment\QianRuShi\HomeWork\chapter7\FengMingQi\fmq.uv2
+Project File Date:  05/25/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling FengMing.c...
+FENGMING.C(12): error C132: 'main': not in formal parameter list
+FENGMING.C(12): error C141: syntax error near '{'
+FENGMING.C(23): error C132: 'BUTTON_TYPE': not in formal parameter list
+FENGMING.C(24): error C132: '_convertButton': not in formal parameter list
+FENGMING.C(24): error C141: syntax error near '{'
+FENGMING.C(28): error C132: 'raw': not in formal parameter list
+FENGMING.C(28): error C141: syntax error near '{'
+FENGMING.C(29): error C132: 'B7': not in formal parameter list
+FENGMING.C(29): error C141: syntax error near 'break'
+FENGMING.C(30): error C231: 'B8': redefinition
+FENGMING.C(30): error C141: syntax error near 'break'
+FENGMING.C(31): error C231: 'B9': redefinition
+FENGMING.C(31): error C141: syntax error near 'break'
+FENGMING.C(32): error C231: 'RES0': redefinition
+FENGMING.C(32): error C141: syntax error near 'break'
+FENGMING.C(33): error C231: 'B4': redefinition
+FENGMING.C(33): error C141: syntax error near 'break'
+FENGMING.C(34): error C231: 'B5': redefinition
+FENGMING.C(34): error C141: syntax error near 'break'
+FENGMING.C(35): error C231: 'B6': redefinition
+FENGMING.C(35): error C141: syntax error near 'break'
+FENGMING.C(36): error C231: 'CANCEL': redefinition
+FENGMING.C(36): error C141: syntax error near 'break'
+FENGMING.C(37): error C231: 'B1': redefinition
+FENGMING.C(37): error C141: syntax error near 'break'
+FENGMING.C(38): error C231: 'B2': redefinition
+FENGMING.C(38): error C141: syntax error near 'break'
+FENGMING.C(39): error C231: 'B3': redefinition
+FENGMING.C(39): error C141: syntax error near 'break'
+FENGMING.C(40): error C231: 'SET': redefinition
+FENGMING.C(40): error C141: syntax error near 'break'
+FENGMING.C(41): error C231: 'B0': redefinition
+FENGMING.C(41): error C141: syntax error near 'break'
+FENGMING.C(42): error C231: 'RES1': redefinition
+FENGMING.C(42): error C141: syntax error near 'break'
+FENGMING.C(43): error C231: 'RES2': redefinition
+FENGMING.C(43): error C141: syntax error near 'break'
+FENGMING.C(44): error C231: 'CONFIRM': redefinition
+FENGMING.C(44): error C141: syntax error near 'break'
+FENGMING.C(45): error C231: 'NON': redefinition
+FENGMING.C(46): error C141: syntax error near '}'
+FENGMING.C(48): error C231: 'RES0': redefinition
+FENGMING.C(49): error C141: syntax error near '}'
+FengMing.c(60): error C320: "No KEY_PORT defined function getKeyPressed() can't work!!"
+FENGMING.C(65): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(67): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(69): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(71): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(80): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(82): error C202: 'KEY_PORT': undefined identifier
+compiling IMSutil.c...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling FengMing.c...
+FengMing.c(60): error C320: "No KEY_PORT defined function getKeyPressed() can't work!!"
+FENGMING.C(65): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(67): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(69): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(71): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(80): error C202: 'KEY_PORT': undefined identifier
+FENGMING.C(82): error C202: 'KEY_PORT': undefined identifier
+compiling IMSutil.c...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling FengMing.c...
+compiling IMSutil.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GETKEYPRESSED?FENGMING
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_MS?IMSUTIL
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY_100US?IMSUTIL
+Program Size: data=9.0 xdata=0 code=227
+creating hex file from "fmq"...
+"fmq" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling FengMing.c...
+compiling IMSutil.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY_100US?IMSUTIL
+Program Size: data=11.0 xdata=0 code=276
+creating hex file from "fmq"...
+"fmq" - 0 Error(s), 1 Warning(s).

@@ -1,0 +1,248 @@
+BL51 BANKED LINKER/LOCATER V5.12                                                        05/25/2012  18:21:30  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
+E:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, FengMing.obj, IMSutil.obj TO fmq RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  FengMing.obj (FENGMING)
+  IMSutil.obj (IMSUTIL)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?CCASE)
+
+
+LINK MAP OF MODULE:  fmq (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         _DATA_GROUP_
+            IDATA   000AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     006BH     UNIT         ?PR?_CONVERTBUTTON?FENGMING
+            CODE    006EH     0033H     UNIT         ?PR?MAIN?FENGMING
+            CODE    00A1H     0026H     UNIT         ?C?LIB_CODE
+            CODE    00C7H     001CH     UNIT         ?PR?GETKEYPRESSED?FENGMING
+            CODE    00E3H     0012H     UNIT         ?PR?_DELAY_MS?IMSUTIL
+            CODE    00F5H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0101H     000AH     UNIT         ?PR?DELAY_50US?IMSUTIL
+            CODE    010BH     0006H     UNIT         ?PR?DELAY_100US?IMSUTIL
+            CODE    0111H     0003H     UNIT         ?PR?DELAY_5US?IMSUTIL
+
+
+
+OVERLAY MAP OF MODULE:   fmq (?C_STARTUP)
+
+
+SEGMENT                               DATA_GROUP 
+  +--> CALLED SEGMENT               START    LENGTH
+---------------------------------------------------
+?C_C51STARTUP                       -----    -----
+  +--> ?PR?MAIN?FENGMING
+
+?PR?MAIN?FENGMING                   0008H    0002H
+  +--> ?PR?GETKEYPRESSED?FENGMING
+  +--> ?PR?_DELAY_MS?IMSUTIL
+
+?PR?GETKEYPRESSED?FENGMING          -----    -----
+  +--> ?PR?_CONVERTBUTTON?FENGMING
+
+
+
+SYMBOL TABLE OF MODULE:  fmq (?C_STARTUP)
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/25/2012  18:21:30  PAGE 2
+
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:00F5H         SEGMENT       ?C_C51STARTUP
+  I:000AH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:00F8H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:00F5H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:00F5H         LINE#         99
+  C:00F7H         LINE#         100
+  C:00F8H         LINE#         101
+  C:00F9H         LINE#         102
+  C:00FBH         LINE#         151
+  C:00FEH         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        FENGMING
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:006EH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:00C7H         PUBLIC        getKeyPressed
+  C:0003H         PUBLIC        _convertButton
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        bibber
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        press
+  D:0009H         SYMBOL        cnt
+  -------         ENDDO         
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/25/2012  18:21:30  PAGE 3
+
+
+  C:006EH         LINE#         16
+  C:006EH         LINE#         17
+  C:006EH         LINE#         21
+  C:006EH         LINE#         22
+  C:006EH         LINE#         23
+  C:0073H         LINE#         25
+  C:0081H         LINE#         26
+  C:0081H         LINE#         27
+  C:008BH         LINE#         28
+  C:008BH         LINE#         29
+  C:008DH         LINE#         30
+  C:0094H         LINE#         31
+  C:0096H         LINE#         32
+  C:009DH         LINE#         33
+  -------         ENDPROC       MAIN
+  -------         PROC          _CONVERTBUTTON
+  D:0007H         SYMBOL        raw
+  C:0003H         LINE#         45
+  C:0003H         LINE#         46
+  C:0003H         LINE#         49
+  C:003BH         LINE#         50
+  C:003BH         LINE#         51
+  C:003EH         LINE#         52
+  C:0041H         LINE#         53
+  C:0044H         LINE#         54
+  C:0047H         LINE#         55
+  C:004AH         LINE#         56
+  C:004DH         LINE#         57
+  C:0050H         LINE#         58
+  C:0053H         LINE#         59
+  C:0056H         LINE#         60
+  C:0059H         LINE#         61
+  C:005CH         LINE#         62
+  C:005FH         LINE#         63
+  C:0062H         LINE#         64
+  C:0065H         LINE#         65
+  C:0068H         LINE#         66
+  C:006BH         LINE#         67
+  C:006EH         LINE#         68
+  -------         ENDPROC       _CONVERTBUTTON
+  -------         PROC          GETKEYPRESSED
+  -------         DO            
+  D:0007H         SYMBOL        x_temp
+  D:0006H         SYMBOL        y_temp
+  -------         ENDDO         
+  C:00C7H         LINE#         79
+  C:00C7H         LINE#         80
+  C:00C7H         LINE#         87
+  C:00CAH         LINE#         89
+  C:00CCH         LINE#         91
+  C:00CFH         LINE#         93
+  C:00D1H         LINE#         95
+  C:00D4H         LINE#         97
+  C:00D7H         LINE#         101
+  C:00D7H         LINE#         102
+  C:00DAH         LINE#         103
+  C:00DAH         LINE#         104
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/25/2012  18:21:30  PAGE 4
+
+
+  C:00DFH         LINE#         107
+  C:00E2H         LINE#         108
+  -------         ENDPROC       GETKEYPRESSED
+  -------         ENDMOD        FENGMING
+
+  -------         MODULE        IMSUTIL
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0111H         PUBLIC        delay_5us
+  C:00E3H         PUBLIC        _delay_ms
+  C:0101H         PUBLIC        delay_50us
+  C:010BH         PUBLIC        delay_100us
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        ucMs
+  -------         DO            
+  D:0005H         SYMBOL        ucCounter
+  -------         ENDDO         
+  C:00E3H         LINE#         5
+  C:00E3H         LINE#         6
+  C:00E3H         LINE#         10
+  C:00E7H         LINE#         11
+  C:00E7H         LINE#         12
+  C:00EDH         LINE#         13
+  C:00F2H         LINE#         14
+  C:00F4H         LINE#         15
+  -------         ENDPROC       _DELAY_MS
+  -------         PROC          DELAY_5US
+  C:0111H         LINE#         21
+  C:0111H         LINE#         22
+  C:0111H         LINE#         23
+  C:0112H         LINE#         24
+  C:0113H         LINE#         27
+  -------         ENDPROC       DELAY_5US
+  -------         PROC          DELAY_50US
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0101H         LINE#         29
+  C:0101H         LINE#         30
+  C:0101H         LINE#         32
+  C:0103H         LINE#         33
+  C:0103H         LINE#         34
+  C:0106H         LINE#         35
+  C:010AH         LINE#         36
+  -------         ENDPROC       DELAY_50US
+  -------         PROC          DELAY_100US
+  C:010BH         LINE#         38
+  C:010BH         LINE#         39
+  C:010BH         LINE#         40
+  C:010EH         LINE#         41
+  -------         ENDPROC       DELAY_100US
+  -------         ENDMOD        IMSUTIL
+
+  -------         MODULE        ?C?CCASE
+  C:00A1H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/25/2012  18:21:30  PAGE 5
+
+
+    SEGMENT: ?PR?DELAY_100US?IMSUTIL
+
+Program Size: data=11.0 xdata=0 code=276
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

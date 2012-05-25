@@ -1,0 +1,137 @@
+C51 COMPILER V7.50   FENGMING                                                              05/25/2012 18:21:27 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE FENGMING
+OBJECT MODULE PLACED IN FengMing.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE FengMing.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<REG52.H>
+   2          #include"IMSutil.h"
+   3          
+   4          #define KEY_PORT P1
+   5          
+   6          sbit bibber= P3^0;
+   7          
+   8          enum BUTTON_TYPE { B0 , B1 , B2 , B3 , B4 , B5 , B6 , B7 , B8 , B9 , CANCEL , CONFIRM , SET , RES0 , RES1 
+             -, RES2 , NON };
+   9          
+  10          //This function acts like a factory, it map the raw input value into the enum type and return it
+  11          enum BUTTON_TYPE convertButton( unsigned char raw );
+  12          
+  13          //This function read the keyboad and return the key typed, NON when no key is pressed
+  14          enum BUTTON_TYPE getKeyPressed( void );
+  15          
+  16          int main( void )
+  17          {
+  18   1              enum BUTTON_TYPE press;
+  19   1              unsigned char cnt;
+  20   1      
+  21   1              while( 1 )
+  22   1              {
+  23   2                      press = getKeyPressed();
+  24   2      
+  25   2                      if( press >= B1 && press <= B9 )
+  26   2                      {
+  27   3                              for( cnt = 0 ; cnt < press ; cnt ++ )
+  28   3                              {
+  29   4                                      bibber = 0;      //trun on the bibber
+  30   4                                      delay_ms( 1000 );
+  31   4                                      bibber = 1;
+  32   4                                      delay_ms( 1000 );
+  33   4                              }
+  34   3                      }
+  35   2      
+  36   2      
+  37   2                                      
+  38   2              }
+  39   1      
+  40   1              return 0;
+  41   1      }
+  42          
+  43          
+  44          
+  45          enum BUTTON_TYPE convertButton( unsigned char raw )
+  46          {
+  47   1              //use the simple if else stuff( switch case are essentially the same)
+  48   1              //can i figure out a classifier to compute and get raw to correct type more efficient?
+  49   1              switch( raw )
+  50   1              {
+  51   2                      case 0x11: return B7;break;
+  52   2                      case 0x21: return B8;break;
+  53   2                      case 0x41: return B9;break;
+  54   2                      case 0x81: return RES0;break;
+C51 COMPILER V7.50   FENGMING                                                              05/25/2012 18:21:27 PAGE 2   
+
+  55   2                      case 0x12: return B4;break;
+  56   2                      case 0x22: return B5;break;
+  57   2                      case 0x42: return B6;break;
+  58   2                      case 0x82: return CANCEL;break;
+  59   2                      case 0x14: return B1;break;
+  60   2                      case 0x24: return B2;break;
+  61   2                      case 0x44: return B3;break;
+  62   2                      case 0x84: return SET;break;
+  63   2                      case 0x18: return B0;break;
+  64   2                      case 0x28: return RES1;break;
+  65   2                      case 0x48: return RES2;break;
+  66   2                      case 0x88: return CONFIRM;break;
+  67   2                      default: return NON;
+  68   2              }
+  69   1      
+  70   1              return RES0;
+  71   1      }
+  72          
+  73          //This is a bad implementation 
+  74          //They have a bette approach 
+  75          //First read the key into firstKey    ( if first read faild, give up immediately)
+  76          //Second reread the key into secondKey 
+  77          //if they are the same so it is pressed 
+  78          //if not return NON
+  79          enum BUTTON_TYPE getKeyPressed( void )
+  80          {
+  81   1      #ifndef KEY_PORT
+              #error "No KEY_PORT defined function getKeyPressed() can't work!!"
+              #endif
+  84   1      
+  85   1              unsigned char x_temp,y_temp;
+  86   1      
+  87   1              KEY_PORT = 0x0F;
+  88   1      
+  89   1              x_temp = KEY_PORT;
+  90   1      
+  91   1              KEY_PORT = 0xF0;
+  92   1      
+  93   1              y_temp = KEY_PORT;
+  94   1      
+  95   1              x_temp = x_temp | y_temp;
+  96   1              
+  97   1              x_temp = ~x_temp;
+  98   1      
+  99   1              //wait for user to release the key
+ 100   1              do
+ 101   1              {
+ 102   2                      KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very
+             - easy, set a wait and let other run. when timeout check the value if fail..continue wait...
+ 103   2              }
+ 104   1              while( KEY_PORT != 0xF0 );
+ 105   1              
+ 106   1              
+ 107   1              return ( convertButton(x_temp) );
+ 108   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    186    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V7.50   FENGMING                                                              05/25/2012 18:21:27 PAGE 3   
+
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
