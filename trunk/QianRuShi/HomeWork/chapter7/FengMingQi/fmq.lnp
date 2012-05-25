@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"FengMing.obj",
+"IMSutil.obj" 
+TO "fmq" 
+RAMSIZE(256) 
