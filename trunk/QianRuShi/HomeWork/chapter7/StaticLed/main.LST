@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/25/2012 20:18:12 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:11:03 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -8,37 +8,82 @@ COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
 line level    source
 
    1          #include<REG52.H>
-   2          
-   3          /*
-   4           *
-   5           * The 7SEG cc / CA  has been verified by hand
-   6           * IMS @ SCUT 2012/05/25 I will tell you.
-   7          */
-   8          
-   9          #define LED P2
-  10          
-  11          int main( void )
-  12          {
-  13   1              LED = 0x6f;
-  14   1      
-  15   1              while( 1 )
-  16   1              {
-  17   2              }
-  18   1      
-  19   1      
-  20   1      
-  21   1              return 0;
-  22   1      }
+   2          #include"IMSutil.h"
+   3          
+   4          /*
+   5           *
+   6           * The 7SEG cc / CA  has been verified by hand
+   7           * IMS @ SCUT 2012/05/25 I will tell you.
+   8          */
+   9          
+  10          #define LED P2
+  11          #define LED_NUM 8
+  12          
+  13          sbit i_clk = P1^6;
+  14          sbit i_data = P1^7;
+  15          
+  16          code unsigned char str[][LED_NUM] =
+  17          {
+  18                  { 0x76 , 0x79 , 0x38 , 0x38 , 0x3f , 0x40 , 0x40 , 0x40 },   //HELLO---
+  19                  //{ 0x3f , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d , 0x7d , 0x07 },   //01234567
+  20                  { 0x77 , 0x7c , 0x39 , 0x5e , 0x79 , 0x71 , 0x73 , 0x71 },   
+  21                  { 0x76 , 0x06 , 0x38 , 0x38 , 0x3f , 0x06 , 0x5b , 0x4f } 
+  22          };
   23          
-  24          
+  24          int main( void )
+  25          {
+  26   1              //LED = 0x6f;
+  27   1              
+  28   1              unsigned char cyc;
+  29   1              unsigned char mode;
+  30   1      
+  31   1              unsigned char i;
+  32   1              unsigned char j;
+  33   1              unsigned char k;
+  34   1      
+  35   1              cyc = sizeof( str ) / LED_NUM;
+  36   1      
+  37   1              i_clk = 0;  //initial the clk to low level;
+  38   1      
+  39   1              while( 1 )
+  40   1              {
+  41   2                      for( i=0 ; i<cyc; i++ )
+  42   2                      {
+  43   3                              for( j=0 ; j < LED_NUM ; j++ )
+  44   3                              {
+  45   4                                      mode = str[i][ LED_NUM - 1 - j ];
+  46   4                                      for( k=0 ; k<8 ; k++ )
+  47   4                                      {
+  48   5                                              i_data = ( mode >> k ) & 0x01;
+  49   5                                              delay_50us();
+  50   5                                              i_clk = 1;
+  51   5                                              delay_100us();
+  52   5                                              i_clk = 0;
+  53   5                                              delay_50us();
+  54   5                                      }
+  55   4      
+C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:11:03 PAGE 2   
+
+  56   4                              }
+  57   3      
+  58   3                              delay_ms( 5000 );
+  59   3                      }
+  60   2              }
+  61   1      
+  62   1      
+  63   1      
+  64   1              return 0;
+  65   1      }
+  66          
+  67          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =      5    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =    118    ----
+   CONSTANT SIZE    =     24    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----       5
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

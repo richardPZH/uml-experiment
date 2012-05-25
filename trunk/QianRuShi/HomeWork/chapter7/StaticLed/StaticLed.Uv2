@@ -7,6 +7,8 @@ Group (Source Group 1)
 
 File 1,2,<.\STARTUP.A51><STARTUP.A51> 0x0 
 File 1,1,<.\main.c><main.c> 0x0 
+File 1,1,<.\IMSutil.c><IMSutil.c> 0x0 
+File 1,5,<.\IMSutil.h><IMSutil.h> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'
@@ -32,7 +34,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvLib ()
  EnvReg (ÿAtmel\)
  OrgReg (ÿAtmel\)
- TgStat=0
+ TgStat=16
  OutDir (.\)
  OutName (StaticLed)
  GenApp=1
@@ -58,7 +60,7 @@ Options 1,0,0  // Target 'Target 1'
  XT51FL=0
  CBANKS5=0
  XBANKS5=0
- RCB51 { 0,0,0,0,0,0,0,1,0 }
+ RCB51 { 0,0,0,0,0,255,255,0,0 }
  RXB51 { 0,0,0,0,0,0,0,0,0 }
  OCM51 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
  OCR51 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
