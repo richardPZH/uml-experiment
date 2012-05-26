@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"task.obj",
+"Conf_tny.obj" 
+TO "runRTX51" Rtx51Tiny 
+RAMSIZE(256) 

@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:41:06 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/26/2012 13:57:40 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -56,13 +56,13 @@ line level    source
   47   4                                      for( k=0 ; k<8 ; k++ )
   48   4                                      {
   49   5                                              i_data = ( mode >> ( 7 - k )) & 0x01;
-  50   5                                              delay_50us();
+  50   5                                              //delay_50us();
   51   5                                              i_clk = 1;
-  52   5                                              delay_100us();
+  52   5                                              //delay_5us();
   53   5                                              i_clk = 0;
-  54   5                                              delay_50us();
+  54   5                                              //delay_50us();
   55   5                                      }
-C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:41:06 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  05/26/2012 13:57:40 PAGE 2   
 
   56   4      
   57   4                              }
@@ -80,11 +80,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    122    ----
+   CODE SIZE        =     99    ----
    CONSTANT SIZE    =     40    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       5
+   DATA SIZE        =   ----       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
