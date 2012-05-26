@@ -9,14 +9,25 @@
 #define	APRIORI_H
 
 #include "DBreader.h"
+#include <list>
+#include <vector>
+
+using namespace std;
+
+typedef struct{
+    vector<int> avt;
+    int count;
+}FreqPattCnt;
 
 class Apriori
 {
 public:
-    void generate( DBreader * p_dbr , double min_support_rate );
+    void generate( DBreader * p_dbr , const double min_support_rate );
+    Apriori( void ){ c = new list< FreqPattCnt > ; p = new list < FreqPattCnt > ; };
     
 private:
-    
+    list< FreqPattCnt > *c;
+    list< FreqPattCnt >*p;
 };
 
 
