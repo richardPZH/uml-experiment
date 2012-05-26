@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 	if( argc < 4 )
 	{
 		print_usage();
-		exit( -1 );
+		exit( 1 );
 	}
 		
 	int rows,max_length,num_items;
@@ -76,10 +76,20 @@ int main(int argc, char** argv) {
             
             random_shuffle( start , end );
             
-            ofile<<tansItems;
-            for( ; tansItems>0 ; tansItems-- )
+            //sort the 1 to k item
+            start = v_array.begin();
+            for( int i=0; i<tansItems ; i++ )
             {
-                ofile<<" "<<v_array.at( tansItems-1 );
+                start++;
+            } 
+            sort( v_array.begin() , start );
+            
+            ofile<<tansItems;
+            start = v_array.begin();
+            for( int j=0 ; j < tansItems ; j++ )
+            {
+                ofile<<" "<<*start;
+                start++;
             }
             
             ofile<<endl;
