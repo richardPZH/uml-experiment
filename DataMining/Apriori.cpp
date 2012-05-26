@@ -1,7 +1,10 @@
+#include <iostream>
 #include "Apriori.h"
 #include "DBreader.h"
 
 #define MAX_LENGTH 110
+
+using namespace std;
 
 void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
 {
@@ -11,7 +14,7 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
     int tmp;
     while( p_dbr->readOneItem( tmp ) )
     {
-        inItem.at( tmp ) ++;
+        inItem[tmp]++;
     }
     
     int support_count =( p_dbr->totalRow() ) * min_support_rate;
@@ -62,7 +65,19 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
     while( ! ( c->empty()) )
     {
         //output the frequent pattern in p
+        f = p->begin();
+        e = p->end();
         
+        while( f != e )
+        {
+            for( i=0; i < f->avt.size() ; i++ )
+            {
+                cout<<f->avt.at(i)<<" ";
+            }
+            cout<<" Support_Count : "<<f->count<<endl;
+            
+            f++;
+        }
         //output done
         
         p_dbr->moveToFront();

@@ -45,7 +45,9 @@ bool DBreaderImp:: readOneItem(int& item)
 
 bool DBreaderImp:: moveToFront( void )
 {
-    return ifile.seekg( 0 );
+    ifile.clear();
+    ifile.seekg( 0 );    //may be something wrong
+    return true;
 }
 
 bool DBreaderImp:: search(int& item)
