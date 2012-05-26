@@ -34,6 +34,8 @@ bool DBreaderImp:: readOneItem(int& item)
             //EOF reached
             return false;                
         }
+        
+        tRow++;
     }
     
     ifile>>item;
@@ -51,7 +53,7 @@ bool DBreaderImp:: search(int& item)
     return p_sr->search( item );
 }
 
-bool DBreaderImp:: totalRow( void )
+int DBreaderImp:: totalRow( void )
 {
     return tRow;
 }

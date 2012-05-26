@@ -16,7 +16,7 @@ public:
     virtual bool moveToFront( void )=0;
     virtual bool readOneItem( int & item )=0;
     virtual bool search( int & item )=0;
-    virtual bool totalRow( void )=0;
+    virtual int totalRow( void )=0;
 };
 
 
