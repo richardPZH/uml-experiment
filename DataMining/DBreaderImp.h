@@ -40,7 +40,7 @@ public:
     bool moveToFront( void );
     bool readOneItem( int & item );
     bool search( int & item );
-    bool totalRow( void );
+    int totalRow( void );
     
 private:
     StoreRow * p_sr;
