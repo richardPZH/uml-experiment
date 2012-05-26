@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "Apriori.h"
 #include "DBreader.h"
 
@@ -17,7 +18,7 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
         inItem[tmp]++;
     }
     
-    int support_count =( p_dbr->totalRow() ) * min_support_rate;
+    int support_count =round( ( p_dbr->totalRow() ) * min_support_rate );
     
     FreqPattCnt fpt;
     
@@ -30,9 +31,9 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
             fpt.count = inItem.at( i );
             
             c->push_back( fpt );
+            
+            fpt.avt.clear();
         }
-        
-        fpt.avt.clear();
     }
     
     list< FreqPattCnt > * temp;
@@ -99,7 +100,8 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
                 }
                 if( i == f->avt.size() )
                 {
-                    f->count ++;
+                    //cout<<f->count<<endl;
+                    f->count = f->count + 1;
                 }
             }
         }
@@ -109,15 +111,19 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
         
         while( f != e )
         {
-            if( f->count < support_count )
+            if( ( f->count ) < support_count )
             {
                 f = c->erase( f );
+                e = c->end();
+                continue;
             }
+            
+            f++;
         }
         
         temp = p;
         p = c;
-        c = p;
+        c = temp;
         c->clear();
         
         //use the p(k-1) to generate c(k)
@@ -145,7 +151,7 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
              
                 }
                 
-                if( i == f->avt.size() - 1 )
+                if( i == ( f->avt.size() - 1 ))
                 {
                     for( i=0 ; i < f->avt.size() ; i++ )
                     {
@@ -156,9 +162,29 @@ void  Apriori :: generate( DBreader * p_dbr , const double min_support_rate )
                     
                     c->push_back( fpt );
                 }
+                
+                t++;
             }
+            
+            f++;
         }
         
     }
+    
+    //output the frequent pattern in p
+        f = p->begin();
+        e = p->end();
+        
+        while( f != e )
+        {
+            for( i=0; i < f->avt.size() ; i++ )
+            {
+                cout<<f->avt.at(i)<<" ";
+            }
+            cout<<" Support_Count : "<<f->count<<endl;
+            
+            f++;
+        }
+        //output done
     
 }
