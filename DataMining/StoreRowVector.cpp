@@ -13,7 +13,7 @@ bool StoreRowVector:: search(int& item)
     int l,r,mid;
     
     l=0;
-    r=vt.size();
+    r=vt.size()-1;
     
     while( l <= r )
     {
