@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
     
     double min_support;
         
-    min_support = 0.5; //atoi( argv[1] ) * 1.0 / 100 ;
+    min_support = 0.4; //atoi( argv[1] ) * 1.0 / 100 ;
     
     DBreader * dbreader = new DBreaderImp( DATA_FILE );                 //try to implement some of those rules I learnt over the years
   
