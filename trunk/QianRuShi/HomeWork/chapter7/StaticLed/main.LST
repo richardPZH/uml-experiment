@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:11:03 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:41:06 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -25,62 +25,63 @@ line level    source
   16          code unsigned char str[][LED_NUM] =
   17          {
   18                  { 0x76 , 0x79 , 0x38 , 0x38 , 0x3f , 0x40 , 0x40 , 0x40 },   //HELLO---
-  19                  //{ 0x3f , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d , 0x7d , 0x07 },   //01234567
+  19                  { 0x3f , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d , 0x7d , 0x07 },   //01234567
   20                  { 0x77 , 0x7c , 0x39 , 0x5e , 0x79 , 0x71 , 0x73 , 0x71 },   
-  21                  { 0x76 , 0x06 , 0x38 , 0x38 , 0x3f , 0x06 , 0x5b , 0x4f } 
-  22          };
-  23          
-  24          int main( void )
-  25          {
-  26   1              //LED = 0x6f;
-  27   1              
-  28   1              unsigned char cyc;
-  29   1              unsigned char mode;
-  30   1      
-  31   1              unsigned char i;
-  32   1              unsigned char j;
-  33   1              unsigned char k;
-  34   1      
-  35   1              cyc = sizeof( str ) / LED_NUM;
-  36   1      
-  37   1              i_clk = 0;  //initial the clk to low level;
-  38   1      
-  39   1              while( 1 )
-  40   1              {
-  41   2                      for( i=0 ; i<cyc; i++ )
-  42   2                      {
-  43   3                              for( j=0 ; j < LED_NUM ; j++ )
-  44   3                              {
-  45   4                                      mode = str[i][ LED_NUM - 1 - j ];
-  46   4                                      for( k=0 ; k<8 ; k++ )
-  47   4                                      {
-  48   5                                              i_data = ( mode >> k ) & 0x01;
-  49   5                                              delay_50us();
-  50   5                                              i_clk = 1;
-  51   5                                              delay_100us();
-  52   5                                              i_clk = 0;
-  53   5                                              delay_50us();
-  54   5                                      }
-  55   4      
-C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:11:03 PAGE 2   
+  21                  { 0x76 , 0x06 , 0x38 , 0x38 , 0x3f , 0x06 , 0x5b , 0x4f }, 
+  22                  { 0x38 , 0x40 , 0x38 , 0x40 , 0x07 , 0x40 , 0x07 , 0x40 },
+  23          };
+  24          
+  25          int main( void )
+  26          {
+  27   1              //LED = 0x6f;
+  28   1              
+  29   1              unsigned char cyc;
+  30   1              unsigned char mode;
+  31   1      
+  32   1              unsigned char i;
+  33   1              unsigned char j;
+  34   1              unsigned char k;
+  35   1      
+  36   1              cyc = sizeof( str ) / LED_NUM;
+  37   1      
+  38   1              i_clk = 0;  //initial the clk to low level;
+  39   1      
+  40   1              while( 1 )
+  41   1              {
+  42   2                      for( i=0 ; i<cyc; i++ )
+  43   2                      {
+  44   3                              for( j=0 ; j < LED_NUM ; j++ )
+  45   3                              {
+  46   4                                      mode = str[i][ LED_NUM - 1 - j ];
+  47   4                                      for( k=0 ; k<8 ; k++ )
+  48   4                                      {
+  49   5                                              i_data = ( mode >> ( 7 - k )) & 0x01;
+  50   5                                              delay_50us();
+  51   5                                              i_clk = 1;
+  52   5                                              delay_100us();
+  53   5                                              i_clk = 0;
+  54   5                                              delay_50us();
+  55   5                                      }
+C51 COMPILER V7.50   MAIN                                                                  05/25/2012 22:41:06 PAGE 2   
 
-  56   4                              }
-  57   3      
-  58   3                              delay_ms( 5000 );
-  59   3                      }
-  60   2              }
-  61   1      
+  56   4      
+  57   4                              }
+  58   3      
+  59   3                              delay_ms( 5000 );
+  60   3                      }
+  61   2              }
   62   1      
   63   1      
-  64   1              return 0;
-  65   1      }
-  66          
+  64   1      
+  65   1              return 0;
+  66   1      }
   67          
+  68          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    118    ----
-   CONSTANT SIZE    =     24    ----
+   CODE SIZE        =    122    ----
+   CONSTANT SIZE    =     40    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----       5
