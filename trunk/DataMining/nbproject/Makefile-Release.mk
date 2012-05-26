@@ -34,7 +34,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Apriori.o
+	${OBJECTDIR}/Apriori.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/DBreaderImp.o \
+	${OBJECTDIR}/StoreRowSet.o \
+	${OBJECTDIR}/StoreRowVector.o
 
 
 # C Compiler Flags
@@ -65,6 +69,26 @@ ${OBJECTDIR}/Apriori.o: Apriori.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Apriori.o Apriori.cpp
+
+${OBJECTDIR}/main.o: main.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/DBreaderImp.o: DBreaderImp.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/DBreaderImp.o DBreaderImp.cpp
+
+${OBJECTDIR}/StoreRowSet.o: StoreRowSet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/StoreRowSet.o StoreRowSet.cpp
+
+${OBJECTDIR}/StoreRowVector.o: StoreRowVector.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/StoreRowVector.o StoreRowVector.cpp
 
 # Subprojects
 .build-subprojects:
