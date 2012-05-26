@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V5.12                                                        05/25/2012  22:41:16  PAGE 1
+BL51 BANKED LINKER/LOCATER V5.12                                                        05/26/2012  13:57:44  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
@@ -22,18 +22,18 @@ LINK MAP OF MODULE:  StaticLed (?C_STARTUP)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0005H     UNIT         _DATA_GROUP_
-            IDATA   000DH     0001H     UNIT         ?STACK
+            DATA    0008H     0002H     UNIT         _DATA_GROUP_
+            IDATA   000AH     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     007AH     UNIT         ?PR?MAIN?MAIN
-            CODE    007DH     0028H     UNIT         ?CO?MAIN
-            CODE    00A5H     0012H     UNIT         ?PR?_DELAY_MS?IMSUTIL
-            CODE    00B7H     000CH     UNIT         ?C_C51STARTUP
-            CODE    00C3H     000AH     UNIT         ?PR?DELAY_50US?IMSUTIL
-            CODE    00CDH     0006H     UNIT         ?PR?DELAY_100US?IMSUTIL
-            CODE    00D3H     0003H     UNIT         ?PR?DELAY_5US?IMSUTIL
+            CODE    0003H     0063H     UNIT         ?PR?MAIN?MAIN
+            CODE    0066H     0028H     UNIT         ?CO?MAIN
+            CODE    008EH     0012H     UNIT         ?PR?_DELAY_MS?IMSUTIL
+            CODE    00A0H     000CH     UNIT         ?C_C51STARTUP
+            CODE    00ACH     000AH     UNIT         ?PR?DELAY_50US?IMSUTIL
+            CODE    00B6H     0006H     UNIT         ?PR?DELAY_100US?IMSUTIL
+            CODE    00BCH     0003H     UNIT         ?PR?DELAY_5US?IMSUTIL
 
 
 
@@ -46,20 +46,9 @@ SEGMENT                           DATA_GROUP
 ?C_C51STARTUP                   -----    -----
   +--> ?PR?MAIN?MAIN
 
-?PR?MAIN?MAIN                   0008H    0005H
+?PR?MAIN?MAIN                   0008H    0002H
   +--> ?CO?MAIN
-  +--> ?PR?DELAY_50US?IMSUTIL
-  +--> ?PR?DELAY_100US?IMSUTIL
   +--> ?PR?_DELAY_MS?IMSUTIL
-
-?PR?DELAY_50US?IMSUTIL          -----    -----
-  +--> ?PR?DELAY_5US?IMSUTIL
-
-?PR?DELAY_100US?IMSUTIL         -----    -----
-  +--> ?PR?DELAY_50US?IMSUTIL
-
-
-BL51 BANKED LINKER/LOCATER V5.12                                                      05/25/2012  22:41:16  PAGE 2
 
 
 
@@ -69,8 +58,11 @@ SYMBOL TABLE OF MODULE:  StaticLed (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:00B7H         SEGMENT       ?C_C51STARTUP
-  I:000DH         SEGMENT       ?STACK
+  C:00A0H         SEGMENT       ?C_C51STARTUP
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/26/2012  13:57:44  PAGE 2
+
+
+  I:000AH         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
@@ -79,7 +71,7 @@ SYMBOL TABLE OF MODULE:  StaticLed (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:00BAH         SYMBOL        IDATALOOP
+  C:00A3H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0000H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -88,18 +80,18 @@ SYMBOL TABLE OF MODULE:  StaticLed (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:00B7H         SYMBOL        STARTUP1
+  C:00A0H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         92
-  C:00B7H         LINE#         99
-  C:00B9H         LINE#         100
-  C:00BAH         LINE#         101
-  C:00BBH         LINE#         102
-  C:00BDH         LINE#         151
-  C:00C0H         LINE#         155
+  C:00A0H         LINE#         99
+  C:00A2H         LINE#         100
+  C:00A3H         LINE#         101
+  C:00A4H         LINE#         102
+  C:00A6H         LINE#         151
+  C:00A9H         LINE#         155
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        MAIN
@@ -112,96 +104,96 @@ SYMBOL TABLE OF MODULE:  StaticLed (?C_STARTUP)
   C:0003H         PUBLIC        main
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
-  C:007DH         PUBLIC        str
+  C:0066H         PUBLIC        str
   B:0090H.7       PUBLIC        i_data
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          MAIN
   -------         DO            
   D:0008H         SYMBOL        cyc
-BL51 BANKED LINKER/LOCATER V5.12                                                      05/25/2012  22:41:16  PAGE 3
-
-
-  D:0009H         SYMBOL        mode
-  D:000AH         SYMBOL        i
-  D:000BH         SYMBOL        j
-  D:000CH         SYMBOL        k
+  D:0006H         SYMBOL        mode
+  D:0009H         SYMBOL        i
+  D:0007H         SYMBOL        j
+  D:0005H         SYMBOL        k
   -------         ENDDO         
   C:0003H         LINE#         25
   C:0003H         LINE#         26
   C:0003H         LINE#         36
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/26/2012  13:57:44  PAGE 3
+
+
   C:0006H         LINE#         38
   C:0008H         LINE#         40
   C:0008H         LINE#         41
   C:0008H         LINE#         42
   C:0012H         LINE#         43
   C:0012H         LINE#         44
-  C:0015H         LINE#         45
-  C:0015H         LINE#         46
-  C:003CH         LINE#         47
-  C:003FH         LINE#         48
-  C:003FH         LINE#         49
-  C:0053H         LINE#         50
-  C:0056H         LINE#         51
-  C:0058H         LINE#         52
-  C:005BH         LINE#         53
-  C:005DH         LINE#         54
-  C:0060H         LINE#         55
-  C:0069H         LINE#         57
-  C:0072H         LINE#         59
-  C:0079H         LINE#         60
+  C:0014H         LINE#         45
+  C:0014H         LINE#         46
+  C:003BH         LINE#         47
+  C:003DH         LINE#         48
+  C:003DH         LINE#         49
+  C:004FH         LINE#         51
+  C:0051H         LINE#         53
+  C:0053H         LINE#         55
+  C:0057H         LINE#         57
+  C:005BH         LINE#         59
+  C:0062H         LINE#         60
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
   -------         MODULE        IMSUTIL
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:00D3H         PUBLIC        delay_5us
-  C:00A5H         PUBLIC        _delay_ms
-  C:00C3H         PUBLIC        delay_50us
-  C:00CDH         PUBLIC        delay_100us
+  C:00BCH         PUBLIC        delay_5us
+  C:008EH         PUBLIC        _delay_ms
+  C:00ACH         PUBLIC        delay_50us
+  C:00B6H         PUBLIC        delay_100us
   -------         PROC          _DELAY_MS
   D:0006H         SYMBOL        ucMs
   -------         DO            
   D:0005H         SYMBOL        ucCounter
   -------         ENDDO         
-  C:00A5H         LINE#         5
-  C:00A5H         LINE#         6
-  C:00A5H         LINE#         10
-  C:00A9H         LINE#         11
-  C:00A9H         LINE#         12
-  C:00AFH         LINE#         13
-  C:00B4H         LINE#         14
-  C:00B6H         LINE#         15
+  C:008EH         LINE#         5
+  C:008EH         LINE#         6
+  C:008EH         LINE#         10
+  C:0092H         LINE#         11
+  C:0092H         LINE#         12
+  C:0098H         LINE#         13
+  C:009DH         LINE#         14
+  C:009FH         LINE#         15
   -------         ENDPROC       _DELAY_MS
   -------         PROC          DELAY_5US
-  C:00D3H         LINE#         21
-  C:00D3H         LINE#         22
-  C:00D3H         LINE#         23
-  C:00D4H         LINE#         24
-  C:00D5H         LINE#         27
-BL51 BANKED LINKER/LOCATER V5.12                                                      05/25/2012  22:41:16  PAGE 4
-
-
+  C:00BCH         LINE#         21
+  C:00BCH         LINE#         22
+  C:00BCH         LINE#         23
+  C:00BDH         LINE#         24
+  C:00BEH         LINE#         27
   -------         ENDPROC       DELAY_5US
   -------         PROC          DELAY_50US
   -------         DO            
   D:0007H         SYMBOL        i
   -------         ENDDO         
-  C:00C3H         LINE#         29
-  C:00C3H         LINE#         30
-  C:00C3H         LINE#         32
-  C:00C5H         LINE#         33
-  C:00C5H         LINE#         34
-  C:00C8H         LINE#         35
-  C:00CCH         LINE#         36
+  C:00ACH         LINE#         29
+  C:00ACH         LINE#         30
+  C:00ACH         LINE#         32
+  C:00AEH         LINE#         33
+  C:00AEH         LINE#         34
+  C:00B1H         LINE#         35
+BL51 BANKED LINKER/LOCATER V5.12                                                      05/26/2012  13:57:44  PAGE 4
+
+
+  C:00B5H         LINE#         36
   -------         ENDPROC       DELAY_50US
   -------         PROC          DELAY_100US
-  C:00CDH         LINE#         38
-  C:00CDH         LINE#         39
-  C:00CDH         LINE#         40
-  C:00D0H         LINE#         41
+  C:00B6H         LINE#         38
+  C:00B6H         LINE#         39
+  C:00B6H         LINE#         40
+  C:00B9H         LINE#         41
   -------         ENDPROC       DELAY_100US
   -------         ENDMOD        IMSUTIL
 
-Program Size: data=14.0 xdata=0 code=214
-LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY_100US?IMSUTIL
+
+Program Size: data=11.0 xdata=0 code=191
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

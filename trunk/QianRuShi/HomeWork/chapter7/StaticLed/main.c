@@ -47,11 +47,11 @@ int main( void )
 				for( k=0 ; k<8 ; k++ )
 				{
 					i_data = ( mode >> ( 7 - k )) & 0x01;
-					delay_50us();
+					//delay_50us();
 					i_clk = 1;
-					delay_100us();
+					//delay_5us();
 					i_clk = 0;
-					delay_50us();
+					//delay_50us();
 				}
 
 			}
