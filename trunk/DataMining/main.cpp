@@ -27,15 +27,15 @@ void print_usage( void );
 
 int main(int argc, char** argv) {
     
-//    if( argc < 2 )
-//    {
-//        print_usage();
-//        exit( 1 );
-//    }
+    if( argc < 2 )
+    {
+        print_usage();
+        exit( 1 );
+    }
     
     double min_support;
         
-    min_support = 0.22; //atoi( argv[1] ) * 1.0 / 100 ;
+    min_support = atoi( argv[1] ) * 1.0 / 100 ;
     
     DBreader * dbreader = new DBreaderImp( DATA_FILE );                 //try to implement some of those rules I learnt over the years
   
