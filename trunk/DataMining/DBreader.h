@@ -17,6 +17,7 @@ public:
     virtual bool readOneItem( int & item )=0;
     virtual bool search( int & item )=0;
     virtual int totalRow( void )=0;
+    virtual ~DBreader(){};
 };
 
 
