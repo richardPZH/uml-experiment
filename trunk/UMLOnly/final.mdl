@@ -2594,92 +2594,293 @@
 	subsystem  	"Component View"
 	quidu      	"4FA10DA3033F"
 	logical_models 	(list unit_reference_list
-	    (object Class "员工"
-		quid       	"4FC9C95A00FA"
+	    (object Class "项目数据库"
+		quid       	"4FC9D003028B"
 		stereotype 	"Interface"
 		operations 	(list Operations
-		    (object Operation "VisitPersonalWorkAttendance"
-			quid       	"4FC9CAFE02B6"
+		    (object Operation "VisitProjectInfo"
+			quid       	"4FC9D2A90115"
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
 			uid        	0)
-		    (object Operation "VisitPersonalSalary"
-			quid       	"4FC9CBA70368"
+		    (object Operation "GetSalaryLevel"
+			quid       	"4FC9D2E10253"
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
 			uid        	0)))
-	    (object Class "雇员"
-		quid       	"4FC9C96C009A"
+	    (object Class "考勤数据库"
+		quid       	"4FC9D005004E"
 		stereotype 	"Interface"
-		superclasses 	(list inheritance_relationship_list
-		    (object Inheritance_Relationship
-			quid       	"4FC9CA29031F"
-			supplier   	"Logical View::员工"
-			quidu      	"4FC9C95A00FA"))
-		realized_interfaces 	(list realize_rel_list
-		    (object Realize_Relationship
-			quid       	"4FC9CA980063"
-			supplier   	"Logical View::员工"
-			quidu      	"4FC9C95A00FA"))
 		operations 	(list Operations
-		    (object Operation "CalculateSalary"
-			quid       	"4FC9CD040136"
+		    (object Operation "VisitWorkAttanceRecord"
+			quid       	"4FC9D2F70193"
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
 			uid        	0)
-		    (object Operation "AddWorkAttance"
-			quid       	"4FC9CD71026C"
-			concurrency 	"Sequential"
-			opExportControl 	"Public"
-			uid        	0)
-		    (object Operation "ProposeEditWorkAttance"
-			quid       	"4FC9CD7D03CB"
-			concurrency 	"Sequential"
-			opExportControl 	"Public"
-			uid        	0)))
-	    (object Class "项目经理"
-		quid       	"4FC9CA3201DF"
-		realized_interfaces 	(list realize_rel_list
-		    (object Realize_Relationship
-			quid       	"4FC9CA7C01E1"
-			supplier   	"Logical View::员工"
-			quidu      	"4FC9C95A00FA")
-		    (object Realize_Relationship
-			quid       	"4FC9CA8003DC"
-			supplier   	"Logical View::员工"
-			quidu      	"4FC9C95A00FA"))
-		operations 	(list Operations
-		    (object Operation "ConfirmSalary"
-			quid       	"4FC9CC4D034B"
+		    (object Operation "AddWorkAttanceRecord"
+			quid       	"4FC9D30803AA"
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
 			uid        	0)
 		    (object Operation "EditWorkAttance"
-			quid       	"4FC9CC57034C"
+			quid       	"4FC9D31D002A"
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
 			uid        	0)))
-	    (object Class "小时工"
-		quid       	"4FC9CAAB02EE"
+	    (object Class "旧项目数据库"
+		quid       	"4FC9D16300BE"
 		realized_interfaces 	(list realize_rel_list
 		    (object Realize_Relationship
-			quid       	"4FC9CAEB0151"
-			supplier   	"Logical View::雇员"
-			quidu      	"4FC9C96C009A")))
+			quid       	"4FC9D16E0151"
+			supplier   	"Logical View::项目数据库"
+			quidu      	"4FC9D003028B")))
+	    (object Class "新考勤数据库"
+		quid       	"4FC9D16502CD"
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"4FC9D1710119"
+			supplier   	"Logical View::考勤数据库"
+			quidu      	"4FC9D005004E")))
+	    (object Class "员工"
+		quid       	"4FCA31A701BD"
+		operations 	(list Operations
+		    (object Operation "VisitPersonalWorkAttandance"
+			quid       	"4FCA321C0020"
+			concurrency 	"Sequential"
+			abstract   	TRUE
+			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "VisitPersonalSalary"
+			quid       	"4FCA32330037"
+			concurrency 	"Sequential"
+			abstract   	TRUE
+			opExportControl 	"Public"
+			uid        	0))
+		class_attributes 	(list class_attribute_list
+		    (object ClassAttribute "name"
+			quid       	"4FCA31B600D2"
+			type       	"String")
+		    (object ClassAttribute "gender"
+			quid       	"4FCA31ED0242"
+			type       	"Boolean")
+		    (object ClassAttribute "age"
+			quid       	"4FCA31F801F9"
+			type       	"Integer")
+		    (object ClassAttribute "ID"
+			quid       	"4FCA394C01F6"
+			type       	"Integer"))
+		abstract   	TRUE)
+	    (object Class "雇员"
+		quid       	"4FCA328202A9"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"4FCA32CE0049"
+			supplier   	"Logical View::员工"
+			quidu      	"4FCA31A701BD"))
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"4FCA489003C1"
+			supplier   	"Logical View::项目数据库"
+			quidu      	"4FC9D003028B"))
+		realized_interfaces 	(list realize_rel_list
+		    (object Realize_Relationship
+			quid       	"4FCA32C30371"
+			supplier   	"Logical View::员工"
+			quidu      	"4FCA31A701BD"))
+		operations 	(list Operations
+		    (object Operation "AddWorkAttance"
+			quid       	"4FCA337B01B8"
+			concurrency 	"Sequential"
+			abstract   	TRUE
+			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "RequestEditWorkAttance"
+			quid       	"4FCA33950122"
+			concurrency 	"Sequential"
+			abstract   	TRUE
+			opExportControl 	"Public"
+			uid        	0))
+		class_attributes 	(list class_attribute_list
+		    (object ClassAttribute "ProjectID"
+			quid       	"4FCA36370301"
+			type       	"Integer"))
+		abstract   	TRUE)
+	    (object Class "项目经理"
+		quid       	"4FCA32A202A7"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"4FCA32C802DA"
+			supplier   	"Logical View::员工"
+			quidu      	"4FCA31A701BD"))
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"4FCA48940389"
+			supplier   	"Logical View::考勤数据库"
+			quidu      	"4FC9D005004E"))
+		operations 	(list Operations
+		    (object Operation "ConfirmSalary"
+			quid       	"4FCA32F6014D"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "EditWorkAttance"
+			quid       	"4FCA33300064"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0))
+		class_attributes 	(list class_attribute_list
+		    (object ClassAttribute "ChargeProjectID[]"
+			quid       	"4FCA361803D3"
+			type       	"Integer")))
 	    (object Class "普通员工"
-		quid       	"4FC9CAAD03CF"
-		realized_interfaces 	(list realize_rel_list
-		    (object Realize_Relationship
-			quid       	"4FC9CAED03A9"
+		quid       	"4FCA33FA0376"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"4FCA340501F8"
 			supplier   	"Logical View::雇员"
-			quidu      	"4FC9C96C009A")))
+			quidu      	"4FCA328202A9"))
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"4FCA39780070"
+			supplier   	"Logical View::Calculator"
+			quidu      	"4FCA38CB0051")))
 	    (object Class "销售人员"
-		quid       	"4FC9CAB1000F"
+		quid       	"4FCA33FD02C5"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"4FCA340702B8"
+			supplier   	"Logical View::雇员"
+			quidu      	"4FCA328202A9"))
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"4FCA3A250324"
+			supplier   	"Logical View::Calculator"
+			quidu      	"4FCA38CB0051")))
+	    (object Class "小时工"
+		quid       	"4FCA3400021E"
+		superclasses 	(list inheritance_relationship_list
+		    (object Inheritance_Relationship
+			quid       	"4FCA340A0208"
+			supplier   	"Logical View::雇员"
+			quidu      	"4FCA328202A9"))
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"4FCA3A29036B"
+			supplier   	"Logical View::Calculator"
+			quidu      	"4FCA38CB0051")))
+	    (object Class "Calculator"
+		quid       	"4FCA38CB0051"
+		stereotype 	"Interface"
+		operations 	(list Operations
+		    (object Operation "GetMySalary"
+			quid       	"4FCA3C50036B"
+			parameters 	(list Parameters
+			    (object Parameter "id"
+				quid       	"4FCA3C87004A"
+				type       	"Integer"))
+			result     	"Double"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0)))
+	    (object Class "CalculatorImp"
+		quid       	"4FCA3CEB004B"
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"4FCA3E3800D4"
+			supplier   	"Logical View::考勤数据库"
+			quidu      	"4FC9D005004E")
+		    (object Uses_Relationship
+			quid       	"4FCA3E3C0133"
+			supplier   	"Logical View::项目数据库"
+			quidu      	"4FC9D003028B"))
 		realized_interfaces 	(list realize_rel_list
 		    (object Realize_Relationship
-			quid       	"4FC9CAF0031F"
+			quid       	"4FCA3D680231"
+			supplier   	"Logical View::Calculator"
+			quidu      	"4FCA38CB0051")))
+	    (object Class "Deamon"
+		quid       	"4FCA45190340"
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"4FCA472B03DC"
+			supplier   	"Logical View::Calculator"
+			quidu      	"4FCA38CB0051")
+		    (object Uses_Relationship
+			quid       	"4FCA4733011B"
+			supplier   	"Logical View::项目数据库"
+			quidu      	"4FC9D003028B")
+		    (object Uses_Relationship
+			quid       	"4FCA473903BC"
+			supplier   	"Logical View::考勤数据库"
+			quidu      	"4FC9D005004E"))
+		operations 	(list Operations
+		    (object Operation "Deamon"
+			quid       	"4FCA458C03CF"
+			concurrency 	"Sequential"
+			opExportControl 	"Private"
+			uid        	0)
+		    (object Operation "GetInstance"
+			quid       	"4FCA45A30030"
+			documentation 	"This is a static method"
+			result     	"Deamon"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0
+			quidu      	"4FCA45190340")
+		    (object Operation "taskOnEveryFriday"
+			quid       	"4FCA46C5013A"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "taskOnEveryMonthEnd"
+			quid       	"4FCA46F90208"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "HandleRequest"
+			quid       	"4FCA490803BA"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "PushRequest"
+			quid       	"4FCA4913019A"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0)))
+	    (object Association "$UNNAMED$81"
+		quid       	"4FCA478C0086"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$82"
+			quid       	"4FCA478D0390"
+			supplier   	"Logical View::Deamon"
+			quidu      	"4FCA45190340"
+			is_navigable 	TRUE)
+		    (object Role "$UNNAMED$83"
+			quid       	"4FCA478D03A9"
+			supplier   	"Logical View::员工"
+			quidu      	"4FCA31A701BD")))
+	    (object Association "$UNNAMED$84"
+		quid       	"4FCA47DE01CB"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$85"
+			quid       	"4FCA47DF02D7"
+			supplier   	"Logical View::Deamon"
+			quidu      	"4FCA45190340")
+		    (object Role "$UNNAMED$86"
+			quid       	"4FCA47DF02DB"
 			supplier   	"Logical View::雇员"
-			quidu      	"4FC9C96C009A"))))
+			quidu      	"4FCA328202A9")))
+	    (object Association "$UNNAMED$87"
+		quid       	"4FCA47E20357"
+		roles      	(list role_list
+		    (object Role "$UNNAMED$88"
+			quid       	"4FCA47E302DF"
+			supplier   	"Logical View::项目经理"
+			quidu      	"4FCA32A202A7")
+		    (object Role "$UNNAMED$89"
+			quid       	"4FCA47E302E3"
+			supplier   	"Logical View::Deamon"
+			quidu      	"4FCA45190340"))))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"4FA10DA9013A"
@@ -2693,17 +2894,17 @@
 	    (object ClassDiagram "ClassDiagram1"
 		quid       	"4FC9C82801D8"
 		title      	"ClassDiagram1"
-		zoom       	100
+		zoom       	75
 		max_height 	28350
 		max_width  	21600
 		origin_x   	0
 		origin_y   	0
 		items      	(list diagram_item_list
-		    (object ClassView "Class" "Logical View::员工" @134
+		    (object ClassView "Class" "Logical View::普通员工" @134
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1055, 92)
+			location   	(167, 1607)
 			font       	(object Font
 			    size       	12
 			    face       	"Arial"
@@ -2715,20 +2916,196 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@134
-			    location   	(1054, 200)
-			    anchor_loc 	1
-			    nlines     	2
-			    max_width  	226
+			    location   	(18, 1554)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	298
 			    justify    	0
-			    label      	"员工")
+			    label      	"普通员工")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FCA33FA0376"
+			width      	316
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::销售人员" @135
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(639, 1592)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@135
+			    location   	(490, 1539)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	298
+			    justify    	0
+			    label      	"销售人员")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FCA33FD02C5"
+			width      	316
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::小时工" @136
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1073, 1594)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@136
+			    location   	(963, 1541)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	220
+			    justify    	0
+			    label      	"小时工")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FCA3400021E"
+			width      	238
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::Calculator" @137
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			ShowOperationSignature 	TRUE
+			location   	(3995, 1116)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@137
+			    location   	(3994, 1224)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	550
+			    justify    	0
+			    label      	"Calculator")
 			icon       	"Interface"
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"4FC9C95A00FA"
+			quidu      	"4FCA38CB0051"
 			compartment 	(object Compartment
-			    Parent_View 	@134
-			    location   	(742, 244)
+			    Parent_View 	@137
+			    location   	(3661, 1271)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    anchor     	2
+			    nlines     	2
+			    max_width  	729
+			    justify    	0)
+			width      	58
+			height     	58
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::CalculatorImp" @138
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(3993, 1572)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@138
+			    location   	(3800, 1519)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	386
+			    justify    	0
+			    label      	"CalculatorImp")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FCA3CEB004B"
+			width      	404
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @139
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA3D680231"
+			client     	@138
+			supplier   	@137
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::项目数据库" @140
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1765, 1951)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@140
+			    location   	(1764, 2059)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	678
+			    justify    	0
+			    label      	"项目数据库")
+			icon       	"Interface"
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FC9D003028B"
+			compartment 	(object Compartment
+			    Parent_View 	@140
+			    location   	(1563, 2106)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2741,17 +3118,17 @@
 			    icon_style 	"Icon"
 			    anchor     	2
 			    nlines     	3
-			    max_width  	622
+			    max_width  	392
 			    justify    	0)
 			width      	58
 			height     	58
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::雇员" @135
+		    (object ClassView "Class" "Logical View::考勤数据库" @141
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(633, 595)
+			location   	(3012, 1989)
 			font       	(object Font
 			    size       	12
 			    face       	"Arial"
@@ -2762,21 +3139,21 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@135
-			    location   	(632, 703)
+			    Parent_View 	@141
+			    location   	(3011, 2097)
 			    anchor_loc 	1
 			    nlines     	2
-			    max_width  	231
+			    max_width  	678
 			    justify    	0
-			    label      	"雇员")
+			    label      	"考勤数据库")
 			icon       	"Interface"
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"4FC9C96C009A"
+			quidu      	"4FC9D005004E"
 			compartment 	(object Compartment
-			    Parent_View 	@135
-			    location   	(362, 747)
+			    Parent_View 	@141
+			    location   	(2747, 2144)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2789,17 +3166,17 @@
 			    icon_style 	"Icon"
 			    anchor     	2
 			    nlines     	4
-			    max_width  	538
+			    max_width  	550
 			    justify    	0)
 			width      	58
 			height     	58
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::项目经理" @136
+		    (object ClassView "Class" "Logical View::旧项目数据库" @142
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1608, 712)
+			location   	(1752, 2481)
 			font       	(object Font
 			    size       	12
 			    face       	"Arial"
@@ -2810,20 +3187,255 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@136
-			    location   	(1378, 604)
+			    Parent_View 	@142
+			    location   	(1551, 2428)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	460
+			    max_width  	402
 			    justify    	0
-			    label      	"项目经理")
+			    label      	"旧项目数据库")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"4FC9CA3201DF"
+			quidu      	"4FC9D16300BE"
+			width      	420
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::新考勤数据库" @143
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(3045, 2527)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@143
+			    location   	(2844, 2474)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	402
+			    justify    	0
+			    label      	"新考勤数据库")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FC9D16502CD"
+			width      	420
+			height     	136
+			annotation 	8
+			autoResize 	TRUE)
+		    (object RealizeView "" @144
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FC9D16E0151"
+			client     	@142
+			supplier   	@140
+			line_style 	0)
+		    (object RealizeView "" @145
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FC9D1710119"
+			client     	@143
+			supplier   	@141
+			line_style 	0)
+		    (object UsesView "" @146
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA3E3800D4"
+			client     	@138
+			supplier   	@141
+			line_style 	0)
+		    (object UsesView "" @147
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA3E3C0133"
+			client     	@138
+			supplier   	@140
+			line_style 	0)
+		    (object NoteView @148
+			location   	(3980, 335)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@148
+			    location   	(3842, 275)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	240
+			    label      	
+|GetInstance is static function
+|Singleton
+			    )
+			line_color 	3342489
+			fill_color 	13434879
+			width      	300
+			height     	132)
+		    (object ClassView "Class" "Logical View::员工" @149
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1109, 224)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@149
+			    location   	(741, 14)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	736
+			    justify    	0
+			    label      	"员工")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FCA31A701BD"
 			compartment 	(object Compartment
-			    Parent_View 	@136
-			    location   	(1378, 671)
+			    Parent_View 	@149
+			    location   	(741, 84)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	TRUE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	13434879
+			    anchor     	2
+			    nlines     	7
+			    max_width  	699)
+			width      	754
+			height     	448
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::雇员" @150
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(642, 996)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@150
+			    location   	(284, 831)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	716
+			    justify    	0
+			    label      	"雇员")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FCA328202A9"
+			compartment 	(object Compartment
+			    Parent_View 	@150
+			    location   	(284, 905)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	TRUE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	13434879
+			    anchor     	2
+			    nlines     	4
+			    max_width  	608)
+			width      	734
+			height     	360
+			annotation 	8
+			autoResize 	TRUE)
+		    (object InheritView "" @151
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA32CE0049"
+			client     	@150
+			supplier   	@149
+			line_style 	0)
+		    (object InheritView "" @152
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA340501F8"
+			client     	@134
+			supplier   	@150
+			line_style 	0)
+		    (object InheritView "" @153
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA340702B8"
+			client     	@135
+			supplier   	@150
+			line_style 	0)
+		    (object InheritView "" @154
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA340A0208"
+			client     	@136
+			supplier   	@150
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::Deamon" @155
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(3238, 335)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@155
+			    location   	(2920, 109)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	636
+			    justify    	0
+			    label      	"Deamon")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4FCA45190340"
+			compartment 	(object Compartment
+			    Parent_View 	@155
+			    location   	(2920, 183)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2836,38 +3448,77 @@
 			    icon_style 	"Icon"
 			    fill_color 	13434879
 			    anchor     	2
-			    nlines     	3
-			    max_width  	388)
-			width      	478
-			height     	244
+			    nlines     	7
+			    max_width  	538)
+			width      	654
+			height     	482
 			annotation 	8
 			autoResize 	TRUE)
-		    (object RealizeView "" @137
+		    (object AttachView "" @156
 			stereotype 	TRUE
 			line_color 	3342489
-			quidu      	"4FC9CA7C01E1"
-			client     	@136
-			supplier   	@134
+			client     	@155
+			supplier   	@148
 			line_style 	0)
-		    (object RealizeView "" @138
+		    (object UsesView "" @157
 			stereotype 	TRUE
 			line_color 	3342489
-			quidu      	"4FC9CA8003DC"
-			client     	@136
-			supplier   	@134
+			quidu      	"4FCA472B03DC"
+			client     	@155
+			supplier   	@137
 			line_style 	0)
-		    (object InheritView "" @139
+		    (object UsesView "" @158
 			stereotype 	TRUE
 			line_color 	3342489
-			quidu      	"4FC9CA29031F"
-			client     	@135
-			supplier   	@134
+			quidu      	"4FCA4733011B"
+			client     	@155
+			supplier   	@140
 			line_style 	0)
-		    (object ClassView "Class" "Logical View::小时工" @140
+		    (object UsesView "" @159
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA473903BC"
+			client     	@155
+			supplier   	@141
+			line_style 	0)
+		    (object AssociationViewNew "$UNNAMED$84" @160
+			location   	(1959, 658)
+			font       	(object Font
+			    size       	12
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA47DE01CB"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$85" @161
+				Parent_View 	@160
+				location   	(1317, -338)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4FCA47DF02D7"
+				client     	@160
+				supplier   	@155
+				line_style 	0)
+			    (object RoleView "$UNNAMED$86" @162
+				Parent_View 	@160
+				location   	(1317, -338)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4FCA47DF02DB"
+				client     	@160
+				supplier   	@150
+				line_style 	0)))
+		    (object ClassView "Class" "Logical View::项目经理" @163
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(170, 1134)
+			location   	(1644, 1063)
 			font       	(object Font
 			    size       	12
 			    face       	"Arial"
@@ -2878,26 +3529,47 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@140
-			    location   	(60, 1080)
+			    Parent_View 	@163
+			    location   	(1318, 910)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	220
+			    max_width  	653
 			    justify    	0
-			    label      	"小时工")
+			    label      	"项目经理")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"4FC9CAAB02EE"
-			width      	238
-			height     	136
+			quidu      	"4FCA32A202A7"
+			compartment 	(object Compartment
+			    Parent_View 	@163
+			    location   	(1318, 984)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	13434879
+			    anchor     	2
+			    nlines     	4
+			    max_width  	614)
+			width      	671
+			height     	336
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::普通员工" @141
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(620, 1144)
+		    (object InheritView "" @164
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA32C802DA"
+			client     	@163
+			supplier   	@149
+			line_style 	0)
+		    (object AssociationViewNew "$UNNAMED$87" @165
+			location   	(2444, 695)
 			font       	(object Font
 			    size       	12
 			    face       	"Arial"
@@ -2907,72 +3579,41 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@141
-			    location   	(471, 1090)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	298
-			    justify    	0
-			    label      	"普通员工")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4FC9CAAD03CF"
-			width      	316
-			height     	136
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::销售人员" @142
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(1105, 1131)
-			font       	(object Font
-			    size       	12
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@142
-			    location   	(956, 1077)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	298
-			    justify    	0
-			    label      	"销售人员")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4FC9CAB1000F"
-			width      	316
-			height     	136
-			annotation 	8
-			autoResize 	TRUE)
-		    (object RealizeView "" @143
 			stereotype 	TRUE
 			line_color 	3342489
-			quidu      	"4FC9CAEB0151"
-			client     	@140
-			supplier   	@135
+			quidu      	"4FCA47E20357"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$88" @166
+				Parent_View 	@165
+				location   	(-887, 480)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4FCA47E302DF"
+				client     	@165
+				supplier   	@163
+				line_style 	0)
+			    (object RoleView "$UNNAMED$89" @167
+				Parent_View 	@165
+				location   	(-887, 480)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4FCA47E302E3"
+				client     	@165
+				supplier   	@155
+				line_style 	0)))
+		    (object UsesView "" @168
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4FCA489003C1"
+			client     	@150
+			supplier   	@140
 			line_style 	0)
-		    (object RealizeView "" @144
+		    (object UsesView "" @169
 			stereotype 	TRUE
 			line_color 	3342489
-			quidu      	"4FC9CAED03A9"
-			client     	@141
-			supplier   	@135
-			line_style 	0)
-		    (object RealizeView "" @145
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4FC9CAF0031F"
-			client     	@142
-			supplier   	@135
+			quidu      	"4FCA48940389"
+			client     	@163
+			supplier   	@141
 			line_style 	0)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"4FA10DA3033F"
