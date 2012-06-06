@@ -1,0 +1,78 @@
+function [] = lab2e1 ( precent_of_training )
+
+load yeast.out
+
+%1~8 is attribute 9 is class label
+oDS = dataset( yeast(:,1:8) , yeast(:,9));
+
+s = size( DS.data );
+s = s(1);
+
+%disp( s );
+%disp( l );
+
+%training sample dataset TS
+%testing  sample dataset XS
+[ TS , XS ] = gendat( DS , precent_of_training * s );
+
+%disp( ts.data );
+%disp( xs.data );
+
+%disp( 'Disping full dataset' );
+figure( 1 );
+scatterd(DS);
+title( 'Full DataSet' );
+
+%disp( 'Disping training dataset');
+figure( 2 );
+scatterd(TS);
+title( 'Training DataSet');
+
+%disp( 'Disping testing set');
+figure( 3 );
+scatterd(XS);
+title('Testing DataSet');
+
+%Normalizing using mapminmax
+fd = DS.data;
+fl = DS.labels;
+fd = fd';
+fd = mapminmax( fd , 0 , 1 );
+fd = fd';
+
+nDS = dataset( fd , fl );
+figure( 4 );
+scatterd(nDS);
+title('Normalizing Full Set');
+
+%Normalizing the Training Set
+fd = TS.data;
+fl = TS.labels;
+fd = fd';
+fd = mapminmax( fd , 0 , 1 );
+fd = fd';
+
+nTS = dataset( fd , fl );
+figure( 5 );
+scatterd(nTS);
+title('Normalizing Training Set');
+
+%Normalizing the Testing Set
+fd = XS.data;
+fl = XS.labels;
+fd = fd';
+fd = mapminmax( fd , 0 , 1 );
+fd = fd';
+
+nXS = dataset( fd , fl );
+figure( 6 );
+scatterd(nXS);
+title('Normalizing Testing Set');
+
+
+
+
+
+
+
+end
