@@ -1,4 +1,4 @@
-function [] = lab2e1 ( precent_of_training )
+function [] = unNormalKnn ( precent_of_training )
 
 load yeast.out
 
@@ -35,11 +35,19 @@ s = s(1);
 
 Xaccuracy = zeros( 15 , 1 );                %preallocate
 Taccuracy = zeros( 15 , 1 );
+tTTimeElasped = zeros( 15 , 1 );
+tXTimeElasped = zeros( 15 , 1 );
+tSTimeElasped = zeros( 15 , 1 );
 
 for k=1:15
+    tStart = tic;
     classifier = knnc( TS ,k );                  %train a k classifier with Training dataset
+    tTTimeElasped(k) = toc( tStart );
     
+    tStart = tic;
     Xoutput = labeld( XS , classifier);      %get the teXting result
+    tXTimeElasped(k) = toc( tStart );
+    
     len = size( Xoutput );
     len = len( 1 );
     j = 0;
@@ -51,7 +59,10 @@ for k=1:15
            
     Xaccuracy(k) = j * 1.0 / len;
     
+    tStart = tic;
     Toutput = labeld( TS , classifier);      %get the Training resullt
+    tSTimeElasped(k) = toc( tStart );
+    
     len = size( Toutput );
     len = len(1);
     j = 0;
@@ -65,15 +76,12 @@ for k=1:15
     
 end
 
-
 k = 1:1:15;
-plot( k , Taccuracy , 'r-.+');
-hold on;
-plot( k , Xaccuracy , 'b-o');
+
+subplot(2,1,1),plot( k , Taccuracy , 'r-.+' , k , Xaccuracy , 'b-o' ),ylabel('Accuracy'),xlabel('K'),title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
+subplot(2,1,2),plot( k , tTTimeElasped , '');
 
 grid on;
-xlabel('Accuracy');
-ylabel('K');
-title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
+
 
 end
