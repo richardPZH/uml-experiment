@@ -1,4 +1,4 @@
-function [] = unNormalKnn ( precent_of_training )
+function [time2classifeOneSample] = unNormalKnn ( precent_of_training )
 
 load yeast.out
 
@@ -14,6 +14,8 @@ s = s(1);
 %training sample dataset TS
 %testing  sample dataset XS
 [ TS XS ] = gendat( DS , precent_of_training * s );
+s = size( XS.labels );
+s = s(1);
 
 %disp( ts.data );
 %disp( xs.data );
@@ -37,7 +39,8 @@ Xaccuracy = zeros( 15 , 1 );                %preallocate
 Taccuracy = zeros( 15 , 1 );
 tTTimeElasped = zeros( 15 , 1 );
 tXTimeElasped = zeros( 15 , 1 );
-tSTimeElasped = zeros( 15 , 1 );
+tSTimeElasped = zeros( 15 , 2 );
+time2classifeOneSample = zeros( 15 ,1 );
 
 for k=1:15
     tStart = tic;
@@ -47,6 +50,8 @@ for k=1:15
     tStart = tic;
     Xoutput = labeld( XS , classifier);      %get the teXting result
     tXTimeElasped(k) = toc( tStart );
+    time2classifeOneSample( k , 1 ) = k;
+    time2classifeOneSample( k , 2 ) = tXTimeElasped(k) / s;
     
     len = size( Xoutput );
     len = len( 1 );
@@ -78,10 +83,15 @@ end
 
 k = 1:1:15;
 
-subplot(2,1,1),plot( k , Taccuracy , 'r-.+' , k , Xaccuracy , 'b-o' ),ylabel('Accuracy'),xlabel('K'),title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
-subplot(2,1,2),plot( k , tTTimeElasped , 'r' , k , tXTimeElasped , 'g' , k , tSTimeElasped , 'b' ), xlabel('K') , ylabel('time elasped in sec') , title('Red is traing time; Green is label testing set time; Blue is training set time');
+h = figure;
+%title([num2str(precent_of_training * 100) '% of trainning' ]);
+bigTitle = [num2str(precent_of_training * 100) '% of trainning' ];
+set(h,'name',bigTitle,'Numbertitle','off');
 
-grid on;
+subplot(2,1,1),plot( k , Taccuracy , 'r-.+' , k , Xaccuracy , 'b-o' ),grid on ,ylabel('Accuracy'),xlabel('K'),title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
+subplot(2,1,2),plot( k , tTTimeElasped , 'r' , k , tXTimeElasped , 'g' , k , tSTimeElasped , 'b' ), grid on , xlabel('K') , ylabel('time elasped in sec') , title('Red is traing time; Green is label testing set time; Blue is training set time');
+
+
 
 
 end
