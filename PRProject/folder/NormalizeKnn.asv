@@ -1,0 +1,12 @@
+function [time2classifeOneSample] = NormalizeKnn ( precent_of_training )
+
+load yeast.out
+
+%normal the rawData
+%map them to 0~1
+rawData = yeast(:,1:8)';
+rawData = mapminmax( rawData , 0 , 1);
+rawData = rawData';
+
+yeast = [ rawData yeast(:,9) ];
+
