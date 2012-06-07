@@ -78,10 +78,15 @@ end
 
 k = 1:1:15;
 
-subplot(2,1,1),plot( k , Taccuracy , 'r-.+' , k , Xaccuracy , 'b-o' ),ylabel('Accuracy'),xlabel('K'),title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
-subplot(2,1,2),plot( k , tTTimeElasped , '');
+h = figure(1);
+%grid on;
+%title([num2str(precent_of_training * 100) '% of trainning' ]);
+set(h,'')
 
-grid on;
+subplot(2,1,1),plot( k , Taccuracy , 'r-.+' , k , Xaccuracy , 'b-o' ),ylabel('Accuracy'),xlabel('K'),title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
+subplot(2,1,2),plot( k , tTTimeElasped , 'r' , k , tXTimeElasped , 'g' , k , tSTimeElasped , 'b' ), xlabel('K') , ylabel('time elasped in sec') , title('Red is traing time; Green is label testing set time; Blue is training set time');
+
+
 
 
 end
