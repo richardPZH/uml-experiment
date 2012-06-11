@@ -5,7 +5,7 @@ load yeast.out
 %discrete them
 labels = yeast( : , 9 );
 
-yeast = yeast( : , 1:8 )';
+yeast = yeast( : , 1:8 );
 [row col] = size( yeast );
 
 maxArray = max( yeast );
@@ -13,13 +13,12 @@ minArray = min( yeast );
 
 interVal = ( maxArray - minArray ) ./ level;
 
-for k = 1:row
-    for j = 1:col
-        yeast( k , j ) = round(( yeast( k , j ) - minArray(k) ) / interVal(k) );
+for k = 1:col
+    for j = 1:row
+        yeast( j , k ) = round(( yeast( j , k ) - minArray(k) ) / interVal(k) );
     end
 end
 
-yeast = yeast';
 yeast = [ yeast , labels ];
 
 fid = fopen('yeast.dis2','w');

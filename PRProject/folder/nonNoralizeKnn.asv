@@ -1,9 +1,21 @@
-function [] = unNormalKnn ( precent_of_training )
+function [time2classifeOneSample main90componentCount ] = nonNoralizeKnn ( precent_of_training )
 
 load yeast.out
 
 %1~8 is attribute 9 is class label
-DS = dataset( yeast(:,1:8) , yeast(:,9));
+[coef,score,latent,t2] = princomp( yeast(:,1:8) );
+latent=100*latent/sum(latent);
+s = size( latent );
+s = s(1);
+totle = 0;
+for main90componentCount = 1 : s 
+    totle = totle + latent(main90componentCount);
+    if( totle > 90 )
+        break;
+    end
+end
+
+DS = dataset( score(:,1:7 ) , yeast(:,9));
 
 s = size( DS.labels );
 s = s(1);
@@ -14,6 +26,8 @@ s = s(1);
 %training sample dataset TS
 %testing  sample dataset XS
 [ TS XS ] = gendat( DS , precent_of_training * s );
+s = size( XS.labels );
+s = s(1);
 
 %disp( ts.data );
 %disp( xs.data );
@@ -37,7 +51,8 @@ Xaccuracy = zeros( 15 , 1 );                %preallocate
 Taccuracy = zeros( 15 , 1 );
 tTTimeElasped = zeros( 15 , 1 );
 tXTimeElasped = zeros( 15 , 1 );
-tSTimeElasped = zeros( 15 , 1 );
+tSTimeElasped = zeros( 15 , 2 );
+time2classifeOneSample = zeros( 15 ,1 );
 
 for k=1:15
     tStart = tic;
@@ -47,6 +62,8 @@ for k=1:15
     tStart = tic;
     Xoutput = labeld( XS , classifier);      %get the teXting result
     tXTimeElasped(k) = toc( tStart );
+    time2classifeOneSample( k , 1 ) = k;
+    time2classifeOneSample( k , 2 ) = tXTimeElasped(k) / s;
     
     len = size( Xoutput );
     len = len( 1 );
@@ -78,13 +95,13 @@ end
 
 k = 1:1:15;
 
-h = figure(1);
-%grid on;
+h = figure;
 %title([num2str(precent_of_training * 100) '% of trainning' ]);
-set(h,'')
+bigTitle = [num2str(precent_of_training * 100) '% of trainning' ];
+set(h,'name',bigTitle,'Numbertitle','off');
 
-subplot(2,1,1),plot( k , Taccuracy , 'r-.+' , k , Xaccuracy , 'b-o' ),ylabel('Accuracy'),xlabel('K'),title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
-subplot(2,1,2),plot( k , tTTimeElasped , 'r' , k , tXTimeElasped , 'g' , k , tSTimeElasped , 'b' ), xlabel('K') , ylabel('time elasped in sec') , title('Red is traing time; Green is label testing set time; Blue is training set time');
+subplot(2,1,1),plot( k , Taccuracy , 'r-.+' , k , Xaccuracy , 'b-o' ),grid on ,ylabel('Accuracy'),xlabel('K'),title('Testing Accuracy of Precentage KNN classifier(Red is trainging acc Blue is testing acc');
+subplot(2,1,2),plot( k , tTTimeElasped , 'r' , k , tXTimeElasped , 'g' , k , tSTimeElasped , 'b' ), grid on , xlabel('K') , ylabel('time elasped in sec') , title('Red is traing time; Green is label testing set time; Blue is training set time');
 
 
 

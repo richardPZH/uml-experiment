@@ -1,9 +1,22 @@
-function [time2classifeOneSample] = unNormalKnn ( precent_of_training )
+function [time2classifeOneSample main85componentCount ] = nonNoralizeKnn ( precent_of_training )
 
 load yeast.out
 
 %1~8 is attribute 9 is class label
-DS = dataset( yeast(:,1:8) , yeast(:,9));
+[coef,score,latent,t2] = princomp( yeast(:,1:8) );
+latent=100*latent/sum(latent);
+s = size( latent );
+s = s(1);
+totle = 0;
+for main85componentCount = 1 : s 
+    totle = totle + latent(main85componentCount);
+    if( totle > 85 )
+        break;
+    end
+end
+
+t = 1 : main85componentCount;
+DS = dataset( score(:, t ) , yeast(:,9) );
 
 s = size( DS.labels );
 s = s(1);
