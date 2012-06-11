@@ -1,10 +1,10 @@
-function [ tTTimeElasped time2classifeOneSample Xaccuracy Taccuracy] = DTwithIGwithNoPrune( precent_of_training )
+function [ tTTimeElasped time2classifeOneSample Xaccuracy Taccuracy] = DTwithIGwithNoPrune( precent_of_training , prune_level )
 
 load yeast.dis
 
 %1~8 is attribute 9 is class label
-t = [ 3 4 7];
-DS = dataset( yeast(:, t ) , yeast(:,9));
+
+DS = dataset( yeast(:, 1:8 ) , yeast(:,9) );
 
 s = size( DS.labels );
 s = s(1);
@@ -37,7 +37,7 @@ s = s(1);
 %title('Testing DataSet');
 
     tStart = tic;
-    classifier = TREEC( TS , 'infcrit'  );                  %train a tree classifier with Information Gain 
+    classifier = TREEC( TS , 'infcrit' , prune_level );                  %train a tree classifier with Information Gain 
     tTTimeElasped = toc( tStart );
     
     tStart = tic;
