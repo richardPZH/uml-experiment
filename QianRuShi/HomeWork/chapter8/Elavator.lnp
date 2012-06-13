@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"Conf_tny.obj",
+"tasks.obj" 
+TO "Elavator" Rtx51Tiny 
+RAMSIZE(256) 
