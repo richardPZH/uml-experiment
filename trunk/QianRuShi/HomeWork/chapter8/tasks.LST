@@ -1,0 +1,726 @@
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE TASKS
+OBJECT MODULE PLACED IN tasks.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE tasks.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <rtx51tny.h>
+   2          #include <reg52.h>
+   3          #include <INTRINS.H>
+   4          
+   5          unsigned char ucMotorDrvPuls; //电机运转时初始值
+   6          unsigned char FORREV=1; //1表示上行，0表示下行
+   7          unsigned char STOPCUR=0;//1电梯停留在当前层，0不停留
+   8          unsigned char CURFLR=1; //当前所在楼层
+   9          unsigned char count=0;  //累计到COUNT即表示运行过一层
+  10          
+  11          #define UCTIMES 8 //设置电机转速
+  12          #define OUTPUT P2 //电机驱动信号口
+  13          #define COUNT 8   //电机每循环8次表示电梯经过一层楼
+  14          
+  15          sbit UP1=P3^4;
+  16          sbit DOWN2=P3^3;
+  17          sbit UP2=P3^2;
+  18          sbit DOWN3=P3^1;
+  19          sbit UP3=P3^0;
+  20          sbit DOWN4=P1^7;
+  21          sbit FLOOR1=P1^0;
+  22          sbit FLOOR2=P1^1;
+  23          sbit FLOOR3=P1^2;
+  24          sbit FLOOR4=P1^3;
+  25          sbit START=P1^4;
+  26          sbit STOP=P1^5;
+  27          sbit ALARM=P1^6;
+  28          
+  29          //报警位
+  30          sbit alarmBit=P0^4;
+  31          sbit upLight=P0^5;
+  32          sbit downLight=P0^6;
+  33          
+  34          void time(unsigned int ucMs);//延时单位：ms
+  35          void outPress();//按下电梯外按钮
+  36          unsigned char inPress();//按下电梯内楼层按钮
+  37          unsigned char elevator();//到达某一层返回1，否则返回0
+  38          void storeUP(unsigned char);//存储当前所有上行请求
+  39          void storeDOWN(unsigned char);//存储当前所有下行请求
+  40          
+  41          //延时函数
+  42          void time(unsigned int ucMs);
+  43          
+  44          //初始化所有灯
+  45          void initLights(void);
+  46          
+  47          //设置当前楼层
+  48          void setFloor(int floor);
+  49          
+  50          //设置电梯向上运行灯
+  51          void setUpLight();
+  52          
+  53          //设置电梯向下运行灯
+  54          void setDownLight();
+  55          
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 2   
+
+  56          //设置电梯停止运行灯
+  57          void setStopLight();
+  58          
+  59          //设置电梯向上运行灯
+  60          void setAlarmLight();
+  61          
+  62          //设置电梯报警灯和喇叭
+  63          void setAlarmLight();
+  64          
+  65          //关闭电梯报警灯和喇叭
+  66          void offAlarmLight();
+  67          
+  68          
+  69          //报警开关
+  70          int alarmSwitch=1;
+  71          
+  72          unsigned char UP_req[5]={0,0,0,0,0}; //上行请求
+  73          unsigned char DOWN_req[5]={0,0,0,0,0}; //下行请求
+  74          
+  75          //电机定位
+  76          void position(void)
+  77          {
+  78   1        OUTPUT=0x01|(P2&0xf0);time(200);
+  79   1        OUTPUT=0x02|(P2&0xf0);time(200);
+  80   1        OUTPUT=0x04|(P2&0xf0);time(200);
+  81   1        OUTPUT=0x08|(P2&0xf0);time(200);
+  82   1        ucMotorDrvPuls=0x11;
+  83   1        OUTPUT=0x01|(P2&0xf0);        
+  84   1        
+  85   1      }
+  86          
+  87          /****************************************/
+  88          /*                 main task            */
+  89          /****************************************/
+  90          void elavator(void) _task_ 0
+  91          { 
+  92   1        time(100);
+  93   1        initLights();
+  94   1        position();//电机定位
+  95   1        ucMotorDrvPuls=0x11;
+  96   1        OUTPUT=0x00|(P2&0xf0);//电机停止 
+  97   1        setFloor(CURFLR);
+  98   1        setUpLight();
+  99   1        time(100);
+ 100   1        
+ 101   1        while(1)//主循环
+ 102   1        {
+ 103   2                outPress();//按下电梯外按钮
+ 104   2                while(STOPCUR==1)//电梯在当前层，电梯不动，可以继续接受请求
+ 105   2                {
+ 106   3                  outPress();
+ 107   3                  inPress();
+ 108   3                }  
+ 109   2      
+ 110   2                if(inPress())//按下电梯内楼层按钮
+ 111   2                {
+ 112   3                  while(START)//等待启动按键按下，电梯不动，可以继续接受请求
+ 113   3                  {
+ 114   4                    outPress();
+ 115   4                    inPress();
+ 116   4                  }
+ 117   3                }
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 3   
+
+ 118   2      
+ 119   2                while(1)//电机运转循环
+ 120   2                {
+ 121   3                  if(UP_req[1]==0&&UP_req[2]==0&&UP_req[3]==0&&
+ 122   3                      DOWN_req[2]==0&&DOWN_req[3]==0&&DOWN_req[4]==0) 
+ 123   3                      {
+ 124   4                        break;//没有请求，跳出电机运转循环，电梯不动
+ 125   4                      }
+ 126   3                        
+ 127   3                  if(FORREV)//上行 
+ 128   3                  { 
+ 129   4                        setUpLight();//上行灯亮
+ 130   4      
+ 131   4                        if(STOPCUR==1){break;}//
+ 132   4      
+ 133   4                        if(elevator())//往上到达某一层
+ 134   4                    {
+ 135   5                              if(CURFLR==4) {setDownLight();break;}//到达四楼
+ 136   5                    }
+ 137   4                    OUTPUT=(ucMotorDrvPuls&0x0f)|(P2&0xf0);
+ 138   4                        ucMotorDrvPuls=_crol_(ucMotorDrvPuls,1);
+ 139   4                  }
+ 140   3                  if(!FORREV)//下行
+ 141   3                  {
+ 142   4                        setDownLight();//下行灯亮
+ 143   4      ;
+ 144   4                        if(STOPCUR==1){break;}
+ 145   4      
+ 146   4                        if(elevator())//往下到达某一层
+ 147   4                    {
+ 148   5                              if(CURFLR==1) {setUpLight();break;}//到达一楼
+ 149   5                    }
+ 150   4                    OUTPUT=(ucMotorDrvPuls&0x0f)|(P2&0xf0);
+ 151   4                        ucMotorDrvPuls=_cror_(ucMotorDrvPuls,1);
+ 152   4                  }   
+ 153   3              
+ 154   3                  outPress();//按下电梯外按钮
+ 155   3                  //if(inPress())//按下电梯内楼层按钮
+ 156   3                      //{
+ 157   3                       // while(START)//等待启动按键按下
+ 158   3                        //{
+ 159   3                    //  outPress();
+ 160   3                      inPress();//电梯运行时，内部按钮按下，无需按启动按钮
+ 161   3                   // }
+ 162   3                      //}
+ 163   3      
+ 164   3                  time(380-UCTIMES*16);
+ 165   3      
+ 166   3                }//end while-电机运转循环
+ 167   2              
+ 168   2              OUTPUT=0x00|(P2&0xf0);//电机停止，有请求时按下启动按钮启动
+ 169   2      
+ 170   2        }//end while-主循环   
+ 171   1      }
+ 172          
+ 173          /****************************************/
+ 174          /*               按钮事件               */
+ 175          /****************************************/
+ 176          //按下电梯外按钮 
+ 177          void outPress()
+ 178          {
+ 179   1         //FORREV=1;
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 4   
+
+ 180   1         if(!UP1)//1楼上
+ 181   1         {
+ 182   2           storeUP(1);
+ 183   2               if(CURFLR>1&&STOPCUR==1)//电梯不在一楼,且当前没其他请求，电梯马上自动启动
+ 184   2               {
+ 185   3                 FORREV=0;//向下运行
+ 186   3                 STOPCUR=0;
+ 187   3               }
+ 188   2               if(CURFLR==1)
+ 189   2               {
+ 190   3                 STOPCUR=1;//电梯停留在当前层
+ 191   3               }
+ 192   2         }
+ 193   1         if(!UP2)//2楼上
+ 194   1         {
+ 195   2           storeUP(2);
+ 196   2               if(CURFLR>2&&STOPCUR==1)//电梯在二楼以上
+ 197   2               {
+ 198   3                 FORREV=0;
+ 199   3                 STOPCUR=0;
+ 200   3               }
+ 201   2               if(CURFLR<2&&STOPCUR==1)
+ 202   2               {
+ 203   3                 FORREV=1;
+ 204   3                 STOPCUR=0;
+ 205   3               }
+ 206   2               if(CURFLR==2)
+ 207   2               {
+ 208   3                 STOPCUR=1;
+ 209   3               }
+ 210   2         }
+ 211   1         if(!UP3)//3楼上
+ 212   1         {
+ 213   2           storeUP(3);
+ 214   2               if(CURFLR>3&&STOPCUR==1)//电梯在三楼以上
+ 215   2               {
+ 216   3                 FORREV=0;
+ 217   3                 STOPCUR=0;
+ 218   3               }
+ 219   2               if(CURFLR<3&&STOPCUR==1)
+ 220   2               {
+ 221   3                 FORREV=1;
+ 222   3                 STOPCUR=0;
+ 223   3               }
+ 224   2               if(CURFLR==3)
+ 225   2               {
+ 226   3                 STOPCUR=1;
+ 227   3               }
+ 228   2         }
+ 229   1         if(!DOWN2)//2楼下
+ 230   1         {
+ 231   2           storeDOWN(2);
+ 232   2               if(CURFLR>2&&STOPCUR==1)//电梯在二楼以上
+ 233   2               {
+ 234   3                 FORREV=0;
+ 235   3                 STOPCUR=0;
+ 236   3               }
+ 237   2               if(CURFLR<2&&STOPCUR==1)
+ 238   2               {
+ 239   3                 FORREV=1;
+ 240   3                 STOPCUR=0;
+ 241   3               }
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 5   
+
+ 242   2               if(CURFLR==2)
+ 243   2               {
+ 244   3                 STOPCUR=1;
+ 245   3               }
+ 246   2         }
+ 247   1         if(!DOWN3)//3楼下
+ 248   1         {
+ 249   2           storeDOWN(3);
+ 250   2               if(CURFLR>3&&STOPCUR==1)//电梯在三楼以上
+ 251   2               {
+ 252   3                 FORREV=0;
+ 253   3                 STOPCUR=0;
+ 254   3               }
+ 255   2               if(CURFLR<3&&STOPCUR==1)
+ 256   2               {
+ 257   3                 FORREV=1;
+ 258   3                 STOPCUR=0;
+ 259   3               }
+ 260   2               if(CURFLR==3)
+ 261   2               {
+ 262   3                 STOPCUR=1;
+ 263   3               }
+ 264   2         }
+ 265   1         if(!DOWN4)//4楼下
+ 266   1         {
+ 267   2           storeDOWN(4);
+ 268   2               if(CURFLR<4&&STOPCUR==1)
+ 269   2               {
+ 270   3                 FORREV=1;
+ 271   3                 STOPCUR=0;
+ 272   3               }
+ 273   2               if(CURFLR==4)
+ 274   2               {
+ 275   3                 STOPCUR=1;
+ 276   3               }
+ 277   2         }
+ 278   1      }
+ 279          
+ 280          //按下电梯内楼层按钮
+ 281          unsigned char inPress()
+ 282          {
+ 283   1        
+ 284   1        int i;
+ 285   1        int flag=0;
+ 286   1      
+ 287   1        if(!FLOOR1)
+ 288   1        {     
+ 289   2          if(1<CURFLR)
+ 290   2              {
+ 291   3                STOPCUR=0;
+ 292   3                UP_req[1]=1;
+ 293   3              }
+ 294   2              if(1==CURFLR)
+ 295   2              {
+ 296   3                STOPCUR=1;
+ 297   3              }
+ 298   2              return 1;
+ 299   2        }
+ 300   1        if(!FLOOR2)
+ 301   1        {
+ 302   2          if(2>CURFLR)//请求层大于当前层
+ 303   2              {
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 6   
+
+ 304   3                UP_req[2]=1;
+ 305   3                STOPCUR=0;
+ 306   3              }
+ 307   2              if(2<CURFLR)
+ 308   2              {
+ 309   3                DOWN_req[2]=1;
+ 310   3                STOPCUR=0;
+ 311   3              }
+ 312   2              if(2==CURFLR)
+ 313   2              {
+ 314   3                STOPCUR=1;
+ 315   3              }
+ 316   2              return 1;
+ 317   2              
+ 318   2        }
+ 319   1        if(!FLOOR3)
+ 320   1        {
+ 321   2          if(3>CURFLR)//请求层大于当前层
+ 322   2              {
+ 323   3                UP_req[3]=1;
+ 324   3                STOPCUR=0;
+ 325   3              }
+ 326   2              if(3<CURFLR)
+ 327   2              {
+ 328   3                DOWN_req[3]=1;
+ 329   3                STOPCUR=0;
+ 330   3              }
+ 331   2              if(3==CURFLR)
+ 332   2              {
+ 333   3                STOPCUR=1;
+ 334   3              }
+ 335   2              return 1;
+ 336   2        }
+ 337   1      
+ 338   1        if(!FLOOR4)
+ 339   1        {
+ 340   2          if(4>CURFLR)
+ 341   2              {
+ 342   3            DOWN_req[4]=1;
+ 343   3                STOPCUR=0;
+ 344   3              }
+ 345   2              if(4==CURFLR)
+ 346   2              {
+ 347   3                STOPCUR=1;
+ 348   3              }
+ 349   2              return 1;
+ 350   2        }
+ 351   1        if(!START)
+ 352   1        {
+ 353   2          STOPCUR=0;
+ 354   2              return 1;
+ 355   2        }
+ 356   1        if(!STOP)//紧急停止
+ 357   1        {
+ 358   2          while(START)//不响应其他按键
+ 359   2              {
+ 360   3                //亮灯
+ 361   3                setStopLight();
+ 362   3              }
+ 363   2              return 1;
+ 364   2        }
+ 365   1        if(!ALARM)
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 7   
+
+ 366   1        {
+ 367   2                setAlarmLight();
+ 368   2              return 1;
+ 369   2        }
+ 370   1      
+ 371   1         if(FORREV==1)
+ 372   1         {
+ 373   2            //请求上行而进去电梯内选择的是下层
+ 374   2                for(i=CURFLR+1;i<=4;i++)
+ 375   2                {
+ 376   3                  if(UP_req[i]==1||DOWN_req[i]==1){flag=1;}
+ 377   3                }
+ 378   2                if(flag==0)//上层没请求
+ 379   2                {
+ 380   3                  FORREV=0;
+ 381   3                      
+ 382   3                }
+ 383   2              }
+ 384   1              if(FORREV==0)
+ 385   1              {
+ 386   2                 //请求下行而进去电梯内选择的是上层
+ 387   2                for(i=CURFLR-1;i>=1;i--)
+ 388   2                {
+ 389   3                  if(UP_req[i]==1||DOWN_req[i]==1){flag=1;}
+ 390   3                }
+ 391   2                if(flag==0)//上层没请求
+ 392   2                {
+ 393   3                  FORREV=1;
+ 394   3                      
+ 395   3                }
+ 396   2              }
+ 397   1        return 0;
+ 398   1      }
+ 399          
+ 400          /*******************************************************************/
+ 401          /*                       到达某一层返回1，否则返回0,                       */
+ 402          /*    亮灯、显示数字、请求清零、电机停止、确定接下去电机方向       */
+ 403          /*******************************************************************/
+ 404          unsigned char elevator()
+ 405          {
+ 406   1        count++;
+ 407   1        if(count==COUNT)
+ 408   1        {
+ 409   2              //正常情况
+ 410   2          if(FORREV==1)//判断上行是否到达请求楼层,上行请求优先处理
+ 411   2              {
+ 412   3                CURFLR++;
+ 413   3                setUpLight();//上行灯亮 
+ 414   3      
+ 415   3                
+ 416   3      
+ 417   3                if(CURFLR==2)//到达二楼
+ 418   3                {
+ 419   4                  count=0;    
+ 420   4                  setFloor(2);//显示数字
+ 421   4                  if(UP_req[2]==1)//二楼有上行请求，优先处理
+ 422   4                  {           
+ 423   5                        setUpLight();
+ 424   5                    UP_req[2]=0;
+ 425   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 426   5                        STOPCUR=1;
+ 427   5                        return 1;
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 8   
+
+ 428   5                  }
+ 429   4                      if(DOWN_req[2]==1&&UP_req[3]==0&&DOWN_req[3]==0
+ 430   4                      &&DOWN_req[4]==0)//二楼有下行请求，上面两层没有请求，不再往上
+ 431   4                      {                  
+ 432   5                         setDownLight();
+ 433   5                         DOWN_req[2]=0;
+ 434   5                         STOPCUR=1;
+ 435   5                         OUTPUT=0x00|(P2&0xf0);//电机停止
+ 436   5                         FORREV=0;
+ 437   5                         return 1;
+ 438   5                      } 
+ 439   4                }
+ 440   3                if(CURFLR==3)//到达三楼
+ 441   3                {     
+ 442   4                  setFloor(3);//显示数字
+ 443   4                      count=0;
+ 444   4                  if(UP_req[3]==1)//三楼有上行请求,优先处理
+ 445   4                  {
+ 446   5                        setUpLight();
+ 447   5                    UP_req[3]=0;
+ 448   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 449   5                        STOPCUR=1;
+ 450   5                        return 1;
+ 451   5                  }
+ 452   4                      if(DOWN_req[3]==1&&DOWN_req[4]==0)//三楼有下行请求，四楼无请求，不再往上
+ 453   4                      {
+ 454   5                        setDownLight();
+ 455   5                        FORREV=0;
+ 456   5                        DOWN_req[3]=0;
+ 457   5                        STOPCUR=1;
+ 458   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 459   5                        return 1;
+ 460   5                      } 
+ 461   4                }
+ 462   3                if(CURFLR==4)//到达四楼
+ 463   3                {     
+ 464   4                  setFloor(4);//显示数字
+ 465   4                      setDownLight();
+ 466   4                      count=0;
+ 467   4                  if(DOWN_req[4]==1)//四楼有请求,四楼的请求只用向下的情况
+ 468   4                  {
+ 469   5                    DOWN_req[4]=0;
+ 470   5                        FORREV=0;
+ 471   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 472   5                        STOPCUR=1;
+ 473   5                  }
+ 474   4                }
+ 475   3              }
+ 476   2              else//判断下行是否到达请求层，下行请求优先处理
+ 477   2              {
+ 478   3                CURFLR--;
+ 479   3                setDownLight();//下行等亮
+ 480   3      
+ 481   3               
+ 482   3      
+ 483   3                if(CURFLR==1)//到达一楼
+ 484   3                {     
+ 485   4                  setFloor(1);//显示数字
+ 486   4                      count=0;
+ 487   4                  if(UP_req[1]==1)//一楼有请求,一楼的请求只有向上的情况
+ 488   4                  {
+ 489   5                        setUpLight();
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 9   
+
+ 490   5                    UP_req[1]=0;
+ 491   5                        FORREV=1;
+ 492   5                    OUTPUT=0x00|(P2&0xf0);//电机停止
+ 493   5                        STOPCUR=1;
+ 494   5                  }
+ 495   4                }
+ 496   3                if(CURFLR==2)//到达二楼
+ 497   3                {     
+ 498   4                  setFloor(2);//显示数字
+ 499   4                      count=0;
+ 500   4                  if(DOWN_req[2]==1)//二楼有下行请求，优先处理
+ 501   4                  {
+ 502   5                        setDownLight();
+ 503   5                    DOWN_req[2]=0;
+ 504   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 505   5                        STOPCUR=1;
+ 506   5                        return 1;
+ 507   5                  }
+ 508   4                      if(UP_req[2]==1&&UP_req[1]==0)//一楼无请求，不再往下
+ 509   4                      {
+ 510   5                        setUpLight();
+ 511   5                        FORREV=1;
+ 512   5                        UP_req[2]=0;
+ 513   5                        STOPCUR=1;
+ 514   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 515   5                      } 
+ 516   4                }
+ 517   3                if(CURFLR==3)//到达三楼
+ 518   3                {     
+ 519   4                  setFloor(3);//显示数字
+ 520   4                      count=0;
+ 521   4                  if(DOWN_req[3]==1)//三楼有下行请求，优先处理
+ 522   4                  {
+ 523   5                        setDownLight(); 
+ 524   5                    DOWN_req[3]=0;
+ 525   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 526   5                        STOPCUR=1;
+ 527   5                        return 1;
+ 528   5                  }
+ 529   4                      if(UP_req[1]==0&&DOWN_req[2]==0&&UP_req[2]==0&&UP_req[3]==1)
+ 530   4                      {
+ 531   5                        setUpLight();
+ 532   5                        FORREV=1;
+ 533   5                        UP_req[3]=0;
+ 534   5                        STOPCUR=1;
+ 535   5                        OUTPUT=0x00|(P2&0xf0);//电机停止
+ 536   5                      } 
+ 537   4                }
+ 538   3              }//end if-FORREV
+ 539   2      
+ 540   2          return 1;
+ 541   2        }
+ 542   1        else
+ 543   1        {
+ 544   2          return 0;
+ 545   2        }//end if-count
+ 546   1      }
+ 547          
+ 548          /****************************************/
+ 549          /*               保存请求               */
+ 550          /****************************************/
+ 551          void storeUP(unsigned char x)
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 10  
+
+ 552          {
+ 553   1        UP_req[x]=1;
+ 554   1      }
+ 555          void storeDOWN(unsigned char x)
+ 556          {
+ 557   1        DOWN_req[x]=1;
+ 558   1      }
+ 559          
+ 560          /****************************************/
+ 561          /*               功能函数               */
+ 562          /****************************************/
+ 563          //初始化所有灯
+ 564          void initLights()
+ 565          {
+ 566   1              P0=0x11;
+ 567   1      }
+ 568          
+ 569          //设置楼层显示
+ 570          void setFloor(int floor)
+ 571          {
+ 572   1              switch (floor)
+ 573   1              {
+ 574   2                      case 1:
+ 575   2                      {       
+ 576   3                              P0&=0xf0;//清零
+ 577   3                              P0|=0x01;break;
+ 578   3                      }
+ 579   2                      case 2:
+ 580   2                      {
+ 581   3                              P0&=0xf0;//清零
+ 582   3                              P0|=0x02;break;
+ 583   3                      }
+ 584   2                      case 3:
+ 585   2                      {
+ 586   3                              P0&=0xf0;//清零
+ 587   3                              P0|=0x03;break;
+ 588   3                      }
+ 589   2                      case 4:
+ 590   2                      {
+ 591   3                              P0&=0xf0;//清零
+ 592   3                              P0|=0x04;break;
+ 593   3                      }
+ 594   2                      default:
+ 595   2                      {
+ 596   3                              P0=0x06;break;
+ 597   3                      }
+ 598   2              }
+ 599   1      }
+ 600          
+ 601          //设置电梯向上运行灯
+ 602          void setUpLight()
+ 603          {
+ 604   1              upLight=1;
+ 605   1              downLight=0;
+ 606   1      }
+ 607          
+ 608          //设置电梯向下运行灯
+ 609          void setDownLight()
+ 610          {
+ 611   1              upLight=0;
+ 612   1              downLight=1;
+ 613   1      }
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 11  
+
+ 614          
+ 615          //设置电梯停止运行灯
+ 616          void setStopLight()
+ 617          {
+ 618   1              upLight=0;
+ 619   1              downLight=0;
+ 620   1      }
+ 621          
+ 622          //设置电梯报警灯和喇叭
+ 623          void setAlarmLight()
+ 624          {
+ 625   1              int num=0;//循环次数
+ 626   1              //设置警告灯亮
+ 627   1              while(START)
+ 628   1              {
+ 629   2                      num++;
+ 630   2                      if(!alarmBit)
+ 631   2                      {
+ 632   3                              alarmBit=1;
+ 633   3                      }
+ 634   2                      else//熄灭警告灯
+ 635   2                      {
+ 636   3                              alarmBit=0;
+ 637   3                      }
+ 638   2                      time(400);
+ 639   2              }
+ 640   1              offAlarmLight();        
+ 641   1      }
+ 642          
+ 643          //停止报警灯和喇叭
+ 644          void offAlarmLight()
+ 645          {
+ 646   1              alarmBit=1;
+ 647   1      }
+ 648          
+ 649          /******************************************/
+ 650          /*              延时函数                  */
+ 651          /******************************************/
+ 652          void delay_5us(void)
+ 653          {
+ 654   1        _nop_();
+ 655   1        _nop_();
+ 656   1      }
+ 657          void delay_50us(void)
+ 658          {
+ 659   1        unsigned char i;
+ 660   1        for(i=0;i<4;i++)
+ 661   1        {
+ 662   2          delay_5us();
+ 663   2        }
+ 664   1      }
+ 665          void delay_100us(void)
+ 666          {
+ 667   1        delay_50us();
+ 668   1        delay_50us();
+ 669   1      }
+ 670          void time(unsigned ucMs)
+ 671          {
+ 672   1        unsigned char j;
+ 673   1        while(ucMs>0)
+ 674   1        {
+ 675   2          for(j=0;j<10;j++)
+C51 COMPILER V7.50   TASKS                                                                 06/13/2012 18:05:35 PAGE 12  
+
+ 676   2              delay_100us();
+ 677   2              ucMs--;
+ 678   2        }
+ 679   1      }
+ 680          
+ 681          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1389    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     17       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
