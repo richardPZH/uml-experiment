@@ -46,6 +46,7 @@ int main( void )
 void fun1( void )
 {
 	enum BUTTON_TYPE button;
+	short cnt;
 
 	while( 1 )
 	{
@@ -64,6 +65,7 @@ void fun1( void )
 			delay_ms( 5 );
 		}
 		*/
+		
 	}
 }
 
@@ -184,7 +186,7 @@ void updateSEGLED( void )
 			DataPort = comNegative[buff[c]];
 		}
 
-		delay_ms( 2 );
+		delay_ms( 1 );
 	}
 	
 }
@@ -207,14 +209,19 @@ void handleUserInput( enum BUTTON_TYPE button )
 	memcpy( bk , buff , sizeof( buff ));
 	memset( buff , 0 , sizeof( buff ));
 
+	updateSEGLED();
 	for( cnt=0 ; cnt<8; )
 	{
-		updateSEGLED();
+		
 
-		button = getKeyPressed();
-
-		if( NON != button )
+		button = NON;
+		while( button == NON  )
 		{
+			button = getKeyPressed();
+		}
+
+		//if( NON != button )
+		//{
 			if( CANCEL == button )
 			{
 				cnt = 8;
@@ -230,7 +237,7 @@ void handleUserInput( enum BUTTON_TYPE button )
 			buff[cnt] = (( unsigned char ) button )% 10;
 
 			cnt++;
-		}
+		//}
 
 	}
 
