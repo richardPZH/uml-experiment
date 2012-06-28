@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 21:33:39 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -57,291 +57,299 @@ line level    source
   46          void fun1( void )
   47          {
   48   1              enum BUTTON_TYPE button;
-  49   1      
-  50   1              while( 1 )
-  51   1              {
-  52   2                      button = getKeyPressed();
-  53   2                      if( button != NON )
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 21:33:39 PAGE 2   
+  49   1              short cnt;
+  50   1      
+  51   1              while( 1 )
+  52   1              {
+  53   2                      button = getKeyPressed();
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 2   
 
-  54   2                      {
-  55   3                              LedConPort= 0x00;
-  56   3                              DataPort = comNegative[button];
-  57   3                      }
-  58   2      
-  59   2                      /*
-  60   2                      for( cnt=0 ; cnt<8; cnt++ )
-  61   2                      {
-  62   2                              LedConPort = cnt;
-  63   2                              DataPort = ch[cnt];
-  64   2                              delay_ms( 5 );
-  65   2                      }
-  66   2                      */
-  67   2              }
-  68   1      }
-  69          
-  70          volatile unsigned char buff[8];
-  71          volatile unsigned char ms50count;
-  72          
-  73          void fun2( void )
-  74          {
-  75   1              enum BUTTON_TYPE button;
-  76   1      
-  77   1              buff[0] = 0;
-  78   1              buff[1] = 9;
-  79   1              buff[2] = 0;
-  80   1              buff[3] = 0;
-  81   1              buff[4] = 3;
-  82   1              buff[5] = 0;
-  83   1              buff[6] = 2;
-  84   1              buff[7] = 0;
-  85   1      
-  86   1              ms50count=0;
+  54   2                      if( button != NON )
+  55   2                      {
+  56   3                              LedConPort= 0x00;
+  57   3                              DataPort = comNegative[button];
+  58   3                      }
+  59   2      
+  60   2                      /*
+  61   2                      for( cnt=0 ; cnt<8; cnt++ )
+  62   2                      {
+  63   2                              LedConPort = cnt;
+  64   2                              DataPort = ch[cnt];
+  65   2                              delay_ms( 5 );
+  66   2                      }
+  67   2                      */
+  68   2                      
+  69   2              }
+  70   1      }
+*** WARNING C280 IN LINE 49 OF MAIN.C: 'cnt': unreferenced local variable
+  71          
+  72          volatile unsigned char buff[8];
+  73          volatile unsigned char ms50count;
+  74          
+  75          void fun2( void )
+  76          {
+  77   1              enum BUTTON_TYPE button;
+  78   1      
+  79   1              buff[0] = 0;
+  80   1              buff[1] = 9;
+  81   1              buff[2] = 0;
+  82   1              buff[3] = 0;
+  83   1              buff[4] = 3;
+  84   1              buff[5] = 0;
+  85   1              buff[6] = 2;
+  86   1              buff[7] = 0;
   87   1      
-  88   1              setTimer2_50ms();
+  88   1              ms50count=0;
   89   1      
-  90   1              EA = 1;
-  91   1              while( 1 )
-  92   1              {
-  93   2                      button = getKeyPressed();
-  94   2      
-  95   2                      handleUserInput( button );
+  90   1              setTimer2_50ms();
+  91   1      
+  92   1              EA = 1;
+  93   1              while( 1 )
+  94   1              {
+  95   2                      button = getKeyPressed();
   96   2      
-  97   2                      updateSEGLED();
-  98   2              }
-  99   1      
- 100   1      }
- 101          
- 102          //set the timer2 interrupt every 50ms  
- 103          void setTimer2_50ms( void )
- 104          {
- 105   1              T2CON = 0x00;
- 106   1              TH2 = RCAP2H = 0x3C ;    
- 107   1              TL2 = RCAP2L = 0xB0 ;
- 108   1      
- 109   1              ET2 = 1;  //enable the timer 2 interrupt
- 110   1              TR2 = 1;  //start the timer     
- 111   1      }
- 112          
- 113          //timer2 interrup routine
- 114          void timer2Interrupt ( void ) interrupt 5
- 115          {
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 21:33:39 PAGE 3   
+  97   2                      handleUserInput( button );
+  98   2      
+  99   2                      updateSEGLED();
+ 100   2              }
+ 101   1      
+ 102   1      }
+ 103          
+ 104          //set the timer2 interrupt every 50ms  
+ 105          void setTimer2_50ms( void )
+ 106          {
+ 107   1              T2CON = 0x00;
+ 108   1              TH2 = RCAP2H = 0x3C ;    
+ 109   1              TL2 = RCAP2L = 0xB0 ;
+ 110   1      
+ 111   1              ET2 = 1;  //enable the timer 2 interrupt
+ 112   1              TR2 = 1;  //start the timer     
+ 113   1      }
+ 114          
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 3   
 
- 116   1              EA = 0;
- 117   1              TF2 = 0;
- 118   1      
- 119   1              ms50count++;
+ 115          //timer2 interrup routine
+ 116          void timer2Interrupt ( void ) interrupt 5
+ 117          {
+ 118   1              EA = 0;
+ 119   1              TF2 = 0;
  120   1      
- 121   1              if( 20 == ms50count )     //the timer is still running
- 122   1              {
- 123   2                      ms50count = 0;
- 124   2                      
- 125   2                      buff[7]++;
- 126   2      
- 127   2                      if( 10 == buff[7] )
- 128   2                      {
- 129   3                              buff[7]=0;
- 130   3      
- 131   3                              buff[6]++;
+ 121   1              ms50count++;
+ 122   1      
+ 123   1              if( 20 == ms50count )     //the timer is still running
+ 124   1              {
+ 125   2                      ms50count = 0;
+ 126   2                      
+ 127   2                      buff[7]++;
+ 128   2      
+ 129   2                      if( 10 == buff[7] )
+ 130   2                      {
+ 131   3                              buff[7]=0;
  132   3      
- 133   3                              if( 6 == buff[6] )
- 134   3                              {
- 135   4                                      buff[6]=0;
- 136   4      
- 137   4                                      buff[4]++;
+ 133   3                              buff[6]++;
+ 134   3      
+ 135   3                              if( 6 == buff[6] )
+ 136   3                              {
+ 137   4                                      buff[6]=0;
  138   4      
- 139   4                                      if( 10 == buff[4] )
- 140   4                                      {
- 141   5                                              buff[4] = 0;
- 142   5      
- 143   5                                              buff[3] ++;
+ 139   4                                      buff[4]++;
+ 140   4      
+ 141   4                                      if( 10 == buff[4] )
+ 142   4                                      {
+ 143   5                                              buff[4] = 0;
  144   5      
- 145   5                                              if( 6 == buff[3] )
- 146   5                                              {
- 147   6                                                      buff[3] = 0;
- 148   6      
- 149   6                                                      buff[1] ++;
+ 145   5                                              buff[3] ++;
+ 146   5      
+ 147   5                                              if( 6 == buff[3] )
+ 148   5                                              {
+ 149   6                                                      buff[3] = 0;
  150   6      
- 151   6                                                      if( 10 == buff[1] )
- 152   6                                                      {
- 153   7                                                              buff[1] =0;
- 154   7                                                              buff[0] ++;
- 155   7                                                      }
- 156   6                                              }
- 157   5                                      }
- 158   4      
- 159   4                              }
- 160   3                      }
- 161   2              }
- 162   1      
- 163   1      
- 164   1              EA = 1;
- 165   1      }
- 166          
- 167          
- 168          void updateSEGLED( void )
- 169          {
- 170   1              unsigned char cnt = sizeof( buff );    //remember the type of buff is an array !!
- 171   1              unsigned char c;
- 172   1      
- 173   1              for( c=0 ; c<cnt ; c++ )
- 174   1              {
- 175   2      
- 176   2                      LedConPort = c;
+ 151   6                                                      buff[1] ++;
+ 152   6      
+ 153   6                                                      if( 10 == buff[1] )
+ 154   6                                                      {
+ 155   7                                                              buff[1] =0;
+ 156   7                                                              buff[0] ++;
+ 157   7                                                      }
+ 158   6                                              }
+ 159   5                                      }
+ 160   4      
+ 161   4                              }
+ 162   3                      }
+ 163   2              }
+ 164   1      
+ 165   1      
+ 166   1              EA = 1;
+ 167   1      }
+ 168          
+ 169          
+ 170          void updateSEGLED( void )
+ 171          {
+ 172   1              unsigned char cnt = sizeof( buff );    //remember the type of buff is an array !!
+ 173   1              unsigned char c;
+ 174   1      
+ 175   1              for( c=0 ; c<cnt ; c++ )
+ 176   1              {
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 4   
+
  177   2      
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 21:33:39 PAGE 4   
-
- 178   2                      if( ( c % 3 ) == 2 )
- 179   2                      {
- 180   3                              DataPort = 0x40;
- 181   3                      }
- 182   2                      else
- 183   2                      {
- 184   3                              DataPort = comNegative[buff[c]];
- 185   3                      }
- 186   2      
- 187   2                      delay_ms( 2 );
- 188   2              }
- 189   1              
- 190   1      }
- 191          
- 192          //handle the user input
- 193          void handleUserInput( enum BUTTON_TYPE button )
- 194          {
- 195   1              char bk[8];
- 196   1              unsigned char cnt;
- 197   1      
- 198   1              EA = 0;   //no interrupt please
+ 178   2                      LedConPort = c;
+ 179   2      
+ 180   2                      if( ( c % 3 ) == 2 )
+ 181   2                      {
+ 182   3                              DataPort = 0x40;
+ 183   3                      }
+ 184   2                      else
+ 185   2                      {
+ 186   3                              DataPort = comNegative[buff[c]];
+ 187   3                      }
+ 188   2      
+ 189   2                      delay_ms( 1 );
+ 190   2              }
+ 191   1              
+ 192   1      }
+ 193          
+ 194          //handle the user input
+ 195          void handleUserInput( enum BUTTON_TYPE button )
+ 196          {
+ 197   1              char bk[8];
+ 198   1              unsigned char cnt;
  199   1      
- 200   1              if( SET != button )
- 201   1              {
- 202   2                      EA = 1;
- 203   2                      return ;
- 204   2              }
- 205   1      
- 206   1              //user hit the set button, so dota it.
- 207   1              memcpy( bk , buff , sizeof( buff ));
- 208   1              memset( buff , 0 , sizeof( buff ));
- 209   1      
- 210   1              for( cnt=0 ; cnt<8; )
- 211   1              {
- 212   2                      updateSEGLED();
- 213   2      
- 214   2                      button = getKeyPressed();
- 215   2      
- 216   2                      if( NON != button )
- 217   2                      {
- 218   3                              if( CANCEL == button )
- 219   3                              {
- 220   4                                      cnt = 8;
- 221   4                                      memcpy( buff , bk , sizeof( buff ));
- 222   4                              }else if( CONFIRM == button )
- 223   3                              {
- 224   4                                      cnt = 8;
- 225   4                              }
- 226   3              
- 227   3                              if( cnt == 2 || cnt == 5 )
- 228   3                                      cnt++;
- 229   3              
- 230   3                              buff[cnt] = (( unsigned char ) button )% 10;
- 231   3      
- 232   3                              cnt++;
- 233   3                      }
- 234   2      
- 235   2              }
- 236   1      
- 237   1              
- 238   1              EA = 1;
- 239   1      }
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 21:33:39 PAGE 5   
+ 200   1              EA = 0;   //no interrupt please
+ 201   1      
+ 202   1              if( SET != button )
+ 203   1              {
+ 204   2                      EA = 1;
+ 205   2                      return ;
+ 206   2              }
+ 207   1      
+ 208   1              //user hit the set button, so dota it.
+ 209   1              memcpy( bk , buff , sizeof( buff ));
+ 210   1              memset( buff , 0 , sizeof( buff ));
+ 211   1      
+ 212   1              updateSEGLED();
+ 213   1              for( cnt=0 ; cnt<8; )
+ 214   1              {
+ 215   2                      
+ 216   2      
+ 217   2                      button = NON;
+ 218   2                      while( button == NON  )
+ 219   2                      {
+ 220   3                              button = getKeyPressed();
+ 221   3                      }
+ 222   2      
+ 223   2                      //if( NON != button )
+ 224   2                      //{
+ 225   2                              if( CANCEL == button )
+ 226   2                              {
+ 227   3                                      cnt = 8;
+ 228   3                                      memcpy( buff , bk , sizeof( buff ));
+ 229   3                              }else if( CONFIRM == button )
+ 230   2                              {
+ 231   3                                      cnt = 8;
+ 232   3                              }
+ 233   2              
+ 234   2                              if( cnt == 2 || cnt == 5 )
+ 235   2                                      cnt++;
+ 236   2              
+ 237   2                              buff[cnt] = (( unsigned char ) button )% 10;
+ 238   2      
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 5   
 
- 240          
- 241          
- 242          
- 243          enum BUTTON_TYPE convertButton( unsigned char raw )
- 244          {
- 245   1              //use the simple if else stuff( switch case are essentially the same)
- 246   1              //can i figure out a classifier to compute and get raw to correct type more efficient?
- 247   1              switch( raw )
- 248   1              {
- 249   2                      case 0x11: return B7;break;
- 250   2                      case 0x21: return B8;break;
- 251   2                      case 0x41: return B9;break;
- 252   2                      case 0x81: return RES0;break;
- 253   2                      case 0x12: return B4;break;
- 254   2                      case 0x22: return B5;break;
- 255   2                      case 0x42: return B6;break;
- 256   2                      case 0x82: return CANCEL;break;
- 257   2                      case 0x14: return B1;break;
- 258   2                      case 0x24: return B2;break;
- 259   2                      case 0x44: return B3;break;
- 260   2                      case 0x84: return SET;break;
- 261   2                      case 0x18: return B0;break;
- 262   2                      case 0x28: return RES1;break;
- 263   2                      case 0x48: return RES2;break;
- 264   2                      case 0x88: return CONFIRM;break;
- 265   2                      default: return NON;
- 266   2              }
- 267   1      
- 268   1              return RES0;
- 269   1      }
- 270          
- 271          //This is a bad implementation 
- 272          //They have a bette approach 
- 273          //First read the key into firstKey    ( if first read faild, give up immediately)
- 274          //Second reread the key into secondKey 
- 275          //if they are the same so it is pressed 
- 276          //if not return NON
- 277          enum BUTTON_TYPE getKeyPressed( void )
- 278          {
- 279   1      #ifndef KEY_PORT
+ 239   2                              cnt++;
+ 240   2                      //}
+ 241   2      
+ 242   2              }
+ 243   1      
+ 244   1              
+ 245   1              EA = 1;
+ 246   1      }
+ 247          
+ 248          
+ 249          
+ 250          enum BUTTON_TYPE convertButton( unsigned char raw )
+ 251          {
+ 252   1              //use the simple if else stuff( switch case are essentially the same)
+ 253   1              //can i figure out a classifier to compute and get raw to correct type more efficient?
+ 254   1              switch( raw )
+ 255   1              {
+ 256   2                      case 0x11: return B7;break;
+ 257   2                      case 0x21: return B8;break;
+ 258   2                      case 0x41: return B9;break;
+ 259   2                      case 0x81: return RES0;break;
+ 260   2                      case 0x12: return B4;break;
+ 261   2                      case 0x22: return B5;break;
+ 262   2                      case 0x42: return B6;break;
+ 263   2                      case 0x82: return CANCEL;break;
+ 264   2                      case 0x14: return B1;break;
+ 265   2                      case 0x24: return B2;break;
+ 266   2                      case 0x44: return B3;break;
+ 267   2                      case 0x84: return SET;break;
+ 268   2                      case 0x18: return B0;break;
+ 269   2                      case 0x28: return RES1;break;
+ 270   2                      case 0x48: return RES2;break;
+ 271   2                      case 0x88: return CONFIRM;break;
+ 272   2                      default: return NON;
+ 273   2              }
+ 274   1      
+ 275   1              return RES0;
+ 276   1      }
+ 277          
+ 278          //This is a bad implementation 
+ 279          //They have a bette approach 
+ 280          //First read the key into firstKey    ( if first read faild, give up immediately)
+ 281          //Second reread the key into secondKey 
+ 282          //if they are the same so it is pressed 
+ 283          //if not return NON
+ 284          enum BUTTON_TYPE getKeyPressed( void )
+ 285          {
+ 286   1      #ifndef KEY_PORT
               #error "No KEY_PORT defined function getKeyPressed() can't work!!"
               #endif
- 282   1      
- 283   1              unsigned char x_temp,y_temp;
- 284   1      
- 285   1              KEY_PORT = 0x0F;
- 286   1      
- 287   1              x_temp = KEY_PORT;
- 288   1      
- 289   1              KEY_PORT = 0xF0;
- 290   1      
- 291   1              y_temp = KEY_PORT;
- 292   1      
- 293   1              x_temp = x_temp | y_temp;
- 294   1              
- 295   1              x_temp = ~x_temp;
- 296   1      
- 297   1              //wait for user to release the key
- 298   1              do
- 299   1              {
- 300   2                      KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very
-             - easy, set a wait and let other run. when timeout check the value if fail..continue wait...
-C51 COMPILER V7.50   MAIN                                                                  05/19/2012 21:33:39 PAGE 6   
+ 289   1      
+ 290   1              unsigned char x_temp,y_temp;
+ 291   1      
+ 292   1              KEY_PORT = 0x0F;
+ 293   1      
+ 294   1              x_temp = KEY_PORT;
+ 295   1      
+ 296   1              KEY_PORT = 0xF0;
+ 297   1      
+ 298   1              y_temp = KEY_PORT;
+ 299   1      
+ 300   1              x_temp = x_temp | y_temp;
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 6   
 
- 301   2                      updateSEGLED();         //time sharing .. it's a good idea to have an OS support!!
- 302   2              }
- 303   1              while( KEY_PORT != 0xF0 );
- 304   1              
- 305   1              
- 306   1              return ( convertButton(x_temp) );
- 307   1      }
- 308          
- 309          
- 310          
- 311          
+ 301   1              
+ 302   1              x_temp = ~x_temp;
+ 303   1      
+ 304   1              //wait for user to release the key
+ 305   1              do
+ 306   1              {
+ 307   2                      KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very
+             - easy, set a wait and let other run. when timeout check the value if fail..continue wait...
+ 308   2                      updateSEGLED();         //time sharing .. it's a good idea to have an OS support!!
+ 309   2              }
+ 310   1              while( KEY_PORT != 0xF0 );
+ 311   1              
+ 312   1              
+ 313   1              return ( convertButton(x_temp) );
+ 314   1      }
+ 315          
+ 316          
+ 317          
+ 318          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    502    ----
+   CODE SIZE        =    504    ----
    CONSTANT SIZE    =      8    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     29      14
+   DATA SIZE        =     29      16
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
