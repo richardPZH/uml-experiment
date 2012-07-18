@@ -1,8 +1,8 @@
 #include<REG52.H>
 #include<IMSutil.h>
 
-#define RUNNING_BASKETBALL_COUNTER 0
-#define COUNTER_1MS 1
+#define RUNNING_BASKETBALL_COUNTER 1
+#define COUNTER_1MS 0
 
 
 #if ( ( RUNNING_BASKETBALL_COUNTER + COUNTER_1MS ) != 1 )

@@ -7,6 +7,18 @@ E:\uml-experiment\QianRuShi\experiment\exp4\exp4.uv2
 Project File Date:  05/10/2012
 
 <h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+compiling IMSutil.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?UPDATE7SEG?MAIN
+    CALLER1: ?C_C51STARTUP
+    CALLER2: ?PR?TIMER2INTERRUPT?MAIN
+Program Size: data=37.2 xdata=0 code=969
+creating hex file from "exp4"...
+"exp4" - 0 Error(s), 1 Warning(s).
 </pre>
 </body>
 </html>

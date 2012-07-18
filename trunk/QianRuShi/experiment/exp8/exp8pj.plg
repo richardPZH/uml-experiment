@@ -4,7 +4,11 @@
 <h1>µVision3 Build Log</h1>
 <h2>Project:</h2>
 E:\uml-experiment\QianRuShi\experiment\exp8\exp8pj.uv2
+<<<<<<< .mine
+Project File Date:  06/28/2012
+=======
 Project File Date:  05/25/2012
+>>>>>>> .r137
 
 <h2>Output:</h2>
 Build target 'Target 1'
@@ -18,8 +22,43 @@ linking...
     SEGMENT: ?CO?MAIN
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?DELAY_100US?IMSUTIL
+<<<<<<< .mine
+Program Size: data=52.0 xdata=0 code=1044
+=======
 Program Size: data=52.0 xdata=0 code=1046
+>>>>>>> .r137
 creating hex file from "exp8pj"...
+<<<<<<< .mine
+"exp8pj" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+compiling IMSutil.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FUN2?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY_100US?IMSUTIL
+Program Size: data=52.0 xdata=0 code=1044
+creating hex file from "exp8pj"...
+"exp8pj" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+compiling IMSutil.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FUN2?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY_100US?IMSUTIL
+Program Size: data=51.0 xdata=0 code=1038
+creating hex file from "exp8pj"...
+"exp8pj" - 0 Error(s), 3 Warning(s).
+=======
 "exp8pj" - 0 Error(s), 3 Warning(s).
 Build target 'Target 1'
 assembling STARTUP.A51...
@@ -107,3 +146,4 @@ linking...
 Program Size: data=54.0 xdata=0 code=1046
 creating hex file from "exp8pj"...
 "exp8pj" - 0 Error(s), 4 Warning(s).
+>>>>>>> .r137

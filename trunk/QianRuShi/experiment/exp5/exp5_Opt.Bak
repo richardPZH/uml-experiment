@@ -31,7 +31,15 @@ TARGOPT 1, (Target 1)
   OPTBL 2,(Instruction Set Manual)<DATASHTS\ATMEL\AT_C51ISM.PDF>
   OPTDL (S8051.DLL)()(DP51.DLL)(-p52)(S8051.DLL)()(TP51.DLL)(-p52)
   OPTDBG 48126,-1,()()()()()()()()()() (BIN\VDM51.DLL)()()()
-  OPTDF 0x40000002
+  OPTKEY 0,(DLGTP51)((98=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(99=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0))
+  OPTKEY 0,(VDM51)(-A127.0.0.1 -P8000 -O2)
+  OPTBB 0,0,17,1,-16776988,0,0,0,0,1,<main.c>()()
+  OPTBB 1,0,47,1,-16777157,0,0,0,0,1,<MAIN.C>()()
+  OPTBB 2,0,67,1,-16777058,0,0,0,0,1,<MAIN.C>()()
+  OPTWA 0,1,(tc0)
+  OPTWA 1,1,(tc1)
+  OPTMM 1,0,(d:0x00)
+  OPTDF 0x40000086
   OPTLE <>
   OPTLC <>
 EndOpt
