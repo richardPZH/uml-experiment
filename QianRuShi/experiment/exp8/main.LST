@@ -1,4 +1,8 @@
+<<<<<<< .mine
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:59:22 PAGE 1   
+=======
 C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 1   
+>>>>>>> .r137
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -46,9 +50,9 @@ line level    source
   35          int main( void )
   36          {
   37   1      
-  38   1              //fun1();
+  38   1              fun1();
   39   1      
-  40   1              fun2();
+  40   1              //fun2();
   41   1              
   42   1      
   43   1              return 0;
@@ -57,12 +61,21 @@ line level    source
   46          void fun1( void )
   47          {
   48   1              enum BUTTON_TYPE button;
+<<<<<<< .mine
+  49   1      
+  50   1              while( 1 )
+  51   1              {
+  52   2                      button = getKeyPressed();
+  53   2                      if( button != NON )
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:59:22 PAGE 2   
+=======
   49   1              short cnt;
   50   1      
   51   1              while( 1 )
   52   1              {
   53   2                      button = getKeyPressed();
 C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 2   
+>>>>>>> .r137
 
   54   2                      if( button != NON )
   55   2                      {
@@ -108,6 +121,28 @@ line level    source
   94   1              {
   95   2                      button = getKeyPressed();
   96   2      
+<<<<<<< .mine
+  97   2                      updateSEGLED();
+  98   2              }
+  99   1      
+ 100   1      }
+ 101          
+ 102          //set the timer2 interrupt every 50ms  
+ 103          void setTimer2_50ms( void )
+ 104          {
+ 105   1              T2CON = 0x00;
+ 106   1              TH2 = RCAP2H = 0x3C ;    
+ 107   1              TL2 = RCAP2L = 0xB0 ;
+ 108   1      
+ 109   1              ET2 = 1;  //enable the timer 2 interrupt
+ 110   1              TR2 = 1;  //start the timer     
+ 111   1      }
+ 112          
+ 113          //timer2 interrup routine
+ 114          void timer2Interrupt ( void ) interrupt 5
+ 115          {
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:59:22 PAGE 3   
+=======
   97   2                      handleUserInput( button );
   98   2      
   99   2                      updateSEGLED();
@@ -127,6 +162,7 @@ line level    source
  113   1      }
  114          
 C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 3   
+>>>>>>> .r137
 
  115          //timer2 interrup routine
  116          void timer2Interrupt ( void ) interrupt 5
@@ -193,6 +229,31 @@ line level    source
 C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 4   
 
  177   2      
+<<<<<<< .mine
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:59:22 PAGE 4   
+
+ 178   2                      if( ( c % 3 ) == 2 )
+ 179   2                      {
+ 180   3                              DataPort = 0x40;
+ 181   3                      }
+ 182   2                      else
+ 183   2                      {
+ 184   3                              DataPort = comNegative[buff[c]];
+ 185   3                      }
+ 186   2      
+ 187   2                      delay_ms( 2 );
+ 188   2              }
+ 189   1              
+ 190   1      }
+ 191          
+ 192          //handle the user input
+ 193          void handleUserInput( enum BUTTON_TYPE button )
+ 194          {
+ 195   1              char bk[8];
+ 196   1              unsigned char cnt;
+ 197   1      
+ 198   1              EA = 0;   //no interrupt please
+=======
  178   2                      LedConPort = c;
  179   2      
  180   2                      if( ( c % 3 ) == 2 )
@@ -214,7 +275,51 @@ line level    source
  196          {
  197   1              char bk[8];
  198   1              unsigned char cnt;
+>>>>>>> .r137
  199   1      
+<<<<<<< .mine
+ 200   1              if( SET != button )
+ 201   1              {
+ 202   2                      EA = 1;
+ 203   2                      return ;
+ 204   2              }
+ 205   1      
+ 206   1              //user hit the set button, so dota it.
+ 207   1              memcpy( bk , buff , sizeof( buff ));
+ 208   1              memset( buff , 0 , sizeof( buff ));
+ 209   1      
+ 210   1              for( cnt=0 ; cnt<8; )
+ 211   1              {
+ 212   2                      updateSEGLED();
+ 213   2      
+ 214   2                      button = getKeyPressed();
+ 215   2      
+ 216   2                      if( NON != button )
+ 217   2                      {
+ 218   3                              if( CANCEL == button )
+ 219   3                              {
+ 220   4                                      cnt = 8;
+ 221   4                                      memcpy( buff , bk , sizeof( buff ));
+ 222   4                              }else if( CONFIRM == button )
+ 223   3                              {
+ 224   4                                      cnt = 8;
+ 225   4                              }
+ 226   3              
+ 227   3                              if( cnt == 2 || cnt == 5 )
+ 228   3                                      cnt++;
+ 229   3              
+ 230   3                              buff[cnt] = (( unsigned char ) button )% 10;
+ 231   3      
+ 232   3                              cnt++;
+ 233   3                      }
+ 234   2      
+ 235   2              }
+ 236   1      
+ 237   1              
+ 238   1              EA = 1;
+ 239   1      }
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:59:22 PAGE 5   
+=======
  200   1              EA = 0;   //no interrupt please
  201   1      
  202   1              if( SET != button )
@@ -255,6 +360,7 @@ line level    source
  237   2                              buff[cnt] = (( unsigned char ) button )% 10;
  238   2      
 C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:20:08 PAGE 5   
+>>>>>>> .r137
 
  239   2                              cnt++;
  240   2                      //}
@@ -328,6 +434,9 @@ line level    source
  306   1              {
  307   2                      KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very
              - easy, set a wait and let other run. when timeout check the value if fail..continue wait...
+<<<<<<< .mine
+C51 COMPILER V7.50   MAIN                                                                  06/28/2012 19:59:22 PAGE 6   
+=======
  308   2                      updateSEGLED();         //time sharing .. it's a good idea to have an OS support!!
  309   2              }
  310   1              while( KEY_PORT != 0xF0 );
@@ -339,14 +448,37 @@ line level    source
  316          
  317          
  318          
+>>>>>>> .r137
 
+<<<<<<< .mine
+ 301   2                      //updateSEGLED();         //time sharing .. it's a good idea to have an OS support!!
+ 302   2              }
+ 303   1              while( KEY_PORT != 0xF0 );
+ 304   1              
+ 305   1              
+ 306   1              return ( convertButton(x_temp) );
+ 307   1      }
+ 308          
+ 309          
+ 310          
+ 311          
+=======
+>>>>>>> .r137
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
+<<<<<<< .mine
+   CODE SIZE        =    496    ----
+=======
    CODE SIZE        =    504    ----
+>>>>>>> .r137
    CONSTANT SIZE    =      8    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
+<<<<<<< .mine
+   DATA SIZE        =     29      13
+=======
    DATA SIZE        =     29      16
+>>>>>>> .r137
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

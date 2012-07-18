@@ -11,15 +11,252 @@ Build target 'Target 1'
 assembling STARTUP.A51...
 assembling Conf_tny.A51...
 compiling tasks.c...
-linking...
-Program Size: data=40.0 xdata=0 code=1847
-creating hex file from "Elavator"...
-"Elavator" - 0 Error(s), 0 Warning(s).
+TASKS.C(117): error C141: syntax error near 'if', expected ';'
+TASKS.C(128): error C141: syntax error near '}', expected ';'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+TASKS.C(128): error C141: syntax error near '}', expected ';'
+Target not created
 Build target 'Target 1'
 assembling STARTUP.A51...
 assembling Conf_tny.A51...
 compiling tasks.c...
 linking...
-Program Size: data=40.0 xdata=0 code=1847
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=52.0 xdata=0 code=2239
 creating hex file from "Elavator"...
-"Elavator" - 0 Error(s), 0 Warning(s).
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=52.0 xdata=0 code=2239
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=52.0 xdata=0 code=2207
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=52.0 xdata=0 code=2189
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=52.0 xdata=0 code=2189
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=55.0 xdata=0 code=2195
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=55.0 xdata=0 code=2190
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=55.0 xdata=0 code=2195
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+Program Size: data=55.0 xdata=0 code=2195
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?TASK_INPRESS?TASKS
+    CALLER2: ?PR?TASK_MOTOR?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?TASK_INPRESS?TASKS
+    CALLER2: ?PR?TASK_MOTOR?TASKS
+Program Size: data=61.0 xdata=0 code=2201
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+TASKS.C(172): warning C209: '_os_wait': too few actual parameters
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?TASK_INPRESS?TASKS
+    CALLER2: ?PR?TASK_MOTOR?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?TASK_INPRESS?TASKS
+    CALLER2: ?PR?TASK_MOTOR?TASKS
+Program Size: data=61.0 xdata=0 code=2206
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+TASKS.C(174): warning C209: '_os_wait': too few actual parameters
+TASKS.C(250): error C141: syntax error near 'void'
+TASKS.C(251): error C141: syntax error near '{'
+TASKS.C(354): error C141: syntax error near 'unsigned'
+TASKS.C(355): error C141: syntax error near '{'
+TASKS.C(477): error C141: syntax error near 'unsigned'
+TASKS.C(478): error C141: syntax error near '{'
+TASKS.C(624): error C141: syntax error near 'void'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+TASKS.C(250): error C141: syntax error near 'void'
+TASKS.C(251): error C141: syntax error near '{'
+TASKS.C(354): error C141: syntax error near 'unsigned'
+TASKS.C(355): error C141: syntax error near '{'
+TASKS.C(477): error C141: syntax error near 'unsigned'
+TASKS.C(478): error C141: syntax error near '{'
+TASKS.C(624): error C141: syntax error near 'void'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+assembling Conf_tny.A51...
+compiling tasks.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?ELAVATOR?TASKS
+    CALLER2: ?PR?TASK_INPRESS?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?INPRESS?TASKS
+    CALLER1: ?PR?TASK_INPRESS?TASKS
+    CALLER2: ?PR?TASK_MOTOR?TASKS
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?SETALARMLIGHT?TASKS
+    CALLER1: ?PR?TASK_INPRESS?TASKS
+    CALLER2: ?PR?TASK_MOTOR?TASKS
+Program Size: data=61.0 xdata=0 code=2240
+creating hex file from "Elavator"...
+"Elavator" - 0 Error(s), 4 Warning(s).

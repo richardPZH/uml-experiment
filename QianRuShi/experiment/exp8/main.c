@@ -35,9 +35,9 @@ void handleUserInput( enum BUTTON_TYPE button );
 int main( void )
 {
 
-	//fun1();
+	fun1();
 
-	fun2();
+	//fun2();
 	
 
 	return 0;
@@ -305,7 +305,7 @@ enum BUTTON_TYPE getKeyPressed( void )
 	do
 	{
 		KEY_PORT = 0xF0;         //can/should I use delay here?? If I have an operating system , it will be very easy, set a wait and let other run. when timeout check the value if fail..continue wait...
-		updateSEGLED();         //time sharing .. it's a good idea to have an OS support!!
+		//updateSEGLED();         //time sharing .. it's a good idea to have an OS support!!
 	}
 	while( KEY_PORT != 0xF0 );
 	

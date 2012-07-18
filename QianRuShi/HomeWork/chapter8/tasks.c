@@ -85,11 +85,11 @@ void position(void)
 }
 
 /****************************************/
-/*                 main task            */
+/*                 init task            */
 /****************************************/
 void elavator(void) _task_ 0
 { 
-  time(100);
+  time(100);  //Get others ready
   initLights();
   position();//电机定位
   ucMotorDrvPuls=0x11;
@@ -98,41 +98,108 @@ void elavator(void) _task_ 0
   setUpLight();
   time(100);
   
+  os_create_task( 1 );
+  os_create_task( 2 );
+  os_create_task( 3 );
+
   while(1)//主循环
   {
-	  outPress();//按下电梯外按钮
-	  while(STOPCUR==1)//电梯在当前层，电梯不动，可以继续接受请求
-	  {
-	    outPress();
-	    inPress();
-	  }  
+	  do{
+		  os_send_signal( 1 );
+	
+		  os_wait1( K_SIG ); //wait for fisrt scan to finish
 
-	  if(inPress())//按下电梯内楼层按钮
+		  os_send_signal( 2 );
+	
+		  os_wait1( K_SIG ); //wait for second scan to finish
+
+	  }while( STOPCUR == 1 );//电梯在当前层，电梯不动，可以继续接受请求
+	    
+
+	  if( inPress() )//按下电梯内楼层按钮
 	  {
-	    while(START)//等待启动按键按下，电梯不动，可以继续接受请求
-	    {
-	      outPress();
-	      inPress();
-	    }
+		do{
+			  os_send_signal( 1 );
+	
+			  os_wait1( K_SIG ); //wait for fisrt scan to finish
+
+			  os_send_signal( 2 );
+	
+			  os_wait1( K_SIG ); //wait for second scan to finish
+
+		  }while( START );//等待启动按键按下，电梯不动，可以继续接受请求
 	  }
+	
+	  os_send_signal( 3 );
 
-	  while(1)//电机运转循环
-	  {
-	    if(UP_req[1]==0&&UP_req[2]==0&&UP_req[3]==0&&
-		DOWN_req[2]==0&&DOWN_req[3]==0&&DOWN_req[4]==0) 
+	  os_wait1( K_SIG );
+
+	  OUTPUT=0x00|(P2&0xf0);//电机停止，有请求时按下启动按钮启动
+	  
+
+  }//end while-主循环   
+}
+
+//outpress task
+void task_outPress(void) _task_ 1
+{
+	while( 1 )
+	{
+		os_wait1( K_SIG );
+
+		outPress();
+
+		os_send_signal( 0 );
+
+	}
+}
+
+//inPress task
+void task_inPress( void ) _task_ 2
+{
+	while( 1 )
+	{
+		os_wait1( K_SIG );
+
+		inPress();
+
+		os_send_signal( 0 );
+
+	}
+}
+
+//motor task
+void task_motor( void ) _task_ 3
+{
+	os_wait1( K_SIG );
+	while( 1 )
+	{
+	    if(UP_req[1]==0&&UP_req[2]==0&&UP_req[3]==0 && DOWN_req[2]==0&&DOWN_req[3]==0&&DOWN_req[4]==0) 
 		{
-		  break;//没有请求，跳出电机运转循环，电梯不动
+			os_send_signal( 0 );
+			os_wait1( K_SIG );
+			continue;//没有请求，跳出电机运转循环，电梯不动
 		}
 		  
 	    if(FORREV)//上行 
 	    { 
 		  setUpLight();//上行灯亮
 
-		  if(STOPCUR==1){break;}//
+		  if(STOPCUR==1){
+			os_send_signal( 0 );
+			os_wait1( K_SIG );
+			continue;//没有请求，跳出电机运转循环，电梯不动
+		  }//
 
 		  if(elevator())//往上到达某一层
 	      {
-			if(CURFLR==4) {setDownLight();break;}//到达四楼
+			if(CURFLR==4) {
+				setDownLight();
+				os_send_signal( 0 );
+				os_wait1( K_SIG );
+				continue;//没有请求，跳出电机运转循环，电梯不动
+			}
+
 	      }
 	      OUTPUT=(ucMotorDrvPuls&0x0f)|(P2&0xf0);
 		  ucMotorDrvPuls=_crol_(ucMotorDrvPuls,1);
@@ -140,13 +207,22 @@ void elavator(void) _task_ 0
 	    if(!FORREV)//下行
 	    {
 		  setDownLight();//下行灯亮
-;
-		  if(STOPCUR==1){break;}
+
+		  if(STOPCUR==1){
+			os_send_signal( 0 );
+			os_wait1( K_SIG );
+			continue;//没有请求，跳出电机运转循环，电梯不动
+		  }
 
 		  if(elevator())//往下到达某一层
 	      {
-			if(CURFLR==1) {setUpLight();break;}//到达一楼
+			if(CURFLR==1) {
+			setUpLight();//到达一楼
+			os_send_signal( 0 );
+			os_wait1( K_SIG );
+			continue;//没有请求，跳出电机运转循环，电梯不动
 	      }
+		  }
 	      OUTPUT=(ucMotorDrvPuls&0x0f)|(P2&0xf0);
 		  ucMotorDrvPuls=_cror_(ucMotorDrvPuls,1);
 	    }	
@@ -161,14 +237,12 @@ void elavator(void) _task_ 0
 	     // }
 		//}
 
-	    time(380-UCTIMES*16);
+		os_wait( K_TMO , ( 380 - UCTIMES*16 ) / 10, 0 );
 
-	  }//end while-电机运转循环
-	
-	OUTPUT=0x00|(P2&0xf0);//电机停止，有请求时按下启动按钮启动
+	}
 
-  }//end while-主循环   
 }
+
 
 /****************************************/
 /*               按钮事件               */
