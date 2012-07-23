@@ -29,9 +29,13 @@ int main(int argc, char** argv) {
 
     cout << c <<endl;
 
-    bitset< 32 > bs;   //try bit set
+    bitset< 33 > bs;   //try bit set
 
     cout << "the size of bs is :" << sizeof( bs ) <<endl;
+
+    bitset< unsigned int> * p_bs;
+
+    p_bs = new bitset< unsigned int >( 10000 );
 
     return 0;
 }
