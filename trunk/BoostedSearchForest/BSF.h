@@ -25,6 +25,8 @@ private:
     Tree * forestEntrance;           //Entrance of the forest, in fact is a place where trees reside
     const Mat< char > * p_s;         //a pointer to the similarity matrix [ s11 s12 ... s1n ; s21 s22 .. s2n ; .... ; sn1 sn2 ... snn ] the similarity matrix's diagno is 1 and symmetrical
     const Mat< double > * p_x;       //a pointer to the original sample matrix [ x11 x12 x13 .. x1k ; x21 x22 x23 ..x2k ; ... ; xn1 xn2 xn3 ... xnk ]
+
+
 };
 
 #endif	/* BSF_H */
