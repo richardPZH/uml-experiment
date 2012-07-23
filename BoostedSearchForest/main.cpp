@@ -39,6 +39,15 @@ int main(int argc, char** argv) {
     cout << "the size of bs is :" << sizeof( bs ) <<endl;
 
 
+    cout<< "the size of size_t is " << sizeof( size_t ) <<endl;
+    
+    size_t s1=5;
+    size_t s2=7;
+
+    cout<< "s1=" <<s1 <<"  s2="<<s2<<endl;
+    cout<< "s2 - 21 = "<<s2 - s1 <<endl;
+    cout<< "s1 - s2 = "<< s1 - s2 << endl;
+
     return 0;
 }
 
