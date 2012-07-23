@@ -11,7 +11,6 @@
 class BSF {
 public:
     BSF();
-    BSF(const BSF& orig);
     virtual ~BSF();
 private:
 

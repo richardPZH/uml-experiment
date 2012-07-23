@@ -11,9 +11,10 @@
 class Tree {
 public:
     Tree();
-    Tree(const Tree& orig);
     virtual ~Tree();
 private:
+    double cm;           //the weight c of this tree
+    
 
 };
 

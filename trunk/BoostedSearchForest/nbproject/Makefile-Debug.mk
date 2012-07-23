@@ -33,7 +33,10 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/Tree.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/BSF.o \
+	${OBJECTDIR}/TreeNode.o
 
 
 # C Compiler Flags
@@ -60,10 +63,25 @@ dist/Debug/GNU-Linux-x86/boostedsearchforest: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-Linux-x86
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/boostedsearchforest ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
+${OBJECTDIR}/Tree.o: Tree.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Tree.o Tree.cpp
+
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/BSF.o: BSF.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/BSF.o BSF.cpp
+
+${OBJECTDIR}/TreeNode.o: TreeNode.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/TreeNode.o TreeNode.cpp
 
 # Subprojects
 .build-subprojects:

@@ -10,8 +10,6 @@
 BSF::BSF() {
 }
 
-BSF::BSF(const BSF& orig) {
-}
 
 BSF::~BSF() {
 }
