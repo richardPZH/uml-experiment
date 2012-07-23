@@ -9,6 +9,7 @@
 #include <iostream>
 #include <armadillo>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 using namespace arma;
@@ -52,6 +53,18 @@ int main(int argc, char** argv) {
     
     cout<< "a = "<<ba<<endl;
     cout<< "!a = "<<!(ba)<<endl;
+
+    vector< Col<double> > vec_coldouble(5);
+    vector<int> vec_array(10);
+
+    vec_array.push_back( 5 );
+    vec_array.push_back( 4 );
+
+    size_t numi= vec_array.size();
+    for( size_t i=0; i< numi ; i++ )
+    {
+        cout<<vec_array[i]<<"\t";
+    }
 
     return 0;
 }
