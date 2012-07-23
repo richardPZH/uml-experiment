@@ -11,7 +11,6 @@
 //#define NumOfHyperplane 1         //how many hyperplanes we store in the interalnode, default is 1
 
 #include "TreeNode.h"
-#include <iostream>
 #include <vector>
 #include <armadillo>
 
@@ -26,6 +25,8 @@ public:
 private:
     std::vector< Col<double>  > p_vector;  //well, use Col<double>  or Col<cx_double> ??? ask someone
 
+    TreeNode * leftChild;
+    TreeNode * rightChild;
 
 };
 
