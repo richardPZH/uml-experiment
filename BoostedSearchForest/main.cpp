@@ -1,7 +1,9 @@
 /* 
  * File:   main.cpp
  * Author: alpha
- *
+ * IMS don't be lazy. Remember to compile
+ * Stop the compile error at the source. Stop them from growing.
+ * When you are idel. Compile & Compile it.
  * Created on July 23, 2012, 8:24 AM
  */
 

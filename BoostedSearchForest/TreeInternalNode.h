@@ -23,7 +23,8 @@ public:
     virtual ~TreeInternalNode();
 
 private:
-    std::vector< Col<double>  > p_vector;  //well, use Col<double>  or Col<cx_double> ??? ask someone
+    std::vector< Row<double>   > p_vector;
+    //well, use Row<double>  or Row<cx_double> ??? ask someone; we store the p~ not p, (p~)t * x~ > 0  (p~)t is 1*n
 
     TreeNode * leftChild;
     TreeNode * rightChild;
