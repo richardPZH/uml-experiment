@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <armadillo>
+#include <bitset>
 
 using namespace std;
 using namespace arma;
@@ -27,6 +28,10 @@ int main(int argc, char** argv) {
     c = a * b;
 
     cout << c <<endl;
+
+    bitset< 32 > bs;   //try bit set
+
+    cout << "the size of bs is :" << sizeof( bs ) <<endl;
 
     return 0;
 }
