@@ -9,7 +9,11 @@
       <itemPath>BSF.h</itemPath>
       <itemPath>Tree.cpp</itemPath>
       <itemPath>Tree.h</itemPath>
+      <itemPath>TreeInternalNode.cpp</itemPath>
+      <itemPath>TreeInternalNode.h</itemPath>
+      <itemPath>TreeLeafNode.cpp</itemPath>
       <itemPath>TreeNode.cpp</itemPath>
+      <itemPath>TreeNode.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
