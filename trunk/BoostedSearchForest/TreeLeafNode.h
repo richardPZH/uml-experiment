@@ -8,7 +8,10 @@
 #ifndef TREELEAFNODE_H
 #define	TREELEAFNODE_H
 
-class TreeLeafNode {
+#include "TreeNode.h"
+
+
+class TreeLeafNode : public TreeNode{
 public:
     TreeLeafNode();
     virtual ~TreeLeafNode();

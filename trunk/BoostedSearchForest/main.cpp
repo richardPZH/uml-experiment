@@ -18,7 +18,7 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
-    srand(time(NULL));
+    srand(time(NULL));           //the randu may need this
 
     cout<<"hello world"<<endl;
 
@@ -47,6 +47,11 @@ int main(int argc, char** argv) {
     cout<< "s1=" <<s1 <<"  s2="<<s2<<endl;
     cout<< "s2 - 21 = "<<s2 - s1 <<endl;
     cout<< "s1 - s2 = "<< s1 - s2 << endl;
+
+    bool ba=0;
+    
+    cout<< "a = "<<ba<<endl;
+    cout<< "!a = "<<!(ba)<<endl;
 
     return 0;
 }
