@@ -37,6 +37,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Tree.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/TreeInternalNode.o \
+	${OBJECTDIR}/compileTest.o \
 	${OBJECTDIR}/BSF.o \
 	${OBJECTDIR}/TreeNode.o
 
@@ -84,6 +85,11 @@ ${OBJECTDIR}/TreeInternalNode.o: TreeInternalNode.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/TreeInternalNode.o TreeInternalNode.cpp
+
+${OBJECTDIR}/compileTest.o: compileTest.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/compileTest.o compileTest.cpp
 
 ${OBJECTDIR}/BSF.o: BSF.cpp 
 	${MKDIR} -p ${OBJECTDIR}
