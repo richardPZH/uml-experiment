@@ -12,7 +12,10 @@ class TreeNode {
 public:
     TreeNode();
     virtual ~TreeNode();
-private:
+    bool isInternal( void );
+    bool isLeaf( void );
+protected:
+    bool internalNode;
 
 };
 

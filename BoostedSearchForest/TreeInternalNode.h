@@ -8,7 +8,10 @@
 #ifndef TREEINTERNALNODE_H
 #define	TREEINTERNALNODE_H
 
-class TreeInternalNode {
+#include "TreeNode.h"
+
+
+class TreeInternalNode : public TreeNode{
 public:
     TreeInternalNode();
     virtual ~TreeInternalNode();

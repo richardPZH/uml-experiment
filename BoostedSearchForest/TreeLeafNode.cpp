@@ -8,6 +8,9 @@
 #include "TreeLeafNode.h"
 
 TreeLeafNode::TreeLeafNode() {
+
+    //leaf node
+    internalNode = 0;
 }
 
 

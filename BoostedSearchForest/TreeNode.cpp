@@ -13,3 +13,12 @@ TreeNode::TreeNode() {
 TreeNode::~TreeNode() {
 }
 
+bool TreeNode:: isInternal( void )
+{
+    return internalNode;
+}
+
+bool TreeNode:: isLeaf( void )
+{
+    return !( internalNode );
+}

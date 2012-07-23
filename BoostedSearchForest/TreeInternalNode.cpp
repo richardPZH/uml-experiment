@@ -8,6 +8,9 @@
 #include "TreeInternalNode.h"
 
 TreeInternalNode::TreeInternalNode() {
+
+    //internal node
+    internalNode = 1;
 }
 
 TreeInternalNode::~TreeInternalNode() {
