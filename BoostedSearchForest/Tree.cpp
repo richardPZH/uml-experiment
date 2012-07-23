@@ -10,8 +10,6 @@
 Tree::Tree() {
 }
 
-Tree::Tree(const Tree& orig) {
-}
 
 Tree::~Tree() {
 }
