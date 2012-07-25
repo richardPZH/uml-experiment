@@ -12,6 +12,11 @@ TreeNode::TreeNode() {
 }
 
 TreeNode::~TreeNode() {
+    //if this is an internal node the intL works and the pvector must have a value, delete it
+    if( myType == INTERNAL )
+    {
+        delete intL.pvector;
+    }
 }
 
 bool TreeNode:: isInternal( void )
