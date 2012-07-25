@@ -11,6 +11,7 @@
 #include <iostream>
 #include <armadillo>
 #include <bitset>
+#include <limits>
 #include <vector>
 
 using namespace std;
@@ -21,9 +22,18 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
-    
 
+    double mina =  numeric_limits< double >:: max() * -1 ;
+    double min;
 
+    cout << mina <<endl;
+
+    if( numeric_limits<double>:: has_infinity )
+    {
+        min = -1 * numeric_limits< double > ::infinity();
+        cout<<  min <<endl;
+        cout<<" mina > min ? =  " << ( mina > min ) << endl;
+    }
 
 
 

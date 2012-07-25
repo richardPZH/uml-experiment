@@ -6,6 +6,11 @@
  */
 
 #include "Tree.h"
+#include "TreeNode.h"
+#include <iostream>
+#include <queue>
+
+using namespace std;
 
 Tree::Tree( const size_t numOfSamples ) {
 
@@ -28,6 +33,13 @@ Tree::Tree( const size_t numOfSamples ) {
 //retval: true -> tree grows succeed; false -> tree grows fail
 bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda )
 {
+    queue< TreeNode * > qu_p;
+
+    root = new TreeNode;
+    root->myType = LEAF;
+    (root->leafL).lFruit = fruit;
+    (root->leafL).rFruit = fruit + numFruit - 1;
+    (root->leafL).J = -11111 ;                           //here we should calculate the root's J, but since root must be splited so set to -inf
 
 }
 
@@ -36,6 +48,8 @@ Tree::~Tree() {
 
     //deleteing the root may recursively delete the whole tree
 
+
+    //delete fruit
     delete []fruit;
 }
 
