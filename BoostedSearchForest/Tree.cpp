@@ -7,10 +7,19 @@
 
 #include "Tree.h"
 
-Tree::Tree() {
+Tree::Tree( const size_t numOfSamples ) {
+
+    root = NULL;
+    numFruit = numOfSamples;
+    fruit = new int[ numFruit ];
+
 }
 
 
 Tree::~Tree() {
+
+    //deleteing the root may recursively delete the whole tree
+
+    delete []fruit;
 }
 
