@@ -8,7 +8,7 @@
 #include "TreeNode.h"
 
 TreeNode::TreeNode() {
-    internalNode = LEAF_NODE;   //default is a leaf node
+    myType = LEAF;   //default is a leaf node
 }
 
 TreeNode::~TreeNode() {
@@ -16,10 +16,10 @@ TreeNode::~TreeNode() {
 
 bool TreeNode:: isInternal( void )
 {
-    return internalNode;
+    return ( myType == INTERNAL );
 }
 
 bool TreeNode:: isLeaf( void )
 {
-    return !( internalNode );
+    return ( myType == LEAF );
 }

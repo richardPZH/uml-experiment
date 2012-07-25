@@ -8,8 +8,17 @@
 #ifndef TREENODE_H
 #define	TREENODE_H
 
-#define LEAF_NODE 0
-#define INTERNAL_NODE 1
+//#define LEAF_NODE 0
+//#define INTERNAL_NODE 1
+#include <iostream>
+#include <vector>
+#include <armadillo>
+
+
+using namespace std;
+using namespace arma;
+
+enum NodeType{ LEAF , INTERNAL };
 
 class TreeNode {
 public:
@@ -17,8 +26,22 @@ public:
     virtual ~TreeNode();
     bool isInternal( void );
     bool isLeaf( void );
-protected:
-    bool internalNode;
+
+    NodeType myType;
+    
+    union{
+        struct{
+            TreeNode *left;
+            TreeNode *right;
+            vector< Row<double> > * pvector;
+        }intL;
+
+        struct{
+            int * lFruit;
+            int * rFruit;
+            double J;
+        }leafL;
+    };
 
 };
 
