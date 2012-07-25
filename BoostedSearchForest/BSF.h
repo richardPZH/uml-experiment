@@ -24,7 +24,7 @@ private:
     size_t m;                        //there are m trees in the forest here m must >= 0 so size_t
     double lamda;                    //the λ the tuning paramemter, balances the retrieval quality and computational cost, need to ask the author Zhen Li
     
-    Tree * forestEntrance;           //Entrance of the forest, in fact is a place where trees reside
+    vector< Tree > * forestEntrance; //Entrance of the forest, in fact is a place where trees reside
     double * treesWeight;            // foresEntrance[k] -> the kth tree -> weight is treesWeight[k]
 
     const Mat< char > * p_s;         //a pointer to the similarity matrix [ s00 s01 ... s0n ; s10 s11 .. s1n ; .... ; sn0 sn1 ... snn ] the similarity matrix's diagno is 1 and symmetrical
