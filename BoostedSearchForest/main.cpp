@@ -21,6 +21,13 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
+    
+
+
+
+
+
+/*
     srand(time(NULL));           //the randu may need this
 
     cout<<"hello world"<<endl;
@@ -68,6 +75,7 @@ int main(int argc, char** argv) {
         cout<<vec_array[i]<<"\t";
     }
 
+*/
     return 0;
 }
 

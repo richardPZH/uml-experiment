@@ -8,6 +8,9 @@
 #ifndef TREENODE_H
 #define	TREENODE_H
 
+#define LEAF_NODE 0
+#define INTERNAL_NODE 1
+
 class TreeNode {
 public:
     TreeNode();
