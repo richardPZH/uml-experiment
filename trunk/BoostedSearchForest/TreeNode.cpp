@@ -8,6 +8,7 @@
 #include "TreeNode.h"
 
 TreeNode::TreeNode() {
+    internalNode = LEAF_NODE;   //default is a leaf node
 }
 
 TreeNode::~TreeNode() {

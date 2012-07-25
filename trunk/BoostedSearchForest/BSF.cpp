@@ -44,6 +44,7 @@ bool BSF::boost( void )
     for( i=0 ; i< m ; i++ ){
 
         //here learn a tree ti
+        forestEntrance->at(i).grow( p_x , p_s , p_w , lamda );
 
 
         //here we calculate the ci

@@ -9,13 +9,19 @@
 #define	TREE_H
 
 #include <cstdlib>
+#include <iostream>
+#include <armadillo>
+
 #include "TreeNode.h"
+
 using namespace std;
+using namespace arma;
 
 class Tree {
 public:
     Tree( const size_t numOfSamples );
     virtual ~Tree();
+    bool grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda );
 private:
     //double cm;         //the weight c of this tree  it is stored in the forest so useless
     TreeNode * root;     //the root of this tree
