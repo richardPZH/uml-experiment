@@ -33,10 +33,8 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/TreeLeafNode.o \
 	${OBJECTDIR}/Tree.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/TreeInternalNode.o \
 	${OBJECTDIR}/compileTest.o \
 	${OBJECTDIR}/BSF.o \
 	${OBJECTDIR}/TreeNode.o
@@ -66,11 +64,6 @@ dist/Release/GNU-Linux-x86/boostedsearchforest: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/GNU-Linux-x86
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/boostedsearchforest ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/TreeLeafNode.o: TreeLeafNode.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/TreeLeafNode.o TreeLeafNode.cpp
-
 ${OBJECTDIR}/Tree.o: Tree.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -80,11 +73,6 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/TreeInternalNode.o: TreeInternalNode.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/TreeInternalNode.o TreeInternalNode.cpp
 
 ${OBJECTDIR}/compileTest.o: compileTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
