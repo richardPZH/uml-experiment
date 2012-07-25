@@ -11,7 +11,7 @@ Tree::Tree( const size_t numOfSamples ) {
 
     root = NULL;
     numFruit = numOfSamples;
-    fruit = new int[ numFruit ];
+    fruit = new int[numFruit];
 
 }
 

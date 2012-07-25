@@ -19,7 +19,7 @@ BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const double c
     lamda = clamda;        //tuning paramater
     m = cm;                //store the number of trees
 
-    forestEntrance = new Tree[m];  //we have m trees
+    forestEntrance = new vector< Tree >( m , Tree(p_x->n_rows));  //we have m trees
     treesWeight = new double[m];   //the weight to m trees
 
     p_w = new Mat<double>( p_x->n_rows , p_x->n_rows ); //new an nxn weight matrix start from 00
@@ -59,7 +59,7 @@ bool BSF::boost( void )
 
 BSF::~BSF() {
     
-    delete []forestEntrance;
+    delete forestEntrance;
     delete []treesWeight;
 
     delete p_w;
