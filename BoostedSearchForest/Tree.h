@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <armadillo>
+#include <list>
 
 #include "TreeNode.h"
 
@@ -27,6 +28,9 @@ private:
     TreeNode * root;     //the root of this tree
     int * fruit;         //pointer to the index of the whole samples --> this may be replace the sample rather than its index here
     size_t numFruit;     //how many fruits we have
+
+    list< TreeNode * > leafLink;
+
 };
 
 #endif	/* TREE_H */
