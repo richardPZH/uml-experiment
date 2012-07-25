@@ -14,10 +14,10 @@ using namespace std;
 
 class Tree {
 public:
-    Tree();
+    Tree( const size_t numOfSamples );
     virtual ~Tree();
 private:
-    double cm;           //the weight c of this tree
+    //double cm;         //the weight c of this tree  it is stored in the forest so useless
     TreeNode * root;     //the root of this tree
     int * fruit;         //pointer to the index of the whole samples --> this may be replace the sample rather than its index here
     size_t numFruit;     //how many fruits we have
