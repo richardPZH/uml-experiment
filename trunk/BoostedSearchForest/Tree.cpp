@@ -191,11 +191,31 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 Tree::~Tree() {
 
     //deleteing the root may recursively delete the whole tree
-
+    rmHelp( root );
 
     //delete fruit
     delete []fruit;
 }
+
+bool Tree:: rmHelp( TreeNode * rNode )
+{
+    if( rNode == NULL )
+        return true;
+
+    if( rNode->isInternal() )
+    {
+        delete (rNode->intL).pvector;
+
+        rmHelp( (rNode->intL).left );
+        rmHelp( (rNode->intL).right );
+    }
+    else{
+        delete rNode;
+    }
+
+    return true;
+}
+
 
 double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const int* array , const size_t num )
 {
