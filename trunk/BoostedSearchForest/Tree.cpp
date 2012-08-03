@@ -48,9 +48,57 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
     }
     else
     {
-        (root->leafL).J = -111111111; //no infinity just a very small number                      
+        (root->leafL).J = -111111111;
+        //no infinity just a very small number
     }
 
+    qu_p.push( root );                          //Assign X as root; enqueue root
+
+    TreeNode * cLeaf,cLeftChild,cRightChild;
+
+    while( ! qu_p.empty() )
+    {
+        cLeaf = qu_p.front();                   //here the cLeaf must point to a leafnode not a internal node
+        qu_p.pop();                             //Find a leaf node l in the queue; dequeue l
+
+        //Find the optimal split for l by solving (18)
+        //1. get X~
+        Mat<double> X;
+        size_t numSamples = (cLeaf->leafL).rFruit - (cLeaf->leafL).lFruit + 1;
+        
+        Col< uword > * p_indices;
+
+        p_indices = new Col< uword >( (unsigned int *)(cLeaf->leafL).lFruit , (uword)numSamples , true , true ); //may improve this
+
+        X = p_w->rows( *p_indices );           //X is still column, not X~,
+        X = X.t();
+
+        //2. get M
+        Mat<double> * p_M;
+        p_M = new Mat<double>( numSamples , numSamples );
+
+        for( size_t i=0 ; i < numSamples ; i++ )                      //May be I can use armadillo to improve this
+        {
+            for( size_t j=0 ; j < numSamples ; j++ )
+            {
+                p_M->at(i,j) = p_w->at(((cLeaf->leafL).lFruit)[i],((cLeaf->leafL).lFruit)[j]) * (p_s->at(((cLeaf->leafL).lFruit)[i],((cLeaf->leafL).lFruit)[j])-lamda);
+            }
+        }
+
+        //3. find p~
+        //Col<double> p;
+
+
+        //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
+
+
+
+        delete p_indices;
+        delete p_M;
+    }
+
+
+    return true;
 }
 
 
@@ -62,4 +110,10 @@ Tree::~Tree() {
     //delete fruit
     delete []fruit;
 }
+
+/*
+ X不用对称都可以。 M=UDU', 令Y=UD^(1/2),这M=YY'
+
+则XMX' = XYY'X' = XY*(XY)' 这个是对称的 
+ */
 
