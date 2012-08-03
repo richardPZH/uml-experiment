@@ -28,3 +28,14 @@ bool TreeNode:: isLeaf( void )
 {
     return ( myType == LEAF );
 }
+
+bool TreeNode:: setLeaf( void )
+{
+    myType = LEAF;
+}
+
+
+bool TreeNode:: setInternal( void )
+{
+    myType = INTERNAL;
+}

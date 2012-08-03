@@ -10,8 +10,9 @@
 
 //#define LEAF_NODE 0
 //#define INTERNAL_NODE 1
-#include <iostream>
+
 #include <vector>
+#include <iostream>
 #include <armadillo>
 
 
@@ -26,6 +27,8 @@ public:
     virtual ~TreeNode();
     bool isInternal( void );
     bool isLeaf( void );
+    bool setLeaf( void );
+    bool setInternal( void );
 
     NodeType myType;
     
@@ -33,7 +36,7 @@ public:
         struct{
             TreeNode *left;
             TreeNode *right;
-            vector< Row<double> > * pvector;
+            vector< Row<double> > * pvector;  //here must be proved
         }intL;
 
         struct{
