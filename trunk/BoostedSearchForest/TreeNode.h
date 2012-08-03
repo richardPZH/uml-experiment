@@ -36,7 +36,7 @@ public:
         struct{
             TreeNode *left;
             TreeNode *right;
-            vector< Row<double> > * pvector;  //here must be proved
+            vector< Col<double> > * pvector;  //here must be proved
         }intL;
 
         struct{

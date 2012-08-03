@@ -10,8 +10,10 @@
 #include <iostream>
 #include <queue>
 #include <limits>
+#include <armadillo>
 
 using namespace std;
+using namespace arma;
 
 Tree::Tree( const size_t numOfSamples ) {
 
@@ -35,6 +37,7 @@ Tree::Tree( const size_t numOfSamples ) {
 bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda )
 {
     queue< TreeNode * > qu_p;
+    Mat<double> myZero = zeros< Mat<double> >(1,1);
 
     root = new TreeNode;
     root->setLeaf();                                     //root initial is a leaf conatining all the samples
@@ -55,6 +58,9 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
     qu_p.push( root );                          //Assign X as root; enqueue root
 
     TreeNode * cLeaf,cLeftChild,cRightChild;
+    unsigned int * array;
+    Col< uword > * p_indices;
+    Mat<double> * p_M;
 
     while( ! qu_p.empty() )
     {
@@ -65,31 +71,68 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         //1. get X~
         Mat<double> X;
         size_t numSamples = (cLeaf->leafL).rFruit - (cLeaf->leafL).lFruit + 1;
+        array =(unsigned int *)( (cLeaf->leafL).lFruit );
         
-        Col< uword > * p_indices;
-
-        p_indices = new Col< uword >( (unsigned int *)(cLeaf->leafL).lFruit , (uword)numSamples , true , true ); //may improve this
+        p_indices = new Col< uword >( array , (uword)numSamples , true , true ); //may improve this
 
         X = p_w->rows( *p_indices );           //X is still column, not X~,
         X = X.t();
 
         //2. get M
-        Mat<double> * p_M;
         p_M = new Mat<double>( numSamples , numSamples );
 
         for( size_t i=0 ; i < numSamples ; i++ )                      //May be I can use armadillo to improve this
         {
             for( size_t j=0 ; j < numSamples ; j++ )
             {
-                p_M->at(i,j) = p_w->at(((cLeaf->leafL).lFruit)[i],((cLeaf->leafL).lFruit)[j]) * (p_s->at(((cLeaf->leafL).lFruit)[i],((cLeaf->leafL).lFruit)[j])-lamda);
+                p_M->at(i,j) = p_w->at(array[i],array[j]) * (p_s->at(array[i],array[j])-lamda);
             }
         }
 
-        //3. find p~
-        //Col<double> p;
+        //3. find p~  because XMXt is real and symmetry so p must be real
+        vec eigval;
+        mat eigvec;
+
+        eig_sym(eigval, eigvec, X * (*p_M) * X.t() );
+            //since the eig_sym The eigenvalues are in ascending order
+            //The largest eigenvalue of XMXt is the numSamplesth one, in C++, the numSampes - 1
+        Col<double> p = eigvec.col( numSamples - 1);         //the p is a col vec
 
 
         //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
+        int * l , * r;
+
+        l = (cLeaf->leafL).lFruit;
+        r = (cLeaf->leafL).rFruit;                          //will l == r??
+
+        while( l <= r )
+        {
+            umat ZZ = ( p_x->row( (unsigned int) *l ) * p ) > myZero;           //read the armadillo document
+
+            if(  ZZ.at(0) > 0 )
+            {
+                l++;
+            }
+            else
+            {
+                unsigned int tmp;
+                tmp = *r;
+                *r = *l;
+                *l = tmp;
+                r--;
+            }
+        }     //ok here lFruit~r is left child ; l~rFruit is richt child
+
+        double lJ, rJ;
+        lJ = rJ = 0;
+
+        //calculate lJ
+
+
+        //calculate rJ
+
+
+        // lJ + rJ > J ?
 
 
 
