@@ -9,6 +9,7 @@
 #include "TreeNode.h"
 #include <iostream>
 #include <queue>
+#include <limits>
 
 using namespace std;
 
@@ -36,10 +37,19 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
     queue< TreeNode * > qu_p;
 
     root = new TreeNode;
-    root->myType = LEAF;
+    root->setLeaf();                                     //root initial is a leaf conatining all the samples
     (root->leafL).lFruit = fruit;
     (root->leafL).rFruit = fruit + numFruit - 1;
-    (root->leafL).J = -11111 ;                           //here we should calculate the root's J, but since root must be splited so set to -inf
+    
+    if( numeric_limits<double>:: has_infinity )
+    {
+        (root->leafL).J = -1 * numeric_limits< double > ::infinity();
+        //here we should calculate the root's J, but since root must be splited so set to -inf
+    }
+    else
+    {
+        (root->leafL).J = -111111111; //no infinity just a very small number                      
+    }
 
 }
 

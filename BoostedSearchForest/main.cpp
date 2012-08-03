@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
     {
         min = -1 * numeric_limits< double > ::infinity();
         cout<<  min <<endl;
-        cout<<" mina > min ? =  " << ( mina > min ) << endl;
+        cout<<" mina > min ? =  " << ( mina < min ) << endl;
     }
 
 
