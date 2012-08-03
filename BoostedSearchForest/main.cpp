@@ -36,7 +36,31 @@ int main(int argc, char** argv) {
     }
 
 
+//    mat a = randu<mat>(5 , 5 );
+//
+//    cout<< a <<endl;
+//
+//    cout<< a.t() <<endl;
+//
+//    trans( a );
+//    cout<< a <<endl;
 
+    vec eigval;
+    mat eigvec;
+    mat symetric;
+
+    symetric << 1 << 2 << 2 << endr \
+             << 2 << 1 << 2 << endr \
+             << 2 << 2 << 1 << endr;
+
+    // use standard algorithm by default
+    eig_sym(eigval, eigvec, symetric );
+
+    cout << "eigval.col " << eigval.n_cols << endl << "eigval.row " << eigval.n_rows <<endl;
+    cout << eigval <<endl;
+
+    cout << "eigvec.col " << eigvec.n_cols << endl << "eigvec.row " << eigvec.n_rows <<endl;
+    cout << eigvec <<endl;
 /*
     srand(time(NULL));           //the randu may need this
 
