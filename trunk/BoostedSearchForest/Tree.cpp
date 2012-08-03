@@ -127,12 +127,24 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         lJ = rJ = 0;
 
         //calculate lJ
+        lJ = findJ( p_s , p_w , lamda , ( (cLeaf->leafL).lFruit ) , r - ( (cLeaf->leafL).lFruit ) + 1 );
 
 
         //calculate rJ
+        rJ = findJ( p_s , p_w , lamda , l , ( (cLeaf->leafL).rFruit) - l + 1 );
 
 
         // lJ + rJ > J ?
+        if( ( lJ + rJ ) > (cLeaf->leafL).J  )
+        {
+            //need to split the node, the make this node become a internal node,
+            //change this to and internal node
+        }
+        else
+        {
+            //this is a leaf node forever, link it to the leafnode list, for the future's sake.
+
+        }
 
 
 
@@ -152,6 +164,24 @@ Tree::~Tree() {
 
     //delete fruit
     delete []fruit;
+}
+
+double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const int* array , const size_t num )
+{
+    double sum;
+    
+    sum = 0;
+    
+    size_t i,j;
+    for( i=0 ; i < num ; i++ )
+    {
+        for( j=0 ; j < num ; j++ )
+        {
+            sum += p_w->at( array[i] , array[j] ) * ( p_s->at( array[i] , array[j]) - lamda );
+        }
+    }
+    
+    return sum;
 }
 
 /*

@@ -23,6 +23,7 @@ public:
     Tree( const size_t numOfSamples );
     virtual ~Tree();
     bool grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda );
+    double findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const int* array , const size_t num );
 private:
     //double cm;         //the weight c of this tree  it is stored in the forest so useless
     TreeNode * root;     //the root of this tree
