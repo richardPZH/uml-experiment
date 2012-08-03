@@ -41,6 +41,7 @@ BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const double c
 bool BSF::boost( void )
 {
     size_t i;
+
     for( i=0 ; i< m ; i++ ){
 
         //here learn a tree ti
@@ -48,6 +49,7 @@ bool BSF::boost( void )
 
 
         //here we calculate the ci
+        treesWeight[i] = findCi( i );
 
 
         //here we update weights wij
@@ -65,5 +67,12 @@ BSF::~BSF() {
 
     delete p_w;
 
+}
+
+double BSF:: findCi( const int th )
+{
+    double coeff = ( 1 - lamda ) / lamda;
+
+    return 0;
 }
 

@@ -61,6 +61,8 @@ int main(int argc, char** argv) {
 
     cout << "eigvec.col " << eigvec.n_cols << endl << "eigvec.row " << eigvec.n_rows <<endl;
     cout << eigvec <<endl;
+
+    cout<< "eigvec.col(2) : \n" << eigvec.col(2) <<endl;
 /*
     srand(time(NULL));           //the randu may need this
 
