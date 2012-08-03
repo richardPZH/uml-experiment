@@ -57,7 +57,7 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 
     qu_p.push( root );                          //Assign X as root; enqueue root
 
-    TreeNode * cLeaf,cLeftChild,cRightChild;
+    TreeNode * cLeaf, * cLeftChild, * cRightChild;
     unsigned int * array;
     Col< uword > * p_indices;
     Mat<double> * p_M;
@@ -124,7 +124,6 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         }     //ok here lFruit~r is left child ; l~rFruit is richt child
 
         double lJ, rJ;
-        lJ = rJ = 0;
 
         //calculate lJ
         lJ = findJ( p_s , p_w , lamda , ( (cLeaf->leafL).lFruit ) , r - ( (cLeaf->leafL).lFruit ) + 1 );
@@ -139,11 +138,43 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         {
             //need to split the node, the make this node become a internal node,
             //change this to and internal node
+            int * ll, * lr;
+            int * rl, * rr;
+
+            ll = (cLeaf->leafL).lFruit;
+            lr = r;
+
+            rl = l;
+            rr = (cLeaf->leafL).rFruit;
+
+            cLeaf->setInternal();
+
+            cLeaf->intL.left = cLeftChild = new TreeNode;
+
+            cLeftChild->setLeaf();
+            cLeftChild->leafL.J = lJ;
+            cLeftChild->leafL.lFruit = ll;
+            cLeftChild->leafL.rFruit = lr;
+
+            cLeaf->intL.right = cRightChild = new TreeNode;
+
+            cRightChild->setLeaf();
+            cRightChild->leafL.J = rJ;
+            cRightChild->leafL.lFruit = rl;
+            cRightChild->leafL.rFruit = rr;
+
+            cLeaf->intL.pvector = new vector< Col<double> >;
+            (cLeaf->intL.pvector)->push_back( p );
+
+            //enqueue l1 and l2
+            qu_p.push( cLeftChild );
+            qu_p.push( cRightChild );
+
         }
         else
         {
             //this is a leaf node forever, link it to the leafnode list, for the future's sake.
-
+            leafLink.push_back( cLeaf );
         }
 
 
