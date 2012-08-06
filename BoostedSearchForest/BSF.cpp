@@ -51,8 +51,6 @@ bool BSF::boost( void )
         //here we calculate the ci
         treesWeight[i] = forestEntrance->at(i).findCi( p_s , lamda );
 
-
-
         //here we update weights wij
 
     }

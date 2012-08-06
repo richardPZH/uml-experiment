@@ -239,11 +239,45 @@ double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double
 
 double Tree:: findCi( const Mat<char> *p_s , const double lamda )
 {
-    //ln function in cmath is ? <--  double log( double x )?
+    int p11,p10;
+    double c;
+    int * array;
+    size_t num;
+
+    std:: list < TreeNode *> ::iterator itb ;
+    std:: list < TreeNode *> ::iterator ite ;
+
+    p11 = p10 = 0;
+
+    itb = leafLink.begin();
+    ite = leafLink.end();
+
+    for(  ; itb != ite ; itb++ )
+    {
+        array = (*itb)->leafL.lFruit;
+        num = (*itb)->leafL.rFruit - array + 1;
+
+        for( size_t i=0 ; i<num ; i++ )
+        {
+            for( size_t j=0 ; j<num ; j++ )
+            {
+                if( p_s->at( array[i] , array[j] ) == 1 )
+                {
+                    p11 ++;
+                }else
+                {
+                    p10 ++;
+                }
+            }
+        }
+
+    }
+
+    //ln function in cmath is ? <--  double log( double x )
+    c = log( (1-lamda) / lamda * p11 / p10 );
 
 
-
-    return 0;
+    return c;
 }
 
 
