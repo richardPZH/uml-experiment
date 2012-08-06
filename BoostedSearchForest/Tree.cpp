@@ -237,6 +237,10 @@ double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double
     return sum;
 }
 
+//findCi function
+//input: the pointer to similarity matrix  : p_s
+//       the lamda
+//retval: double, the weight of the tree ci
 double Tree:: findCi( const Mat<char> *p_s , const double lamda )
 {
     int p11,p10;
@@ -281,25 +285,43 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
     return cm;
 }
 
+//updateWeights Function
+//input: pointer to the weight matrix : p_w
+//       pointer to similarity matrix : p_s
+//       lamda
+//retval: bool, true for update succeed; false for update failure
 bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const double lamda )
 {
     //zij = sij - lamda
     //cm
     //tm(xi,xj)         M_E is e!!
     
+    int * array;
+    size_t num;
 
+    std:: list < TreeNode *> ::iterator itb ;
+    std:: list < TreeNode *> ::iterator ite ;
 
+    itb = leafLink.begin();
+    ite = leafLink.end();
 
+    for(  ; itb != ite ; itb++ )
+    {
+        array = (*itb)->leafL.lFruit;
+        num = (*itb)->leafL.rFruit - array + 1;
 
+        for( size_t i=0 ; i<num ; i++ )
+        {
+            for( size_t j=0 ; j<num ; j++ )
+            {
+                p_w->at( array[i] , array[j] ) = p_w->at( array[i] , array[j] ) * pow( M_E , -1 * (p_s->at(array[i] , array[j] - lamda) * cm ));
+            }
+        }
 
+    }
 
     return true;
 }
 
 
-/*
- X不用对称都可以。 M=UDU', 令Y=UD^(1/2),这M=YY'
-
-则XMX' = XYY'X' = XY*(XY)' 这个是对称的 
- */
 
