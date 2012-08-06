@@ -30,6 +30,8 @@ Tree::Tree( const size_t numOfSamples ) {
 
 }
 
+Mat<double> Tree:: myZero = zeros< Mat<double> >(1,1); //initial the static member zero matrix
+
 //Search Tree Construction: grow
 //Input: p_x -> address of the sample matrix
 //       p_s -> address of the similarity matrix
@@ -39,8 +41,7 @@ Tree::Tree( const size_t numOfSamples ) {
 bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda )
 {
     queue< TreeNode * > qu_p;
-    Mat<double> myZero = zeros< Mat<double> >(1,1);
-
+    
     root = new TreeNode;
     root->setLeaf();                                     //root initial is a leaf conatining all the samples
     (root->leafL).lFruit = fruit;
@@ -323,5 +324,42 @@ bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const doubl
     return true;
 }
 
+bool Tree:: findImage( const Row<double> * p_sample , double * array )
+{
+    TreeNode * p;
+
+    p = root;
+
+    while( ( p != NULL ) && ( p->isInternal() ) )
+    {
+        umat ZZ = ((*p_sample) * ((p->intL).pvector)->at(0) ) > myZero;
+
+        if( ZZ.at(0) > 0 )
+        {
+            p = p->intL.left;
+        }
+        else
+        {
+            p = p->intL.right;
+        }
+    }
+
+    if( ( NULL == p )  || ( p->isInternal() ) )
+        return false;
+
+    int * beg;
+    int * end;
+
+    beg = p->leafL.lFruit;
+    end = p->leafL.rFruit;
+
+    for( ; beg <= end ; beg++ )
+    {
+        array[ *beg ] += array[ *beg ] + cm;
+    }
+
+
+    return true;
+}
 
 

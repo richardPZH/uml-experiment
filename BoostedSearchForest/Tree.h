@@ -25,6 +25,7 @@ public:
     bool grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda );
     double findCi( const Mat<char> *p_s , const double lamda );
     bool updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const double lamda );
+    bool findImage( const Row<double> * p_sample , double * array );
 private:
 
     double findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const int* array , const size_t num );
@@ -36,6 +37,8 @@ private:
     size_t numFruit;     //how many fruits we have
 
     list< TreeNode * > leafLink;
+
+    static Mat<double> myZero;
 
 };
 
