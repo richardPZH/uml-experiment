@@ -276,8 +276,24 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
     //ln function in cmath is ? <--  double log( double x )
     c = log( (1-lamda) / lamda * p11 / p10 );
 
+    cm = c;
 
-    return c;
+    return cm;
+}
+
+bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const double lamda )
+{
+    //zij = sij - lamda
+    //cm
+    //tm(xi,xj)         M_E is e!!
+    
+
+
+
+
+
+
+    return true;
 }
 
 
