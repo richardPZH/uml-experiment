@@ -21,7 +21,6 @@ public:
     virtual ~BSF();
     bool boost( void );
 private:
-    double findCi( const int th );
 
     size_t m;                        //there are m trees in the forest here m must >= 0 so size_t
     double lamda;                    //the λ the tuning paramemter, balances the retrieval quality and computational cost, need to ask the author Zhen Li

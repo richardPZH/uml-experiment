@@ -23,6 +23,7 @@ public:
     Tree( const size_t numOfSamples );
     virtual ~Tree();
     bool grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda );
+    double findCi( const Mat<char> *p_s , const double lamda );
 private:
 
     double findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const int* array , const size_t num );
