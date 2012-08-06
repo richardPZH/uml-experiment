@@ -13,6 +13,7 @@
 #include <bitset>
 #include <limits>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 using namespace arma;
@@ -22,6 +23,11 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
+
+    double x;
+    x = 1234;
+    cout<< "log(x=12345) = "<<log( x ) <<endl;
+    cout<< "log10(x=12345) ="<< log10( x )<<endl;
 
     double mina =  numeric_limits< double >:: max() * -1 ;
     double min;

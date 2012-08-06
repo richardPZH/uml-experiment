@@ -7,6 +7,8 @@
 
 #include "Tree.h"
 #include "TreeNode.h"
+
+#include <cmath>
 #include <iostream>
 #include <queue>
 #include <limits>
@@ -234,6 +236,16 @@ double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double
     
     return sum;
 }
+
+double Tree:: findCi( const Mat<char> *p_s , const double lamda )
+{
+    //ln function in cmath is ? <--  double log( double x )?
+
+
+
+    return 0;
+}
+
 
 /*
  X不用对称都可以。 M=UDU', 令Y=UD^(1/2),这M=YY'
