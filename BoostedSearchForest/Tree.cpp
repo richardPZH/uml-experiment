@@ -200,6 +200,8 @@ Tree::~Tree() {
     delete []fruit;
 }
 
+//private remove the tree function
+//recursively delete the tree node
 bool Tree:: rmHelp( TreeNode * rNode )
 {
     if( rNode == NULL )
@@ -211,6 +213,8 @@ bool Tree:: rmHelp( TreeNode * rNode )
 
         rmHelp( (rNode->intL).left );
         rmHelp( (rNode->intL).right );
+
+        delete rNode;
     }
     else{
         delete rNode;

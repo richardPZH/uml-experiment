@@ -23,6 +23,12 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
+    return 0;
+}
+
+
+#if 0
+
     cout<< "e = " << M_E << endl;
     cout<< "log(M_E) "<< log(M_E) <<endl;
 
@@ -94,7 +100,7 @@ int main(int argc, char** argv) {
 
 
     cout<< "the size of size_t is " << sizeof( size_t ) <<endl;
-    
+
     size_t s1=5;
     size_t s2=7;
 
@@ -103,7 +109,7 @@ int main(int argc, char** argv) {
     cout<< "s1 - s2 = "<< s1 - s2 << endl;
 
     bool ba=0;
-    
+
     cout<< "a = "<<ba<<endl;
     cout<< "!a = "<<!(ba)<<endl;
 
@@ -120,6 +126,4 @@ int main(int argc, char** argv) {
     }
 
 */
-    return 0;
-}
-
+#endif
