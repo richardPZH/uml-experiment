@@ -23,6 +23,8 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
+    cout<< "e = " << M_E << endl;
+    cout<< "log(M_E) "<< log(M_E) <<endl;
 
     double x;
     x = 1234;

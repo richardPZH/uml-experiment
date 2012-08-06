@@ -42,6 +42,11 @@ bool BSF::boost( void )
 {
     size_t i;
 
+    size_t nRows,nCols;
+
+    nRows = p_w->n_rows;
+    nCols = p_w->n_cols;
+
     for( i=0 ; i< m ; i++ ){
 
         //here learn a tree ti
@@ -52,6 +57,7 @@ bool BSF::boost( void )
         treesWeight[i] = forestEntrance->at(i).findCi( p_s , lamda );
 
         //here we update weights wij
+        forestEntrance->at(i).updateWeights( p_w , p_s , lamda );
 
     }
 
