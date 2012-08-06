@@ -25,8 +25,12 @@ BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const double c
     p_w = new Mat<double>( p_x->n_rows , p_x->n_rows ); //new an nxn weight matrix start from 00
     p_w->fill( 1 );                                     //initial wij=1 because wij=1/(n*n) ==> wij=1 Zhen.Li@gmail.com
 
+    pResult = NULL;
+    candaArry = new double[p_x->n_rows];
 
 }
+
+const double BSF:: confidence = 0.5;
 
 //This will follow the Algorithm 1 in the paper
 //Boosted Selection Function Learning
@@ -64,6 +68,61 @@ bool BSF::boost( void )
     return true;
 }
 
+Mat<double> * BSF:: search( const Row< double > * psample )
+{
+    if( pResult != NULL )    //should I delete it myself or user delete it?
+    {
+        delete pResult;
+    }
+
+    size_t i,j;
+    j = p_x->n_rows;
+
+    for( i=0 ; i<j ; i++ )
+    {
+        candaArry[i] = 0;
+    }
+
+    //walk through the trees
+    for( i=0 ; i<m ; i++ )
+    {
+        forestEntrance->at(i).findImage( psample , candaArry );
+    }
+
+    //only those values bigger that confidence is collected ?
+    int num;
+    double *p;
+
+    p = candaArry;
+    num = 0;
+    for( i=0 ; i<j ; i++ )
+    {
+        if( candaArry[i] >= confidence )
+        {
+            *p = (int) i;
+            p++;
+            num++;
+        }
+    }
+
+    unsigned int *tmp = new unsigned int[num];
+    for( i=0 ; i<num ; i++ )
+    {
+        tmp[i] = (unsigned int) candaArry[i];
+    }
+
+    Row<uword> *p_row = new Row<uword>( tmp , num  , true ,  true);
+
+    Mat<double> * p_mat = new Mat<double>;
+
+    *p_mat = p_x->rows( *p_row );
+
+    delete p_row;
+    delete []tmp;
+
+    return p_mat;
+}
+
 
 BSF::~BSF() {
     
@@ -71,6 +130,12 @@ BSF::~BSF() {
     delete []treesWeight;
 
     delete p_w;
+
+    delete[] candaArry;
+    if( pResult != NULL )
+    {
+        delete pResult;
+    }
 
 }
 
