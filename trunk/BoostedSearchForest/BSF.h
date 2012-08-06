@@ -27,7 +27,6 @@ private:
     double lamda;                    //the λ the tuning paramemter, balances the retrieval quality and computational cost, need to ask the author Zhen Li
     
     vector< Tree > * forestEntrance; //Entrance of the forest, in fact is a place where trees reside
-    double * treesWeight;            // foresEntrance[k] -> the kth tree -> weight is treesWeight[k]
 
     const Mat< char > * p_s;         //a pointer to the similarity matrix [ s00 s01 ... s0n ; s10 s11 .. s1n ; .... ; sn0 sn1 ... snn ] the similarity matrix's diagno is 1 and symmetrical
     const Mat< double > * p_x;       //a pointer to the original sample matrix [ x0f0 x0f1 x0f2 .. x0fk ; x1f0 x1f1 x1f2 ..x1fk ; ... ; xnf0 xnf1 xnf2 ... xnfk ]

@@ -20,7 +20,6 @@ BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const double c
     m = cm;                //store the number of trees
 
     forestEntrance = new vector< Tree >( m , Tree(p_x->n_rows));  //we have m trees
-    treesWeight = new double[m];   //the weight to m trees
 
     p_w = new Mat<double>( p_x->n_rows , p_x->n_rows ); //new an nxn weight matrix start from 00
     p_w->fill( 1 );                                     //initial wij=1 because wij=1/(n*n) ==> wij=1 Zhen.Li@gmail.com
@@ -57,8 +56,8 @@ bool BSF::boost( void )
         forestEntrance->at(i).grow( p_x , p_s , p_w , lamda );
 
 
-        //here we calculate the ci
-        treesWeight[i] = forestEntrance->at(i).findCi( p_s , lamda );
+        //here we calculate the ci, the ci is store in the tree i, now omitting the retval
+        forestEntrance->at(i).findCi( p_s , lamda );
 
         //here we update weights wij
         forestEntrance->at(i).updateWeights( p_w , p_s , lamda );
@@ -68,6 +67,10 @@ bool BSF::boost( void )
     return true;
 }
 
+//BSF search function
+//input : a pointer to a sample Row<double> : [ x0 , x1 , x2 , x3 , x4 .... xk , 1 ]  <--- be aware!
+//retval: a pointer to the submatrix of the *p_x, those samples are consider similar to the given sample
+//        user doesn't have to free(delete) this pointer, BSF will handle it.
 Mat<double> * BSF:: search( const Row< double > * psample )
 {
     if( pResult != NULL )    //should I delete it myself or user delete it?
@@ -127,7 +130,6 @@ Mat<double> * BSF:: search( const Row< double > * psample )
 BSF::~BSF() {
     
     delete forestEntrance;
-    delete []treesWeight;
 
     delete p_w;
 
