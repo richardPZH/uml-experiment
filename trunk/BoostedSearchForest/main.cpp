@@ -4,6 +4,10 @@
  * IMS don't be lazy. Remember to compile
  * Stop the compile error at the source. Stop them from growing.
  * When you are idel. Compile & Compile it.
+ *
+ * Open the option -O1 when all things are ok!!!
+ * when -01 is used, it's a little bit hard to debug
+ *
  * Created on July 23, 2012, 8:24 AM
  */
 
@@ -26,19 +30,19 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
-    Mat<double> *p_q;
-    Mat<double> *p_x;
-    Mat<double> *p_d;
-    Mat<char>   *p_s;
+    Mat<double> *p_q = NULL;
+    Mat<double> *p_x = NULL;
+    Mat<double> *p_d = NULL;
+    Mat<char>   *p_s = NULL;
     unsigned int * iArray;
 
     generateQBS( "wine.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
 
 
-    cout<< p_q->n_elem <<endl;
-    cout<< p_x->n_elem <<endl;
-    cout<< p_d->n_elem <<endl;
-    cout<< p_s->n_elem <<endl;
+    cout<< p_q->n_rows <<endl;
+    cout<< p_x->n_rows <<endl;
+    cout<< p_d->n_rows <<endl;
+    cout<< p_s->n_rows <<endl;
 
     delete p_q;
     delete p_x;

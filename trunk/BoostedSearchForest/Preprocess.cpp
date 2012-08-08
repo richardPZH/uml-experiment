@@ -49,7 +49,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     int num_x;
     num_x = (int)( t.n_rows * fragment_b );
     p_indices = new Col<uword>( (*iArray)+num_q , num_x  , true ,  true);
-    **p_q = t.rows( *p_indices );
+    **p_x = t.rows( *p_indices );
     delete p_indices;
 
     //new the p_d
@@ -57,7 +57,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     int num_d;
     num_d = t.n_rows - num_q - num_x;
     p_indices = new Col<uword>( (*iArray)+num_q+num_x , num_d  , true ,  true);
-    **p_q = t.rows( *p_indices );
+    **p_d = t.rows( *p_indices );
     delete p_indices;
 
     //new the p_s
