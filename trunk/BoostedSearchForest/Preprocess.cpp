@@ -6,7 +6,7 @@
 
 #include "Preprocess.h"
 
-bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x , Mat<char> ** p_s ,  Mat<double> ** p_d , int ** iArray)
+bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x , Mat<char> ** p_s ,  Mat<double> ** p_d , unsigned int ** iArray)
 {
     //first check the fragment error
     if( fabs( fragment_q + fragment_b + fragment_d - 1) > 0.001  )
@@ -25,7 +25,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
 
     //new the index array and initial it to 0 - t.n_rows-1
     int isize = t.n_rows;
-    *iArray = new int[ isize ];  //user shall remember to free this array
+    *iArray = new unsigned int[ isize ];  //user shall remember to free this array
     for( int i=0 ; i<isize ; i++ )
     {
         (*iArray)[i] = i;
@@ -35,11 +35,36 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     srand((unsigned) time(NULL));   //random_shuffle needs this
     random_shuffle( *iArray , (*iArray)+isize );
 
-//    for( int i=0 ; i<isize ; i++ )
-//    {
-//        cout<< (*iArray)[i] <<" ";
-//    }
+    Row<uword> * p_indices;
+    //new the p_q
+    *p_q = new Mat<double>;
+    int num_q;
+    num_q = (int) ( t.n_rows * fragment_q );
+    p_indices = new Row<uword>( (*iArray) , num_q  , true ,  true);
+    **p_q = t.rows( *p_indices );
+    delete p_indices;
 
+    //new the p_x
+    *p_x = new Mat<double>;
+    int num_x;
+    num_x = (int)( t.n_rows * fragment_b );
+    p_indices = new Row<uword>( (*iArray)+num_q , num_x  , true ,  true);
+    **p_q = t.rows( *p_indices );
+    delete p_indices;
+
+    //new the p_d
+    *p_d = new Mat<double>;
+    int num_d;
+    num_d = t.n_rows - num_q - num_x;
+    p_indices = new Row<uword>( (*iArray)+num_q+num_x , num_d  , true ,  true);
+    **p_q = t.rows( *p_indices );
+    delete p_indices;
+
+    //new the p_s
+    *p_s = new Mat<char>( num_x , num_x );
+
+
+    //change the p_q p_x p_d 's final col to 1, this is require input for the BSF
 
     return true;
 }

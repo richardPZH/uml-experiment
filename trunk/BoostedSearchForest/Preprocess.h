@@ -16,9 +16,7 @@
 using namespace std;
 using namespace arma;
 
-//the input sample matix, the whole matrix
-#define SAMPLE_MATRIX "wine.txt"
-
+//This is a little bit different from #define, still need to recompile the whole source!!!
 static const double fragment_q = 0.04;
 static const double fragment_b = 0.46;
 static const double fragment_d = 0.5 ; //1 - fragment_q - fragment_d <-- this is error!!!
@@ -32,7 +30,7 @@ static const double fragment_d = 0.5 ; //1 - fragment_q - fragment_d <-- this is
 //       the address of a pointer, will new a int array to index to the original matrix
 //retval: true, generate ok; false, generate fail
 //Require: It's user's responsibility to free the p_q p_x p_s p_d iArray
-bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x , Mat<char> ** p_s ,  Mat<double> ** p_d , int ** iArray);
+bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x , Mat<char> ** p_s ,  Mat<double> ** p_d ,unsigned int ** iArray);
 
 
 #endif	/* PREPROCESS_H */
