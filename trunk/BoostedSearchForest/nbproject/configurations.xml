@@ -7,6 +7,8 @@
                    kind="SOURCE_LOGICAL_FOLDER">
       <itemPath>BSF.cpp</itemPath>
       <itemPath>BSF.h</itemPath>
+      <itemPath>Preprocess.cpp</itemPath>
+      <itemPath>Preprocess.h</itemPath>
       <itemPath>Tree.cpp</itemPath>
       <itemPath>Tree.h</itemPath>
       <itemPath>TreeNode.cpp</itemPath>
