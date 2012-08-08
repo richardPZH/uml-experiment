@@ -60,8 +60,28 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     **p_d = t.rows( *p_indices );
     delete p_indices;
 
-    //new the p_s
+    //new the p_s , remember the p_s is symmetric
     *p_s = new Mat<char>( num_x , num_x );
+    int finalCol = (*p_x)->n_cols - 1;
+    for( int i=0 ; i<num_x ; i++ )
+    {
+        p_s->at( i , i ) = 1;           //similar is 1, dissimilar is 0
+        for( int j=i+1; j<num_x ; j++ )
+        {
+            double f,s;
+            f = (*p_x)->at( i , finalCol );
+            s = (*p_x)->at( j , finalCol );
+            if( fabs( f - s ) > 0.0001 )
+            {
+                (*p_s)->at( i , j ) = 0;
+                (*p_s)->at( j , i ) = 0;
+            }else
+            {
+                (*p_s)->at( i , j ) = 1;
+                (*p_s)->at( j , i ) = 1;
+            }
+        }
+    }
 
 
     //change the p_q p_x p_d 's final col to 1, this is require input for the BSF
