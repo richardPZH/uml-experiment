@@ -114,13 +114,13 @@ Mat<double> * BSF:: search( const Row< double > * psample )
         tmp[i] = (unsigned int) candaArry[i];
     }
 
-    Row<uword> *p_row = new Row<uword>( tmp , num  , true ,  true);
+    Col<uword> *p_col = new Col<uword>( tmp , num  , true ,  true);
 
     Mat<double> * p_mat = new Mat<double>;
 
-    *p_mat = p_x->rows( *p_row );
+    *p_mat = p_x->rows( *p_col );
 
-    delete p_row;
+    delete p_col;
     delete []tmp;
 
     return p_mat;
