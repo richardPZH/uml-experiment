@@ -65,7 +65,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     int finalCol = (*p_x)->n_cols - 1;
     for( int i=0 ; i<num_x ; i++ )
     {
-        p_s->at( i , i ) = 1;           //similar is 1, dissimilar is 0
+        (*p_s)->at( i , i ) = 1;           //similar is 1, dissimilar is 0
         for( int j=i+1; j<num_x ; j++ )
         {
             double f,s;
