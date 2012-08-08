@@ -45,8 +45,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-O1 -larmadillo
-CXXFLAGS=-O1 -larmadillo
+CCFLAGS=-larmadillo
+CXXFLAGS=-larmadillo
 
 # Fortran Compiler Flags
 FFLAGS=
