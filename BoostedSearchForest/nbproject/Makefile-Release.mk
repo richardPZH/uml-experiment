@@ -37,6 +37,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/compileTest.o \
 	${OBJECTDIR}/BSF.o \
+	${OBJECTDIR}/Preprocess.o \
 	${OBJECTDIR}/TreeNode.o
 
 
@@ -83,6 +84,11 @@ ${OBJECTDIR}/BSF.o: BSF.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/BSF.o BSF.cpp
+
+${OBJECTDIR}/Preprocess.o: Preprocess.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Preprocess.o Preprocess.cpp
 
 ${OBJECTDIR}/TreeNode.o: TreeNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}

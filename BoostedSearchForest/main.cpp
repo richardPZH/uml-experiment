@@ -16,6 +16,8 @@
 #include <cmath>
 #include <stdlib.h>
 
+#include "Preprocess.h"
+
 using namespace std;
 using namespace arma;
 
@@ -24,6 +26,23 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
+    Mat<double> *p_q;
+    Mat<double> *p_x;
+    Mat<double> *p_d;
+    Mat<char>   *p_s;
+    int * iArray;
+
+    generateQBS( "wine.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
+
+
+
+    delete []iArray;
+
+    return 0;
+}
+
+#if 0
+    //Test is fine!!! no we can load samples just like the matlab load command
     //This need to test the initial of the Mat<double> of the armadillo
     Mat<double> t;
 
@@ -33,13 +52,12 @@ int main(int argc, char** argv) {
         exit( 1 );
     }
 
-    cout<< t << endl;
+    //cout<< t.row( 5 ) << endl << t.row( 123 ) << endl;
+    cout<< t.n_rows << endl << t.n_cols << endl << t.n_elem <<endl;
 
-    t.save( "wine2.txt" , raw_ascii ); // <-- this will save the data in raw ascii in file wine2.txt, can use diff to see the different!!
+    //t.save( "wine2.txt" , raw_ascii ); // <-- this will save the data in raw ascii in file wine2.txt, can use diff to see the different!!
 
-    return 0;
-}
-
+#endif
 
 #if 0
 
