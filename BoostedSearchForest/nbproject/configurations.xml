@@ -49,7 +49,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandLine>-O1 -larmadillo</commandLine>
+          <commandLine>-larmadillo</commandLine>
         </ccTool>
       </compileType>
     </conf>

@@ -35,10 +35,10 @@ int main(int argc, char** argv) {
     generateQBS( "wine.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
 
 
-    cout<< p_q->n_rows <<endl;
-    cout<< p_x->n_rows <<endl;
-    cout<< p_d->n_rows <<endl;
-    cout<< p_s->n_rows <<endl;
+    cout<< p_q->n_elem <<endl;
+    cout<< p_x->n_elem <<endl;
+    cout<< p_d->n_elem <<endl;
+    cout<< p_s->n_elem <<endl;
 
     delete p_q;
     delete p_x;

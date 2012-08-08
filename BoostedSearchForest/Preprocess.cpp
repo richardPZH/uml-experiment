@@ -31,16 +31,16 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
         (*iArray)[i] = i;
     }
 
-    //shuffle the iArray to get
+    //shuffle the iArray to get random samples as queries and buildSamples and search database
     srand((unsigned) time(NULL));   //random_shuffle needs this
     random_shuffle( *iArray , (*iArray)+isize );
 
-    Row<uword> * p_indices;
+    Col<uword> * p_indices;
     //new the p_q
     *p_q = new Mat<double>;
     int num_q;
     num_q = (int) ( t.n_rows * fragment_q );
-    p_indices = new Row<uword>( (*iArray) , num_q  , true ,  true);
+    p_indices = new Col<uword>( (*iArray) , num_q  , true ,  true);
     **p_q = t.rows( *p_indices );
     delete p_indices;
 
@@ -48,7 +48,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     *p_x = new Mat<double>;
     int num_x;
     num_x = (int)( t.n_rows * fragment_b );
-    p_indices = new Row<uword>( (*iArray)+num_q , num_x  , true ,  true);
+    p_indices = new Col<uword>( (*iArray)+num_q , num_x  , true ,  true);
     **p_q = t.rows( *p_indices );
     delete p_indices;
 
@@ -56,7 +56,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     *p_d = new Mat<double>;
     int num_d;
     num_d = t.n_rows - num_q - num_x;
-    p_indices = new Row<uword>( (*iArray)+num_q+num_x , num_d  , true ,  true);
+    p_indices = new Col<uword>( (*iArray)+num_q+num_x , num_d  , true ,  true);
     **p_q = t.rows( *p_indices );
     delete p_indices;
 
