@@ -40,7 +40,13 @@ int main(int argc, char** argv) {
 
 
     cout<< p_q->n_rows <<endl;
-    cout<< p_x->n_rows <<endl;
+    cout<< *p_q <<endl;
+    cout<<endl;
+    for( int i=0 ; i<7 ; i++ )
+    {
+        cout<< iArray[i] <<" ";
+    }
+    cout<< endl << p_x->n_rows <<endl;
     cout<< p_d->n_rows <<endl;
     cout<< p_s->n_rows <<endl;
 
