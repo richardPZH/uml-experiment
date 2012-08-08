@@ -29,7 +29,7 @@ BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const double c
 
 }
 
-const double BSF:: confidence = 0.5;
+const double BSF:: confidence = 0;
 
 //This will follow the Algorithm 1 in the paper
 //Boosted Selection Function Learning
