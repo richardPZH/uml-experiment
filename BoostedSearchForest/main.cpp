@@ -14,6 +14,7 @@
 #include <limits>
 #include <vector>
 #include <cmath>
+#include <stdlib.h>
 
 using namespace std;
 using namespace arma;
@@ -22,6 +23,19 @@ using namespace arma;
  * 
  */
 int main(int argc, char** argv) {
+
+    //This need to test the initial of the Mat<double> of the armadillo
+    Mat<double> t;
+
+    if( ( t.load("wine.txt" , raw_ascii ) ) == false )
+    {
+        cerr<< "Error Loading wine.txt\n";
+        exit( 1 );
+    }
+
+    cout<< t << endl;
+
+    t.save( "wine2.txt" , raw_ascii ); // <-- this will save the data in raw ascii in file wine2.txt, can use diff to see the different!!
 
     return 0;
 }
