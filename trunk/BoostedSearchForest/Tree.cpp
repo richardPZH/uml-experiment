@@ -13,14 +13,15 @@
 #include <queue>
 #include <limits>
 #include <armadillo>
+#include <string.h>
 
 using namespace std;
 using namespace arma;
 
-Tree::Tree( const size_t numOfSamples ) {
+Tree:: Tree( const size_t numOfSamples ) {
 
     root = NULL;
-    numFruit = numOfSamples;
+    numFruit =( unsigned int )numOfSamples;
     fruit = new unsigned int[numFruit];
 
     for( unsigned int i=0 ; i<numFruit ; i++ )
@@ -28,6 +29,15 @@ Tree::Tree( const size_t numOfSamples ) {
         fruit[i]=i;                    //the index to the sample in the matrix. There are numFruit of samples.
     }
 
+}
+
+Tree:: Tree( const Tree &obj )  //vital ??
+{
+    root = obj.root;
+    numFruit = obj.numFruit;
+    fruit = new unsigned int[numFruit];
+
+    memcpy( fruit , obj.fruit , numFruit * sizeof( * fruit ) );
 }
 
 Mat<double> Tree:: myZero = zeros< Mat<double> >(1,1); //initial the static member zero matrix
@@ -78,7 +88,7 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 
         for( size_t ii=0 ; ii<numSamples ; ii++ )
         {
-            cout<< array[ii] <<" "<<endl;
+            cout<< ii << " " << array[ii] <<" "<<endl;
         }
         
         p_indices = new Col< uword >( array , (uword)numSamples , true , true ); //may improve this

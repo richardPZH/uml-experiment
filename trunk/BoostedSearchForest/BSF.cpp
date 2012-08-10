@@ -21,7 +21,8 @@ BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const Mat<doub
     lamda = clamda;        //tuning paramater
     m = cm;                //store the number of trees
 
-    forestEntrance = new vector< Tree >( m , Tree(p_x->n_rows));  //we have m trees
+    Tree tmp( p_x->n_rows);
+    forestEntrance = new vector< Tree >( m , tmp);  //we have m trees
 
     p_w = new Mat<double>( p_x->n_rows , p_x->n_rows ); //new an nxn weight matrix start from 00
     p_w->fill( 1 );                                     //initial wij=1 because wij=1/(n*n) ==> wij=1 Zhen.Li@gmail.com
