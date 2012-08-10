@@ -28,12 +28,12 @@ public:
     bool findImage( const Row<double> * p_sample , double * array );
 private:
 
-    double findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const int* array , const size_t num );
+    double findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const unsigned int* array , const size_t num );
     bool rmHelp( TreeNode * rNode );
 
     double cm;         //the weight c of this tree  it is stored in the forest too
     TreeNode * root;     //the root of this tree
-    int * fruit;         //pointer to the index of the whole samples --> this may be replace the sample rather than its index here
+    unsigned int * fruit;         //pointer to the index of the whole samples --> this may be replace the sample rather than its index here
     size_t numFruit;     //how many fruits we have
 
     list< TreeNode * > leafLink;

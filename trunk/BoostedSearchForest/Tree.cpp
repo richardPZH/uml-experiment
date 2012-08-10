@@ -21,9 +21,9 @@ Tree::Tree( const size_t numOfSamples ) {
 
     root = NULL;
     numFruit = numOfSamples;
-    fruit = new int[numFruit];
+    fruit = new unsigned int[numFruit];
 
-    for( int i=0 ; i<numFruit ; i++ )
+    for( unsigned int i=0 ; i<numFruit ; i++ )
     {
         fruit[i]=i;                    //the index to the sample in the matrix. There are numFruit of samples.
     }
@@ -75,8 +75,16 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         Mat<double> X;
         size_t numSamples = (cLeaf->leafL).rFruit - (cLeaf->leafL).lFruit + 1;
         array =(unsigned int *)( (cLeaf->leafL).lFruit );
+
+        for( size_t ii=0 ; ii<numSamples ; ii++ )
+        {
+            cout<< array[ii] <<" "<<endl;
+        }
         
         p_indices = new Col< uword >( array , (uword)numSamples , true , true ); //may improve this
+
+        cout<<" rows = "<< p_indices->n_rows <<"  cols = " << p_indices <<endl;
+        cout<< *p_indices <<endl;
 
         X = p_x->rows( *p_indices );           //X is still column, not X~,
         X = X.t();
@@ -103,7 +111,7 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 
 
         //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
-        int * l , * r;
+        unsigned int * l , * r;
 
         l = (cLeaf->leafL).lFruit;
         r = (cLeaf->leafL).rFruit;                          //will l == r??
@@ -141,8 +149,8 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         {
             //need to split the node, the make this node become a internal node,
             //change this to and internal node
-            int * ll, * lr;
-            int * rl, * rr;
+            unsigned int * ll, * lr;
+            unsigned int * rl, * rr;
 
             ll = (cLeaf->leafL).lFruit;
             lr = r;
@@ -224,7 +232,7 @@ bool Tree:: rmHelp( TreeNode * rNode )
 }
 
 
-double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const int* array , const size_t num )
+double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda , const unsigned int* array , const size_t num )
 {
     double sum;
     
@@ -250,7 +258,7 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
 {
     int p11,p10;
     double c;
-    int * array;
+    unsigned int * array;
     size_t num;
 
     std:: list < TreeNode *> ::iterator itb ;
@@ -301,7 +309,7 @@ bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const doubl
     //cm
     //tm(xi,xj)         M_E is e!!
     
-    int * array;
+    unsigned int * array;
     size_t num;
 
     std:: list < TreeNode *> ::iterator itb ;
@@ -351,8 +359,8 @@ bool Tree:: findImage( const Row<double> * p_sample , double * array )
     if( ( NULL == p )  || ( p->isInternal() ) )
         return false;
 
-    int * beg;
-    int * end;
+    unsigned int * beg;
+    unsigned int * end;
 
     beg = p->leafL.lFruit;
     end = p->leafL.rFruit;

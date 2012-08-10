@@ -40,8 +40,8 @@ public:
         }intL;
 
         struct{
-            int * lFruit;
-            int * rFruit;
+            unsigned int * lFruit;
+            unsigned int * rFruit;
             double J;
         }leafL;
     };
