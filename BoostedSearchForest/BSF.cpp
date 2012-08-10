@@ -49,8 +49,8 @@ bool BSF::boost( void )
 
     size_t nRows,nCols;
 
-    nRows = p_w->n_rows;
-    nCols = p_w->n_cols;
+    //nRows = p_w->n_rows;
+    //nCols = p_w->n_cols;
 
     for( i=0 ; i< m ; i++ ){
 

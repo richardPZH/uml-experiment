@@ -31,15 +31,20 @@ using namespace arma;
  */
 int main(int argc, char** argv) {
 
-    Mat<double> *p_q = NULL;
-    Mat<double> *p_x = NULL;
-    Mat<double> *p_d = NULL;
-    Mat<char>   *p_s = NULL;
+    Mat<double> *p_q = NULL;  //the queries matrix
+    Mat<double> *p_x = NULL;  //the build samples matrix
+    Mat<double> *p_d = NULL;  //the database matrix
+    Mat<char>   *p_s = NULL;  //the given similarity matrix
     unsigned int * iArray;
+
+    double lamda = 0.5;  //lamda is user define
+    int cm = 10;         //how many trees
 
     generateQBS( "wine.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
 
+    BSF bsf( p_x , p_s , p_d , lamda , cm );
 
+    bsf.boost();
 
     delete p_q;
     delete p_x;

@@ -78,7 +78,7 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         
         p_indices = new Col< uword >( array , (uword)numSamples , true , true ); //may improve this
 
-        X = p_w->rows( *p_indices );           //X is still column, not X~,
+        X = p_x->rows( *p_indices );           //X is still column, not X~,
         X = X.t();
 
         //2. get M
