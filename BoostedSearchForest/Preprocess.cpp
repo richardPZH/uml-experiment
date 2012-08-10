@@ -109,9 +109,9 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
 //    {
 //        (*p_x)->at( k , j ) = 1;
 //    }
-    setMatrixFinalColTo1( (*p_q));
+    //setMatrixFinalColTo1( (*p_q));   //the request do not need to be set to 1 at the final column
     setMatrixFinalColTo1( (*p_x));
-    setMatrixFinalColTo1( (*p_d));
+    //setMatrixFinalColTo1( (*p_d));   //the database do net need to be set to 1 at the final column
 
     return true;
 }

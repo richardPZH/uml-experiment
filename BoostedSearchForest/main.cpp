@@ -21,6 +21,7 @@
 #include <stdlib.h>
 
 #include "Preprocess.h"
+#include "BSF.h"
 
 using namespace std;
 using namespace arma;
@@ -39,16 +40,6 @@ int main(int argc, char** argv) {
     generateQBS( "wine.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
 
 
-    cout<< p_q->n_rows <<endl;
-    cout<< *p_q <<endl;
-    cout<<endl;
-    for( int i=0 ; i<7 ; i++ )
-    {
-        cout<< iArray[i] <<" ";
-    }
-    cout<< endl << p_x->n_rows <<endl;
-    cout<< p_d->n_rows <<endl;
-    cout<< p_s->n_rows <<endl;
 
     delete p_q;
     delete p_x;
@@ -60,6 +51,25 @@ int main(int argc, char** argv) {
 }
 
 #if 0
+//
+//    cout<< p_q->n_rows <<endl;
+//    cout<< *p_q <<endl;
+//    cout<<endl;
+//    for( int i=0 ; i<7 ; i++ )
+//    {
+//        cout<< iArray[i] <<" ";
+//    }
+//    cout<< endl << p_x->n_rows <<endl;
+//    cout<< p_d->n_rows <<endl;
+//    cout<< p_s->n_rows <<endl;
+//
+//
+//    cout<< endl << *p_x <<endl;
+//    cout<< endl << p_s->at( 0 , 7 ) + '0' <<endl;
+//    cout<< endl << p_s->at( 4 , 1 ) + '0' <<endl;
+
+
+
     //Test is fine!!! no we can load samples just like the matlab load command
     //This need to test the initial of the Mat<double> of the armadillo
     Mat<double> t;

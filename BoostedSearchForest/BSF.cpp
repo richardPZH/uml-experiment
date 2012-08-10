@@ -10,12 +10,14 @@
 //Paramaters:
 // cp_x   the address of the sample x matrix
 // cp_s   the address of the similarity s matrix; these two matrix won't be copied during process, in order to safe memory
+// cp_d   the address of the database matrix
 // clamda the tuning paramater that balances quality and computational cost
 // cm     the number of trees in the forest
-BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const double clamda , const size_t cm )
+BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const Mat<double> * cp_d , const double clamda , const size_t cm )
 {
     p_x = cp_x;            //point to the sample x matrix
     p_s = cp_s;            //point to the similarity s matrix
+    p_d = cp_d;            //point to the database d matrix
     lamda = clamda;        //tuning paramater
     m = cm;                //store the number of trees
 
@@ -100,7 +102,7 @@ Mat<double> * BSF:: search( const Row< double > * psample )
     num = 0;
     for( i=0 ; i<j ; i++ )
     {
-        if( candaArry[i] >= confidence )
+        if( candaArry[i] > confidence )
         {
             *p = (int) i;
             p++;
