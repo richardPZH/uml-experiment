@@ -102,11 +102,12 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         //2. get M
         p_M = new Mat<double>( numSamples , numSamples );
 
-        for( size_t i=0 ; i < numSamples ; i++ )                      //May be I can use armadillo to improve this
+        for( size_t i=0 ; i < numSamples ; i++ )                      //May be I can use armadillo to improve this Mij is symmetric, can prove it
         {
-            for( size_t j=0 ; j < numSamples ; j++ )
+            for( size_t j=i ; j < numSamples ; j++ )
             {
                 p_M->at(i,j) = p_w->at(array[i],array[j]) * (p_s->at(array[i],array[j])-lamda);
+                p_M->at(j,i) = p_M->at(i,j);
             }
         }
 
@@ -117,7 +118,7 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         eig_sym(eigval, eigvec, X * (*p_M) * X.t() );
             //since the eig_sym The eigenvalues are in ascending order
             //The largest eigenvalue of XMXt is the numSamplesth one, in C++, the numSampes - 1
-        Col<double> p = eigvec.col( numSamples - 1);         //the p is a col vec
+        Col<double> p = eigvec.col( p_x->n_rows - 1);         //the p is a col vec
 
 
         //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
