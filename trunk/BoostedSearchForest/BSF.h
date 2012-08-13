@@ -21,6 +21,7 @@ public:
     virtual ~BSF();
     bool boost( void );
     Mat<double> * search( const Row< double > * psample );
+    void printTreeWeightCm( void );
 private:
 
     size_t m;                        //there are m trees in the forest here m must >= 0 so size_t

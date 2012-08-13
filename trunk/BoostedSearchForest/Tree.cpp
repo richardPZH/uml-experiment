@@ -40,7 +40,7 @@ Tree:: Tree( const Tree &obj )  //vital ??
     memcpy( fruit , obj.fruit , numFruit * sizeof( * fruit ) );
 }
 
-Mat<double> Tree:: NmyZero = zeros< Mat<double> >(1,1); //initial the static member zero matrix
+//Mat<double> Tree:: NmyZero = zeros< Mat<double> >(1,1); //initial the static member zero matrix
 
 //Search Tree Construction: grow
 //Input: p_x -> address of the sample matrix
@@ -49,7 +49,7 @@ Mat<double> Tree:: NmyZero = zeros< Mat<double> >(1,1); //initial the static mem
 //       lamda -> zij need him
 //retval: true -> tree grows succeed; false -> tree grows fail
 bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda )
-{
+{   
     queue< TreeNode * > qu_p;
     Mat<double> myZero = zeros< Mat<double> >(1,1);       //for safety!
     
@@ -101,7 +101,7 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         X = X.t();
 
         cout<< X.n_rows <<" <- rows; cols -> "<< X.n_cols << endl;
-        cout<< X.col( 5 );
+        //cout<< X.col( 0 );   //here the X.col(5) out of bound
 
         //2. get M
         p_M = new Mat<double>( numSamples , numSamples );
@@ -232,7 +232,7 @@ bool Tree:: rmHelp( TreeNode * rNode )
 
     if( rNode->isInternal() )
     {
-        delete (rNode->intL).pvector;
+        //delete (rNode->intL).pvector; don't delete the pvector here because the delete rNode will do it.
 
         rmHelp( (rNode->intL).left );
         rmHelp( (rNode->intL).right );
@@ -390,4 +390,9 @@ bool Tree:: findImage( const Row<double> * p_sample , double * array )
     return true;
 }
 
+//return this tree's cm
+double Tree:: getCm( void )
+{
+    return cm;
+}
 
