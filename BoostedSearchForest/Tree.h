@@ -39,7 +39,7 @@ private:
 
     list< TreeNode * > leafLink;
 
-    static Mat<double> myZero;
+    static Mat<double> NmyZero;
 
 };
 
