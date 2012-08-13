@@ -40,7 +40,7 @@ Tree:: Tree( const Tree &obj )  //vital ??
     memcpy( fruit , obj.fruit , numFruit * sizeof( * fruit ) );
 }
 
-Mat<double> Tree:: myZero = zeros< Mat<double> >(1,1); //initial the static member zero matrix
+Mat<double> Tree:: NmyZero = zeros< Mat<double> >(1,1); //initial the static member zero matrix
 
 //Search Tree Construction: grow
 //Input: p_x -> address of the sample matrix
@@ -51,6 +51,7 @@ Mat<double> Tree:: myZero = zeros< Mat<double> >(1,1); //initial the static memb
 bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda )
 {
     queue< TreeNode * > qu_p;
+    Mat<double> myZero = zeros< Mat<double> >(1,1);       //for safety!
     
     root = new TreeNode;
     root->setLeaf();                                     //root initial is a leaf conatining all the samples
@@ -86,18 +87,21 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         size_t numSamples = (cLeaf->leafL).rFruit - (cLeaf->leafL).lFruit + 1;
         array =(unsigned int *)( (cLeaf->leafL).lFruit );
 
-        for( size_t ii=0 ; ii<numSamples ; ii++ )
-        {
-            cout<< ii << " " << array[ii] <<" "<<endl;
-        }
+//        for( size_t ii=0 ; ii<numSamples ; ii++ ) //debug info no more usefull
+//        {
+//            cout<< ii << " " << array[ii] <<" "<<endl;
+//        }
         
         p_indices = new Col< uword >( array , (uword)numSamples , true , true ); //may improve this
 
-        cout<<" rows = "<< p_indices->n_rows <<"  cols = " << p_indices <<endl;
-        cout<< *p_indices <<endl;
+//        cout<<" rows = "<< p_indices->n_rows <<"  cols = " << p_indices <<endl;
+//        cout<< *p_indices <<endl;
 
         X = p_x->rows( *p_indices );           //X is still column, not X~,
         X = X.t();
+
+        cout<< X.n_rows <<" <- rows; cols -> "<< X.n_cols << endl;
+        cout<< X.col( 5 );
 
         //2. get M
         p_M = new Mat<double>( numSamples , numSamples );
@@ -118,7 +122,7 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         eig_sym(eigval, eigvec, X * (*p_M) * X.t() );
             //since the eig_sym The eigenvalues are in ascending order
             //The largest eigenvalue of XMXt is the numSamplesth one, in C++, the numSampes - 1
-        Col<double> p = eigvec.col( p_x->n_rows - 1);         //the p is a col vec
+        Col<double> p = eigvec.col( eigvec.n_cols - 1);         //the p is a col vec
 
 
         //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
@@ -350,6 +354,7 @@ bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const doubl
 bool Tree:: findImage( const Row<double> * p_sample , double * array )
 {
     TreeNode * p;
+    Mat<double> myZero = zeros< Mat<double> >(1,1);       //for safety! how can I static an object and initial him??
 
     p = root;
 
