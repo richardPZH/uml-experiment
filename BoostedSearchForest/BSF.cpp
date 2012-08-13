@@ -129,6 +129,18 @@ Mat<double> * BSF:: search( const Row< double > * psample )
     return p_mat;
 }
 
+//Just Print Out the c of trees in the forest
+void BSF::printTreeWeightCm( void )
+{
+    int i;
+    cout<<"There are "<<m<<" trees in the forest, weight c:"<<endl;
+    for( i=0; i<m ; i++ )
+    {
+        cout<< forestEntrance->at( i ).getCm()<<endl;
+    }
+
+}
+
 
 BSF::~BSF() {
     
