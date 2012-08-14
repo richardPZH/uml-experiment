@@ -51,7 +51,6 @@ Tree:: Tree( const Tree &obj )  //vital ??
 bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda )
 {   
     queue< TreeNode * > qu_p;
-    Mat<double> myZero = zeros< Mat<double> >(1,1);       //for safety!
     
     root = new TreeNode;
     root->setLeaf();                                     //root initial is a leaf conatining all the samples
@@ -124,6 +123,9 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
             //The largest eigenvalue of XMXt is the numSamplesth one, in C++, the numSampes - 1
         Col<double> p = eigvec.col( eigvec.n_cols - 1);         //the p is a col vec
 
+        cout << eigval <<endl;
+
+        cout << eigvec <<endl;
 
         //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
         unsigned int * l , * r;
@@ -133,7 +135,13 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 
         while( l <= r )
         {
-            umat ZZ = ( p_x->row( (unsigned int) *l ) * p ) > myZero;           //read the armadillo document
+            cout<< *l <<endl;
+            cout<< p_x->row( (unsigned int) *l ) << endl;
+            cout<< p << endl;
+
+            mat ZZ = ( p_x->row( (unsigned int) *l ) * p );           //read the armadillo document
+
+            cout<< ZZ <<endl;
 
             if(  ZZ.at(0) > 0 )
             {
@@ -281,6 +289,8 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
 
     p11 = p10 = 0;
 
+    cout << leafLink.size() << endl;
+
     itb = leafLink.begin();
     ite = leafLink.end();
 
@@ -288,6 +298,11 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
     {
         array = (*itb)->leafL.lFruit;
         num = (*itb)->leafL.rFruit - array + 1;
+
+        for( int ii=0 ; ii < num ; ii++ )
+        {
+            cout<< array[ii] << " ";
+        }
 
         for( size_t i=0 ; i<num ; i++ )
         {
@@ -354,13 +369,12 @@ bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const doubl
 bool Tree:: findImage( const Row<double> * p_sample , double * array )
 {
     TreeNode * p;
-    Mat<double> myZero = zeros< Mat<double> >(1,1);       //for safety! how can I static an object and initial him??
-
+   
     p = root;
 
     while( ( p != NULL ) && ( p->isInternal() ) )
     {
-        umat ZZ = ((*p_sample) * ((p->intL).pvector)->at(0) ) > myZero;
+        mat ZZ = ((*p_sample) * ((p->intL).pvector)->at(0) );
 
         if( ZZ.at(0) > 0 )
         {
