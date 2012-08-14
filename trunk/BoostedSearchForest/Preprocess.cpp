@@ -86,6 +86,38 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
         }
     }
 
+    //setMatrixFinalColTo1( (*p_q));   //the request do not need to be set to 1 at the final column
+    setMatrixFinalColTo1( (*p_x));
+    //setMatrixFinalColTo1( (*p_d));   //the database do net need to be set to 1 at the final column
+
+    return true;
+}
+
+template< class Tmat >
+void setMatrixFinalColTo1( Tmat * p )
+{
+    int i,j;
+    j = p->n_cols - 1;
+    i = p->n_rows;
+    for( int k=0 ; k<i ; k++ )
+    {
+        p->at( k , j ) = 1;
+    }
+
+}
+
+
+//    //verify the p_s matrix, is it correct? yes the similarity matrix is symmetric and correct!
+//    cout<< (*p_x)->col( finalCol ) <<endl;
+//    for( int i=0 ; i<(*p_s)->n_rows ; i++ )
+//    {
+//        for( int j=0 ; j<(*p_s)->n_cols; j++ )
+//        {
+//            cout<< char( (**p_s).at( i , j ) + '0' ) << " ";
+//        }
+//        cout<<endl;
+//    }
+
 
     //change the p_q p_x p_d 's final col to 1, this is require input for the BSF
 //    int i,j;
@@ -109,23 +141,3 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
 //    {
 //        (*p_x)->at( k , j ) = 1;
 //    }
-    //setMatrixFinalColTo1( (*p_q));   //the request do not need to be set to 1 at the final column
-    setMatrixFinalColTo1( (*p_x));
-    //setMatrixFinalColTo1( (*p_d));   //the database do net need to be set to 1 at the final column
-
-    return true;
-}
-
-template< class Tmat >
-void setMatrixFinalColTo1( Tmat * p )
-{
-    int i,j;
-    j = p->n_cols - 1;
-    i = p->n_rows;
-    for( int k=0 ; k<i ; k++ )
-    {
-        p->at( k , j ) = 1;
-    }
-
-}
-
