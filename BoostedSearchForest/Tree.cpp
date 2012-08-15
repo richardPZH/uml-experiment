@@ -111,14 +111,14 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         vec eigval;
         mat eigvec;
 
-        cout<< Xt * ( *p_M ) * X << endl;
+        //cout<< Xt * ( *p_M ) * X << endl;
         eig_sym(eigval, eigvec, Xt * (*p_M) * X );
             //since the eig_sym The eigenvalues are in ascending order
             //The largest eigenvalue of XMXt is the numSamplesth one, in C++, the numSampes - 1
         Col<double> p = eigvec.col( eigvec.n_cols - 1);         //the p is a col vec
 
-        cout<< eigval << endl;
-        cout<< p << endl;
+        //cout<< eigval << endl;
+        //cout<< p << endl;
 
         //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
         unsigned int * l , * r;
@@ -351,7 +351,7 @@ bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const doubl
         {
             for( size_t j=0 ; j<num ; j++ )
             {
-                p_w->at( array[i] , array[j] ) = p_w->at( array[i] , array[j] ) * pow( M_E , -1 * (p_s->at(array[i] , array[j] - lamda) * cm ));
+                p_w->at( array[i] , array[j] ) = p_w->at( array[i] , array[j] ) * pow( M_E , -1 * (p_s->at(array[i] , array[j] ) - lamda) * cm );
             }
         }
 
