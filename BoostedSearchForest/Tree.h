@@ -15,6 +15,8 @@
 
 #include "TreeNode.h"
 
+#define EPS 0.000000001
+
 using namespace std;
 using namespace arma;
 

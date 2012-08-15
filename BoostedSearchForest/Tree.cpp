@@ -161,7 +161,9 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 
 
         // lJ + rJ > J ?
-        if( ( lJ + rJ ) > (cLeaf->leafL).J  )
+        double ssj = lJ + rJ;
+        double ooj = (cLeaf->leafL).J;
+        if( (( lJ + rJ ) - (cLeaf->leafL).J ) > 0.0001  )  //use this compare to avoid error
         {
             //need to split the node, the make this node become a internal node,
             //change this to and internal node
@@ -315,7 +317,7 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
     }
 
     //ln function in cmath is ? <--  double log( double x )
-    c = log( (1-lamda) / lamda * p11 / p10 );
+    c = log( (1-lamda) *p11 /( lamda * p10 + EPS));     //becasue the p10 may be 0, which is bad!
 
     cm = c;
 
