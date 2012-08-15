@@ -83,21 +83,14 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         //Find the optimal split for l by solving (18)
         //1. get X~
         Mat<double> X;
+        Mat<double> Xt;
         size_t numSamples = (cLeaf->leafL).rFruit - (cLeaf->leafL).lFruit + 1;
         array =(unsigned int *)( (cLeaf->leafL).lFruit );
-
-//        for( size_t ii=0 ; ii<numSamples ; ii++ ) //debug info no more usefull
-//        {
-//            cout<< ii << " " << array[ii] <<" "<<endl;
-//        }
         
         p_indices = new Col< uword >( array , (uword)numSamples , true , true ); //may improve this
 
-//        cout<<" rows = "<< p_indices->n_rows <<"  cols = " << p_indices <<endl;
-//        cout<< *p_indices <<endl;
-
         X = p_x->rows( *p_indices );           //X is still column, not X~,
-        X = X.t();
+        Xt = X.t();
 
         cout<< X.n_rows <<" <- rows; cols -> "<< X.n_cols << endl;
         //cout<< X.col( 0 );   //here the X.col(5) out of bound
@@ -118,14 +111,14 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
         vec eigval;
         mat eigvec;
 
-        eig_sym(eigval, eigvec, X * (*p_M) * X.t() );
+        cout<< Xt * ( *p_M ) * X << endl;
+        eig_sym(eigval, eigvec, Xt * (*p_M) * X );
             //since the eig_sym The eigenvalues are in ascending order
             //The largest eigenvalue of XMXt is the numSamplesth one, in C++, the numSampes - 1
         Col<double> p = eigvec.col( eigvec.n_cols - 1);         //the p is a col vec
 
-        cout << eigval <<endl;
-
-        cout << eigvec <<endl;
+        cout<< eigval << endl;
+        cout<< p << endl;
 
         //if criteria in (17) increases then split l into l1 and l2; enqueue l1 and l2
         unsigned int * l , * r;
@@ -135,13 +128,13 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 
         while( l <= r )
         {
-            cout<< *l <<endl;
-            cout<< p_x->row( (unsigned int) *l ) << endl;
-            cout<< p << endl;
+            //cout<< *l <<endl;
+            //cout<< p_x->row( (unsigned int) *l ) << endl;
+            //cout<< p << endl;
 
             mat ZZ = ( p_x->row( (unsigned int) *l ) * p );           //read the armadillo document
 
-            cout<< ZZ <<endl;
+            //cout<< ZZ <<endl;
 
             if(  ZZ.at(0) > 0 )
             {
@@ -303,6 +296,7 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
         {
             cout<< array[ii] << " ";
         }
+        cout<<endl;
 
         for( size_t i=0 ; i<num ; i++ )
         {

@@ -36,7 +36,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
 
     //shuffle the iArray to get random samples as queries and buildSamples and search database
     srand((unsigned) time(NULL));   //random_shuffle needs this
-    random_shuffle( *iArray , (*iArray)+isize );
+    //random_shuffle( *iArray , (*iArray)+isize );
 
     Col<uword> * p_indices;
     //new the p_q
