@@ -16,9 +16,10 @@
 using namespace std;
 using namespace arma;
 
+extern Col<double> sampleClass;
 //This is a little bit different from #define, still need to recompile the whole source!!!
-static const double fragment_q = 0.3;
-static const double fragment_b = 0.1;
+static const double fragment_q = 0.2;
+static const double fragment_b = 0.2;
 static const double fragment_d = 0.6 ; //1 - fragment_q - fragment_d <-- this is error!!!
 
 //generate queries build database matrix
