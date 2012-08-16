@@ -17,8 +17,12 @@
 
 #define EPS 0.000000001
 
+
+
 using namespace std;
 using namespace arma;
+
+extern Col<double> sampleClass;
 
 class Tree {
 public:

@@ -35,8 +35,8 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
     }
 
     //shuffle the iArray to get random samples as queries and buildSamples and search database
-    srand((unsigned) time(NULL));   //random_shuffle needs this
-    //random_shuffle( *iArray , (*iArray)+isize );
+    srand((unsigned) time(NULL));                   //random_shuffle needs this
+    random_shuffle( *iArray , (*iArray)+isize );    //get random sample
 
     Col<uword> * p_indices;
     //new the p_q
@@ -86,6 +86,7 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
         }
     }
 
+    sampleClass = (*p_x)->col( finalCol );
     cout<< (*p_x)->col( finalCol ) <<endl;
     
     //setMatrixFinalColTo1( (*p_q));   //the request do not need to be set to 1 at the final column

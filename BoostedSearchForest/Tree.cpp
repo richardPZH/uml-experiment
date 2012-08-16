@@ -161,8 +161,6 @@ bool Tree:: grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double
 
 
         // lJ + rJ > J ?
-        double ssj = lJ + rJ;
-        double ooj = (cLeaf->leafL).J;
         if( (( lJ + rJ ) - (cLeaf->leafL).J ) > 0.0001  )  //use this compare to avoid error
         {
             //need to split the node, the make this node become a internal node,
@@ -296,7 +294,7 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
 
         for( int ii=0 ; ii < num ; ii++ )
         {
-            cout<< array[ii] << " ";
+            cout<<sampleClass.at( array[ii] )<<" ";
         }
         cout<<endl;
 

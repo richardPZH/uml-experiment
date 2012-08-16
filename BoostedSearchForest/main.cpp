@@ -26,6 +26,7 @@
 using namespace std;
 using namespace arma;
 
+Col<double> sampleClass;
 /*
  * 
  */
@@ -47,6 +48,8 @@ int main(int argc, char** argv) {
     bsf.boost();
 
     bsf.printTreeWeightCm();
+
+    //cout<<sampleClass<<endl;
     
     delete p_q;
     delete p_x;
