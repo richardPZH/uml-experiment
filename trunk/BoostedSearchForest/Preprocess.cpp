@@ -25,6 +25,8 @@ bool generateQBS( const char * infile , Mat<double> ** p_q , Mat<double> ** p_x 
         cerr<< "Error Loading wine.txt\n";
         return false;
     }
+    cout<<"Load file :"<<infile<<endl;
+    cout<<"Rows : "<<t.n_rows<<" Cols : "<<t.n_cols<<endl;
 
     //new the index array and initial it to 0 - t.n_rows-1
     int isize = t.n_rows;
