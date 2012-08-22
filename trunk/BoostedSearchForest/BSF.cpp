@@ -70,6 +70,25 @@ bool BSF::boost( void )
     return true;
 }
 
+//Build inverted indices by passing all data points through the learned search trees
+//input: no, because the p_d is saved in the forest
+//retval: bool, true --> everything is ok
+//              false--> something wrong happen
+bool BSF:: buildInvertedIndices( void )
+{
+    size_t i;
+
+    for( i=0 ; i < m ; i++ )
+    {
+        forestEntrance->at(i).addDatabaseItems( p_d );
+    }
+
+
+    return true;
+}
+
+
+
 //BSF search function
 //input : a pointer to a sample Row<double> : [ x0 , x1 , x2 , x3 , x4 .... xk , 1 ]  <--- be aware!
 //retval: a pointer to the submatrix of the *p_x, those samples are consider similar to the given sample

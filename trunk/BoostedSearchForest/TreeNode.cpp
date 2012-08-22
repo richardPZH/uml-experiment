@@ -9,6 +9,7 @@
 
 TreeNode::TreeNode() {
     myType = LEAF;   //default is a leaf node
+    leafL.puivector = NULL;
 }
 
 TreeNode::~TreeNode() {
@@ -16,6 +17,12 @@ TreeNode::~TreeNode() {
     if( myType == INTERNAL )
     {
         delete intL.pvector;
+    }else
+    {
+        if( NULL != leafL.puivector )
+        {
+            delete leafL.puivector;
+        }
     }
 }
 

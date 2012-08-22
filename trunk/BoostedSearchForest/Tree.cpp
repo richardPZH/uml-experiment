@@ -404,3 +404,56 @@ double Tree:: getCm( void )
     return cm;
 }
 
+//add database items into this tree, be careful!
+//input: the database items pointer p_d
+//retval: bool; true--> add all of them ok
+//              false--> something goes wrong
+bool Tree:: addDatabaseItems( const Mat<double> * p_d )
+{
+    size_t r,c;
+    TreeNode * current;
+    Mat<double> result;
+
+    r = p_d->n_rows;
+    c = p_d->n_cols - 1 ;
+
+    Row< double > tmp;
+    for( size_t i = 0 ; i < r ; i ++ )
+    {
+        tmp = p_d->row( i );
+
+        tmp.at( c ) = 1;    //the x sample needs to become this x=[x0 x1 x2 ... 1 ]
+
+        current = root;
+
+        while( (current != NULL) && ( current->isInternal() ))
+        {
+            result = tmp * (current->intL).pvector->at(0) ;
+
+            if( result.at( 0 ) > 0 )
+            {
+                current = current->intL.left;
+            }else
+            {
+                current = current->intL.right;
+            }
+        }
+
+        if( NULL == current )
+        {
+            cerr <<"current is null in the addDatabaseIntems()\b";
+            return false;
+        }
+
+        if( NULL == current->leafL.puivector )
+        {
+            current->leafL.puivector = new vector< unsigned int >;
+        }
+
+        (current->leafL).puivector->push_back( i );
+
+    }
+
+    return true;
+}
+

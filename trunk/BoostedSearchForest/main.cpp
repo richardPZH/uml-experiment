@@ -41,11 +41,13 @@ int main(int argc, char** argv) {
     double lamda = 0.444;    //lamda is user define lamda must between 0 and 1 , becasue the c=log( (1-lamda)/lamda * p11/p10 );
     int cm = 10;         //how many trees
 
-    generateQBS( "optidigit.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
+    generateQBS( "wine.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
 
     BSF bsf( p_x , p_s , p_d , lamda , cm );
 
     bsf.boost();
+
+
 
     bsf.printTreeWeightCm();
 
