@@ -297,7 +297,7 @@ double Tree:: findCi( const Mat<char> *p_s , const Mat<double> *p_d , const doub
         {
             cout<<sampleClass.at( array[ii] )<<" ";
         }
-        cout<<"(";
+        cout<<endl<<"      (";
         if( NULL != ((*itb)->leafL).puivector ){
         for( int ii=0 ; ii < ((*itb)->leafL).puivector->size() ; ii++ )
         {
