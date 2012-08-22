@@ -270,7 +270,7 @@ double Tree:: findJ( const Mat<char> *p_s ,const Mat<double> *p_w , const double
 //input: the pointer to similarity matrix  : p_s
 //       the lamda
 //retval: double, the weight of the tree ci
-double Tree:: findCi( const Mat<char> *p_s , const double lamda )
+double Tree:: findCi( const Mat<char> *p_s , const Mat<double> *p_d , const double lamda )
 {
     int p11,p10;
     double c;
@@ -292,11 +292,19 @@ double Tree:: findCi( const Mat<char> *p_s , const double lamda )
         array = (*itb)->leafL.lFruit;
         num = (*itb)->leafL.rFruit - array + 1;
 
+        cout<<"Leaf : ";
         for( int ii=0 ; ii < num ; ii++ )
         {
             cout<<sampleClass.at( array[ii] )<<" ";
         }
-        cout<<endl;
+        cout<<"(";
+        if( NULL != ((*itb)->leafL).puivector ){
+        for( int ii=0 ; ii < ((*itb)->leafL).puivector->size() ; ii++ )
+        {
+            cout<< p_d->at( ((*itb)->leafL).puivector->at(ii) , p_d->n_cols - 1 )<<" ";
+        }
+        }
+        cout<<") "<<endl;
 
         for( size_t i=0 ; i<num ; i++ )
         {

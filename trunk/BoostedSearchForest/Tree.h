@@ -30,7 +30,7 @@ public:
     Tree(const Tree &obj);
     virtual ~Tree();
     bool grow( const Mat<double> *p_x ,const Mat<char> *p_s ,const Mat<double> *p_w , const double lamda );
-    double findCi( const Mat<char> *p_s , const double lamda );
+    double findCi( const Mat<char> *p_s , const Mat<double> *p_d , const double lamda );
     bool updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const double lamda );
     bool findImage( const Row<double> * p_sample , double * array );
     double getCm( void );
