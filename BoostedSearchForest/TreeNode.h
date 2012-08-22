@@ -42,6 +42,7 @@ public:
         struct{
             unsigned int * lFruit;
             unsigned int * rFruit;
+            vector< unsigned int > * puivector;
             double J;
         }leafL;
     };

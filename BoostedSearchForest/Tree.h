@@ -34,6 +34,7 @@ public:
     bool updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const double lamda );
     bool findImage( const Row<double> * p_sample , double * array );
     double getCm( void );
+    bool addDatabaseItems( const Mat<double> * p_d );
 private:
 
     double cm;                    //the weight c of this tree
