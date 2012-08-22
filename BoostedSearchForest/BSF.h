@@ -21,7 +21,6 @@ public:
     virtual ~BSF();
     bool boost( void );
     Mat<double> * search( const Row< double > * psample );
-    bool buildInvertedIndices( void );
     void printTreeWeightCm( void );
 private:
 

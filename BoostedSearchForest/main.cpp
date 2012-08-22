@@ -48,7 +48,6 @@ int main(int argc, char** argv) {
     bsf.boost();
 
 
-
     bsf.printTreeWeightCm();
 
     //cout<<sampleClass<<endl;

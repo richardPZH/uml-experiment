@@ -58,9 +58,11 @@ bool BSF::boost( void )
         //here learn a tree ti
         forestEntrance->at(i).grow( p_x , p_s , p_w , lamda );
 
+        //build inverted indices after the tree is grown
+        forestEntrance->at(i).addDatabaseItems( p_d );
 
         //here we calculate the ci, the ci is store in the tree i, now omitting the retval
-        forestEntrance->at(i).findCi( p_s , lamda );
+        forestEntrance->at(i).findCi( p_s , p_d , lamda );
 
         //here we update weights wij
         forestEntrance->at(i).updateWeights( p_w , p_s , lamda );
@@ -70,22 +72,22 @@ bool BSF::boost( void )
     return true;
 }
 
-//Build inverted indices by passing all data points through the learned search trees
-//input: no, because the p_d is saved in the forest
-//retval: bool, true --> everything is ok
-//              false--> something wrong happen
-bool BSF:: buildInvertedIndices( void )
-{
-    size_t i;
-
-    for( i=0 ; i < m ; i++ )
-    {
-        forestEntrance->at(i).addDatabaseItems( p_d );
-    }
-
-
-    return true;
-}
+////Build inverted indices by passing all data points through the learned search trees
+////input: no, because the p_d is saved in the forest
+////retval: bool, true --> everything is ok
+////              false--> something wrong happen
+//bool BSF:: buildInvertedIndices( void )
+//{
+//    size_t i;
+//
+//    for( i=0 ; i < m ; i++ )
+//    {
+//        forestEntrance->at(i).addDatabaseItems( p_d );
+//    }
+//
+//
+//    return true;
+//}
 
 
 
