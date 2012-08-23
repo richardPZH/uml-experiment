@@ -6,6 +6,9 @@
  */
 
 #include "BSF.h"
+#include <map>
+
+using namespace std;
 
 //Paramaters:
 // cp_x   the address of the sample x matrix
@@ -28,7 +31,6 @@ BSF::BSF( const Mat< double > * cp_x , const Mat< char > * cp_s , const Mat<doub
     p_w->fill( 1 );                                     //initial wij=1 because wij=1/(n*n) ==> wij=1 Zhen.Li@gmail.com
 
     pResult = NULL;
-    candaArry = new double[p_x->n_rows];
 
 }
 
@@ -72,82 +74,32 @@ bool BSF::boost( void )
     return true;
 }
 
-////Build inverted indices by passing all data points through the learned search trees
-////input: no, because the p_d is saved in the forest
-////retval: bool, true --> everything is ok
-////              false--> something wrong happen
-//bool BSF:: buildInvertedIndices( void )
-//{
-//    size_t i;
-//
-//    for( i=0 ; i < m ; i++ )
-//    {
-//        forestEntrance->at(i).addDatabaseItems( p_d );
-//    }
-//
-//
-//    return true;
-//}
+
 
 
 
 //BSF search function
-//input : a pointer to a sample Row<double> : [ x0 , x1 , x2 , x3 , x4 .... xk , 1 ]  <--- be aware!
+//input : a pointer to a sample Row<double> : [ x0 , x1 , x2 , x3 , x4 .... xk , classlable ]  <--- be aware!
 //retval: a pointer to the submatrix of the *p_x, those samples are consider similar to the given sample
 //        user doesn't have to free(delete) this pointer, BSF will handle it.
 Mat<double> * BSF:: search( const Row< double > * psample )
 {
-    if( pResult != NULL )    //should I delete it myself or user delete it?
+    if( NULL == pResult )
     {
-        delete pResult;
+        pResult = new Mat<double>;
     }
 
-    size_t i,j;
-    j = p_x->n_rows;
+    map< unsigned int , double > mx;
+    map< unsigned int , double > md;
+   
 
-    for( i=0 ; i<j ; i++ )
+    for( size_t i=0 ; i < m ; i++ )
     {
-        candaArry[i] = 0;
+        forestEntrance->at(i).findImage( psample , mx , md );
     }
 
-    //walk through the trees
-    for( i=0 ; i<m ; i++ )
-    {
-        forestEntrance->at(i).findImage( psample , candaArry );
-    }
 
-    //only those values bigger that confidence is collected ?
-    int num;
-    double *p;
-
-    p = candaArry;
-    num = 0;
-    for( i=0 ; i<j ; i++ )
-    {
-        if( candaArry[i] > confidence )
-        {
-            *p = (int) i;
-            p++;
-            num++;
-        }
-    }
-
-    unsigned int *tmp = new unsigned int[num];
-    for( i=0 ; i<num ; i++ )
-    {
-        tmp[i] = (unsigned int) candaArry[i];
-    }
-
-    Col<uword> *p_col = new Col<uword>( tmp , num  , true ,  true);
-
-    Mat<double> * p_mat = new Mat<double>;
-
-    *p_mat = p_x->rows( *p_col );
-
-    delete p_col;
-    delete []tmp;
-
-    return p_mat;
+    return pResult;
 }
 
 //Just Print Out the c of trees in the forest
@@ -169,7 +121,6 @@ BSF::~BSF() {
 
     delete p_w;
 
-    delete[] candaArry;
     if( pResult != NULL )
     {
         delete pResult;
@@ -178,3 +129,19 @@ BSF::~BSF() {
 }
 
 
+////Build inverted indices by passing all data points through the learned search trees
+////input: no, because the p_d is saved in the forest
+////retval: bool, true --> everything is ok
+////              false--> something wrong happen
+//bool BSF:: buildInvertedIndices( void )
+//{
+//    size_t i;
+//
+//    for( i=0 ; i < m ; i++ )
+//    {
+//        forestEntrance->at(i).addDatabaseItems( p_d );
+//    }
+//
+//
+//    return true;
+//}

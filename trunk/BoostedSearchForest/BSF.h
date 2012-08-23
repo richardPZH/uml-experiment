@@ -34,8 +34,7 @@ private:
     const Mat< double > * p_d;       //a pointer to the rest database
     Mat< double > * p_w;             //weight vector [w00 w01 w02 ...; w10 w11 w12..... wn0 wn1 .. 2nn ]
 
-    Mat< double > * pResult;
-    double * candaArry;
+    Mat< double > * pResult;         //this is the search result returned matrix
 
     static const double confidence;
 
