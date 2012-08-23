@@ -164,6 +164,25 @@ Mat<double> * BSF:: search( const Row< double > * psample )
     *pResult = join_cols( sx , sd );
 
     //let's calculate the accuracy and the return num fragment of total samples
+    //cout the lable can works too!
+    int orglable;
+    int correct,total;
+
+    orglable = psample->at( psample->n_elem - 1 );
+    correct = 0;
+    for( total=0 ; total < pResult->n_rows ; total++ )
+    {
+        if( pResult->at( total , pResult->n_cols - 1) == orglable )
+        {
+            correct++;
+        }
+    }
+    cout<<"Return Total      : "<< total << endl;
+    cout<<"Return Sample Hit : "<< correct <<endl;
+    cout<<"Return Accuracy   : "<< ( (double) correct) / total << endl;
+    cout<<endl<<"Your Query Sample class lable is : " << orglable << endl;
+    cout<<"Returned samples' class lables are : "<< pResult->col( pResult->n_cols-1)<<endl;
+
 
 
     return pResult;
