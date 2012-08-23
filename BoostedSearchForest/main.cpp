@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     unsigned int * iArray;
 
     double lamda = 0.444;    //lamda is user define lamda must between 0 and 1 , becasue the c=log( (1-lamda)/lamda * p11/p10 );
-    int cm = 20;         //how many trees
+    int cm = 10;         //how many trees
 
     generateQBS( "optidigit.txt" , &p_q , &p_x , &p_s , &p_d , &iArray );
 
@@ -49,6 +49,14 @@ int main(int argc, char** argv) {
 
 
     bsf.printTreeWeightCm();
+
+    Row<double> q;
+    q = p_q->row( 0 );
+    bsf.search( &q );
+    q = p_q->row( 1 );
+    bsf.search( &q );
+    q = p_q->row( 2 );
+    bsf.search( &q );
 
     //cout<<sampleClass<<endl;
     

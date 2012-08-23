@@ -181,7 +181,7 @@ Mat<double> * BSF:: search( const Row< double > * psample )
     cout<<"Return Sample Hit : "<< correct <<endl;
     cout<<"Return Accuracy   : "<< ( (double) correct) / total << endl;
     cout<<endl<<"Your Query Sample class lable is : " << orglable << endl;
-    cout<<"Returned samples' class lables are : "<< pResult->col( pResult->n_cols-1)<<endl;
+    cout<<"Returned samples' class lables are : \n"<< pResult->col( pResult->n_cols-1)<<endl;
 
 
 
