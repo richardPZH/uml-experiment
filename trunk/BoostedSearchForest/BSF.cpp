@@ -7,6 +7,7 @@
 
 #include "BSF.h"
 #include <map>
+#include <iostream>
 
 using namespace std;
 
@@ -93,10 +94,76 @@ Mat<double> * BSF:: search( const Row< double > * psample )
     map< unsigned int , double > md;
    
 
+    Row<double> tsample;
+    tsample = * psample;
+    tsample.at( tsample.n_elem -1 ) = 1;
+
     for( size_t i=0 ; i < m ; i++ )
     {
-        forestEntrance->at(i).findImage( psample , mx , md );
+        forestEntrance->at(i).findImage( &tsample , mx , md );
     }
+
+    //we need to form the pResult matrix
+    //the confidence occurs here
+    map<unsigned int , double>::iterator  iter;       //will the erase function return the next location?
+    for(iter = mx.begin(); iter != mx.end(); )
+    {
+        if( iter->second <= confidence )
+        {
+            mx.erase( iter++ );                      //they said this is stl std and iter++ not ++iter
+        }
+        else
+        {
+            iter++;
+        }
+    }
+
+    for( iter = md.begin() ; iter != md.end() ; )
+    {
+        if( iter->second <= confidence )
+        {
+            md.erase( iter++ );                   //why iter++, because this is very special!!! warn the programmers
+        }
+        else
+        {
+            iter++;
+        }
+    }
+
+    Col<uword> indexX( mx.size() );  //matlab does care the index is col or row vector, but armadillo does
+    Col<uword> indexD( md.size() );  //so here must use the Col<uword> instead of row<uword>
+
+
+    iter = mx.begin();
+    for( int i = 0 ; iter != mx.end() ; )
+    {
+        indexX.at( i ) = iter->first;
+
+        i++;
+        iter++;
+    }
+
+    iter = md.begin();
+    for( int i = 0 ; iter != md.end() ; )
+    {
+        indexD.at( i ) = iter->first;
+
+        i++;
+        iter++;
+    }
+
+    //we need to get the sx lables correct
+    Mat<double> sx = p_x->rows( indexX ); 
+    for( int i=0 ; i < sx.n_rows ; i++ )
+    {
+        sx.at( i , sx.n_cols-1 ) = sampleClass.at( indexX.at(i) );
+    }
+
+    Mat<double> sd = p_d->rows( indexD );
+
+    *pResult = join_cols( sx , sd );
+
+    //let's calculate the accuracy and the return num fragment of total samples
 
 
     return pResult;

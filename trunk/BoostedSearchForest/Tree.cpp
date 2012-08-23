@@ -14,6 +14,7 @@
 #include <limits>
 #include <armadillo>
 #include <string.h>
+#include <map>
 
 using namespace std;
 using namespace arma;
@@ -436,6 +437,7 @@ bool Tree:: findImage( const Row<double> * p_sample , map<unsigned int,double> &
     if( NULL == p )
         return false;
 
+    //ok finally this sampel arrives at the correct leaf node
     unsigned int * beg;
     unsigned int * end;
     map<unsigned int , double >::iterator iter;
@@ -443,6 +445,7 @@ bool Tree:: findImage( const Row<double> * p_sample , map<unsigned int,double> &
     beg = p->leafL.lFruit;
     end = p->leafL.rFruit;
 
+    //handle the p_x samples
     for( ; beg <= end ; beg++ )
     {
 	iter = mx.find( *beg );
@@ -456,6 +459,7 @@ bool Tree:: findImage( const Row<double> * p_sample , map<unsigned int,double> &
 	}
     }
 
+    //handle the p_d samples
     vector< unsigned int > * pv;
     pv = p->leafL.puivector;
 
