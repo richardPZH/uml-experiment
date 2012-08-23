@@ -368,15 +368,60 @@ bool Tree:: updateWeights( Mat<double> *p_w , const Mat<char> *p_s , const doubl
     return true;
 }
 
-bool Tree:: findImage( const Row<double> * p_sample , double * array )
+//bool Tree:: findImage( const Row<double> * p_sample , double * array )
+//{
+//    TreeNode * p;
+//
+//    p = root;
+//
+//    while( ( p != NULL ) && ( p->isInternal() ) )
+//    {
+//        mat ZZ = ((*p_sample) * ((p->intL).pvector)->at(0) );
+//
+//        if( ZZ.at(0) > 0 )
+//        {
+//            p = p->intL.left;
+//        }
+//        else
+//        {
+//            p = p->intL.right;
+//        }
+//    }
+//
+//    if( ( NULL == p )  || ( p->isInternal() ) )
+//        return false;
+//
+//    unsigned int * beg;
+//    unsigned int * end;
+//
+//    beg = p->leafL.lFruit;
+//    end = p->leafL.rFruit;
+//
+//    for( ; beg <= end ; beg++ )
+//    {
+//        array[ *beg ] += array[ *beg ] + cm;
+//    }
+//
+//
+//    return true;
+//}
+
+//a tree will return the leafnode sample indeice into the map mx and map md
+//input: 1. a pointer to the sample to query, requiret the sample looks like this [x0 x1 x2 x3 .. xn 1]
+//       2. a reference to the mx map , used to store the indice of the p_x
+//       3. a reference to the md map , used to store the indice of the p_d
+//retval: bool; true-->everything is ok;
+//              false-->something goes wrong
+bool Tree:: findImage( const Row<double> * p_sample , map<unsigned int,double> & mx , map<unsigned int , double> &md )
 {
     TreeNode * p;
-   
+    mat ZZ;
+
     p = root;
 
     while( ( p != NULL ) && ( p->isInternal() ) )
     {
-        mat ZZ = ((*p_sample) * ((p->intL).pvector)->at(0) );
+        ZZ = ((*p_sample) * ((p->intL).pvector)->at(0) );
 
         if( ZZ.at(0) > 0 )
         {
@@ -388,23 +433,50 @@ bool Tree:: findImage( const Row<double> * p_sample , double * array )
         }
     }
 
-    if( ( NULL == p )  || ( p->isInternal() ) )
+    if( NULL == p )
         return false;
 
     unsigned int * beg;
     unsigned int * end;
+    map<unsigned int , double >::iterator iter;
 
     beg = p->leafL.lFruit;
     end = p->leafL.rFruit;
 
     for( ; beg <= end ; beg++ )
     {
-        array[ *beg ] += array[ *beg ] + cm;
+	iter = mx.find( *beg );
+	if( iter != mx.end() )      //yes we find it!
+	{
+            iter->second = iter->second + cm;  //the map provide me to change the second value
+	}
+        else                        //no we do not find it!
+	{
+            mx.insert( map<unsigned int , double>::value_type(*beg , cm ));
+	}
     }
 
+    vector< unsigned int > * pv;
+    pv = p->leafL.puivector;
+
+    for( int i=0 ; i < pv->size() ; i++ )
+    {
+        iter = md.find( pv->at(i) );
+	if( iter != mx.end() )      //yes we find it!
+	{
+            iter->second = iter->second + cm;  //the map provide me to change the second value
+	}
+        else                        //no we do not find it!
+	{
+            mx.insert( map<unsigned int , double>::value_type( pv->at(i) , cm ));
+	}
+    }
 
     return true;
 }
+
+
+
 
 //return this tree's cm
 double Tree:: getCm( void )
