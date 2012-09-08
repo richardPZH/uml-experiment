@@ -92,21 +92,22 @@ switch(method)
     case 'ITQS'
         % PCA
         [pc, l] = eigs(cov(XX(1:num_training,:)),bit);
-        XX = XX * pc;
+        %XX = XX * pc;
         % ITQ
-        [Y, R] = ITQ(XX(1:num_training,:),50);
+        [Y, R] = ITQ(XX(1:num_training,:) * pc ,50 );
         %XX = XX*R;
         %Y = zeros(size(XX));
         %Y(XX>=0) = 1;                        %should We prevent this ?
-        q = 10;
-        Q = diag( size(pc,1) , size(pc,q) );
+        q = 10;                               %q is fro [-q,q] user define boundary
+        Q = eye( size( pc,1 ) );              %q is diag dxd matrix
         Q = ( q^2 / 3 ) * Q ;
-        A1 = pc' * XX(1:num_training,:)' * XX(1:num_training,:) * pc;
+        A1 = pc' * (XX(1:num_training,:))' * XX(1:num_training,:) * pc;
         A2 = pc' * Q * pc ;
-        S = inv( A1 + A1' + A2 + A2' ) * ( R * Y' * XX(1:num_training,:))';  %omitting (RR')-1
+        S = inv( A1 + A1' + A2 + A2' ) * ( R * Y' * XX(1:num_training,:) * pc )';  %omitting (RR')-1 %not to use inv??  
         
+        XX = XX * pc ;
         XX = XX*R;
-        XX = XX*A;
+        XX = XX*S;
         
         Y = zeros(size(XX));
         Y(XX>=0) = 1;
@@ -131,6 +132,8 @@ switch(method)
     plot(recall,precision,'-d');
      case 'LSH'
     plot(recall,precision,'-<');
+    case 'ITQS'
+    plot(recall,precision,'-V');    
 end
 
 xlabel('Recall');
