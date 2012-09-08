@@ -94,10 +94,16 @@ switch(method)
         [pc, l] = eigs(cov(XX(1:num_training,:)),bit);
         %XX = XX * pc;
         % ITQ
-        [Y, R] = ITQ(XX(1:num_training,:) * pc ,50 );
+        [Y, R] = ITQ( XX(1:num_training,:) * pc ,50 );
         %XX = XX*R;
         %Y = zeros(size(XX));
         %Y(XX>=0) = 1;                        %should We prevent this ?
+        
+        %new Y { -1 , 1 }^c
+        Z = ( XX(1:num_training,:) * pc * R;
+        Y = ones( size( Z ) ) * -1 ;
+        Y( Z>=0 ) = 1;
+           
         q = 10;                               %q is fro [-q,q] user define boundary
         Q = eye( size( pc,1 ) );              %q is diag dxd matrix
         Q = ( q^2 / 3 ) * Q ;
