@@ -100,16 +100,105 @@ switch(method)
         %Y(XX>=0) = 1;                        %should We prevent this ?
         
         %new Y { -1 , 1 }^c
-        Z = ( XX(1:num_training,:) * pc * R;
+        Z =  XX(1:num_training,:) * pc * R;
         Y = ones( size( Z ) ) * -1 ;
         Y( Z>=0 ) = 1;
            
-        q = 10;                               %q is fro [-q,q] user define boundary
+        q = 10;                               %q is fro [-q,q] user define boundary 0.1 0.2 0.5 1.0 2.0 3.0 7.0 11.0 17
         Q = eye( size( pc,1 ) );              %q is diag dxd matrix
         Q = ( q^2 / 3 ) * Q ;
         A1 = pc' * (XX(1:num_training,:))' * XX(1:num_training,:) * pc;
         A2 = pc' * Q * pc ;
         S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * XX(1:num_training,:) * pc )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
+        
+        XX = XX * pc ;
+        XX = XX*R;
+        XX = XX*S;
+        
+        Y = zeros(size(XX));
+        Y(XX>=0) = 1;
+        
+        Y = compactbit(Y>0);
+        
+    %3 iterative Fix S and R update Y, Fix S and Y update R , Fix R and Y
+    %update S
+    case 'ITQYSR'
+        % PCA
+        [pc, l] = eigs(cov(XX(1:num_training,:)),bit);
+        X = XX(1:num_training,:) * pc;
+        
+        %get an orthogonal random rotation
+        bit = size(X,2);
+        R = randn(bit,bit);
+        [U11 S2 V2] = svd(R);
+        R = U11(:,1:bit);
+        
+        %get a diagnal matrix S , why diagnal?
+        S = diag( randn( 1 ,bit ) );
+        
+        n_itear = 50;
+        
+        q = 10;                               %q is fro [-q,q] user define boundary 0.1 0.2 0.5 1.0 2.0 3.0 7.0 11.0 17
+        Q = eye( size( pc,1 ) );              %q is diag dxd matrix
+        Q = ( q^2 / 3 ) * Q ;
+        A1 = pc' * (XX(1:num_training,:))' * XX(1:num_training,:) * pc;
+        A2 = pc' * Q * pc ;
+        TMP = ( A1 + A1' + A2 + A2' );
+        %S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * X * pc )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
+        
+        for i = 0 : n_itear
+            %fix S and R update Y
+            Z = X * S * R ;
+            Y = ones(size(Z,1),size(Z,2)).*-1;
+            Y(Z>=0) = 1;
+            
+            %fix S and Y update R
+            C = Y' * X * S;                                 % need 1/2 ?
+            [UB,sigma,UA] = svd(C);    
+            R = UA * UB';
+            
+            %fix R and Y update S
+            S =  TMP \ ( R * Y' * XX(1:num_training,:) * pc )';
+            
+        end
+        
+        XX = XX * pc ;
+        XX = XX*S;
+        XX = XX*R;
+        
+        Y = zeros(size(XX));
+        Y(XX>=0) = 1;
+        
+        Y = compactbit(Y>0);
+        
+    %iteratively find a better S to minisize J(S)
+    case 'ITQI'
+        % PCA
+        [pc, l] = eigs(cov(XX(1:num_training,:)),bit);
+        %XX = XX * pc;
+        % ITQ
+        [Y, R] = ITQ( XX(1:num_training,:) * pc ,50 );
+        %XX = XX*R;
+        %Y = zeros(size(XX));
+        %Y(XX>=0) = 1;                        %should We prevent this ?
+        
+        %new Y { -1 , 1 }^c
+        Z =  XX(1:num_training,:) * pc * R;
+        Y = ones( size( Z ) ) * -1 ;
+        Y( Z>=0 ) = 1;
+           
+        q = 2;                               %q is fro [-q,q] user define boundary 0.1 0.2 0.5 1.0 2.0 3.0 7.0 11.0 17
+        Q = eye( size( pc,1 ) );              %q is diag dxd matrix
+        Q = ( q^2 / 3 ) * Q ;
+        
+        n_itear = 5;
+        A1 = pc' * (XX(1:num_training,:))' * XX(1:num_training,:) * pc;
+        A2 = pc' * Q * pc ;
+        TMP = ( A1 + A1' + A2 + A2' );
+        for i=0:n_itear
+            S =  TMP \ ( R * Y' * XX(1:num_training,:) * pc )'  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
+            Y = Y * S;
+        end
         
         XX = XX * pc ;
         XX = XX*R;
@@ -139,7 +228,11 @@ switch(method)
      case 'LSH'
     plot(recall,precision,'-<');
     case 'ITQS'
-    plot(recall,precision,'-V');    
+    plot(recall,precision,'-X'); 
+    case 'ITQYSR'
+    plot(recall,precision,'-p');
+    case 'ITQI'
+    plot(recall,precision,'-*'); 
 end
 
 xlabel('Recall');
