@@ -103,7 +103,7 @@ switch(method)
         Q = ( q^2 / 3 ) * Q ;
         A1 = pc' * (XX(1:num_training,:))' * XX(1:num_training,:) * pc;
         A2 = pc' * Q * pc ;
-        S = inv( A1 + A1' + A2 + A2' ) * ( R * Y' * XX(1:num_training,:) * pc )';  %omitting (RR')-1 %not to use inv??  
+        S = inv( A1 + A1' + A2 + A2' ) * ( R * Y' * XX(1:num_training,:) * pc )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
         
         XX = XX * pc ;
         XX = XX*R;
