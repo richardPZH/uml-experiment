@@ -86,6 +86,32 @@ switch(method)
         Y = zeros(size(XX));
         Y(XX>=0)=1;
         Y = compactbit(Y);
+        
+    % our own novel 1 first itq, than find a good s to improve the
+    % sensitivity
+    case 'ITQS'
+        % PCA
+        [pc, l] = eigs(cov(XX(1:num_training,:)),bit);
+        XX = XX * pc;
+        % ITQ
+        [Y, R] = ITQ(XX(1:num_training,:),50);
+        %XX = XX*R;
+        %Y = zeros(size(XX));
+        %Y(XX>=0) = 1;                        %should We prevent this ?
+        q = 10;
+        Q = diag( size(pc,1) , size(pc,q) );
+        Q = ( q^2 / 3 ) * Q ;
+        A1 = pc' * XX(1:num_training,:)' * XX(1:num_training,:) * pc;
+        A2 = pc' * Q * pc ;
+        S = inv( A1 + A1' + A2 + A2' ) * ( R * Y' * XX(1:num_training,:))';  %omitting (RR')-1
+        
+        XX = XX*R;
+        XX = XX*A;
+        
+        Y = zeros(size(XX));
+        Y(XX>=0) = 1;
+        
+        Y = compactbit(Y>0);
 end
 
 % compute Hamming metric and compute recall precision
@@ -95,7 +121,18 @@ Dhamm = hammingDist(B2, B1);
 [recall, precision, rate] = recall_precision(WtrueTestTraining, Dhamm);
 
 % plot the curve
-plot(recall,precision,'-o');
+switch(method)
+    % ITQ method proposed in our CVPR11 paper
+    case 'ITQ'
+    plot(recall,precision,'-o');
+    case 'RR'
+    plot(recall,precision,'-s');
+    case 'SKLSH' 
+    plot(recall,precision,'-d');
+     case 'LSH'
+    plot(recall,precision,'-<');
+end
+
 xlabel('Recall');
 ylabel('Precision');
 
