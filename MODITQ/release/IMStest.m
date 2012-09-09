@@ -6,7 +6,8 @@ function [] = IMStest( XX , labels ,  bit , method )
 % ''method'' can be 'ITQ', 'RR', 'LSH' and 'SKLSH' 
 %
 
-X = double( XX );
+XX = double( XX );
+X  = XX;
 
 % parameters
 %averageNumberNeighbors = 50;    % ground truth is 50 nearest neighbor
@@ -160,18 +161,17 @@ switch( method )
         Y = UX;
         %Now the R is found! Find the S
         q = 10;                               %q is fro [-q,q] user define boundary
-        Q = eye( size( V,1 ) );              %q is diag dxd matrix
+        Q = eye( size( VC,1 ) );              %q is diag dxd matrix
         Q = ( q^2 / 3 ) * Q ;
         A1 = VC' * (XX(1:num_training,:))' * XX(1:num_training,:) * VC;
         A2 = VC' * Q * VC ;
         S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * XX(1:num_training,:) * VC )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
         
-        XX = XX * V ;
-        XX = XX*R;
-        XX = XX*S;
+        X = X*R;
+        X = X*S;
         
-        Y = zeros(size(XX));
-        Y(XX>=0) = 1;
+        Y = zeros(size(X));
+        Y(X>=0) = 1;
         
         Y = compactbit(Y>0);
         
