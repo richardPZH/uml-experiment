@@ -101,7 +101,83 @@ switch( method )
         Y = compactbit(X>0);
         
     case 'OURSITQ'
+        % Convert the label information into the Y¡Ê{0,1}(nxt)
+        t = max( XtrainingLabels ) + 1;               % Well, I have already known that the CIFAR labels vary from 0 ~ MaxClassNum and they are all clean!  
+        Y = zeros( size( XtrainingLabels , 1 ) , t ); % Y is n x t
+        for i = 1 : size( XtrainingLabels , 1 )       % Do we have a much faster way in Matlab use its property or cache?
+            Y( i , XtrainingLabels(i) + 1 ) = 1;
+        end
+
+        % Apply the CCA, need to prove a little bit later , we find the W == V
+        p = 0.0001;                         % follow the author in ITQ
+        A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
+        B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
+        [ V D ] = eigs( A , B , bit );
+        for i = 1 : size( V , 2 )           % the eigenvectors is scaled by the eigenvalues
+            V( : ,i ) = V( : , i ) / D( i , i );    
+        end
+
+        % now use the CCA found Wk == V to project original data
+        X = X * V;
         
+        %get a rand orthogonal matrix R
+        bit = size(X,2);
+        R = randn(bit,bit);
+        [U11 S2 V2] = svd(R);
+        R = U11(:,1:bit);
+        
+        n_iter = 50;
+        
+        % ITQ find optimal rotation, but change the UX according to their
+        % label
+        for iter=0:n_iter
+            Z = V * R;      
+            UX = ones(size(Z,1),size(Z,2)).*-1;
+            UX(Z>=0) = 1;                         
+            %Now the UX is the new B(Y) , we need to change it!
+            for i = 1 : size( Y , 2 )
+                index =  find( XtrainingLabels == ( i-1 ) );   %handle this class label
+                UI = UX( index , : );
+                UI( UI<=0 ) = 0;
+                num = zeros( size( UI , 1 ) , 1 );
+                for l = 1 : size( UI , 2 )
+                    num( : ) = num( : ) * 2 + UI( : , l );
+                end
+                [ a b ] = mode( num );
+                num_i = find( num == a );
+                UX( index , : ) = UX( num_i(1) , : );
+            end
+            
+            %done changing the UX to what we want....                                    
+            C = UX' * V;
+            [UB,sigma,UA] = svd(C);    
+            R = UA * UB';
+        end
+        
+        Y = UX;
+        %Now the R is found! Find the S
+        q = 10;                               %q is fro [-q,q] user define boundary
+        Q = eye( size( pc,1 ) );              %q is diag dxd matrix
+        Q = ( q^2 / 3 ) * Q ;
+        A1 = pc' * (XX(1:num_training,:))' * XX(1:num_training,:) * pc;
+        A2 = pc' * Q * pc ;
+        S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * XX(1:num_training,:) * pc )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
+        
+        XX = XX * pc ;
+        XX = XX*R;
+        XX = XX*S;
+        
+        Y = zeros(size(XX));
+        Y(XX>=0) = 1;
+        
+        Y = compactbit(Y>0);
+        
+        
+        
+        
+        Y = zeros(size(XX));
+        Y(XX>=0) = 1;
+        Y = compactbit(Y>0);
 end
 
 % compute Hamming metric and compute recall precision
