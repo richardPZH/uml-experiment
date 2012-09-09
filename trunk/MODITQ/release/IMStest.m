@@ -1,5 +1,5 @@
 function [] = IMStest( XX , labels ,  bit , method )
-%
+% 
 % demo code for generating small code and evaluation
 % input XX should be a n*d matrix, n is the number of images, d is dimension
 % ''method'' is the method used to generate small code
@@ -22,7 +22,7 @@ XtestLabels = labels( R(1:num_test) );
 
 R(1:num_test) = [];
 Xtraining = X(R,:);
-XtrainingLabels = labels( R(:) );
+XtrainingLabels = labels( R );
 num_training = size(Xtraining,1);
 clear X;
 
@@ -36,7 +36,8 @@ for i = 1 : num_test
 end
 
 
-% generate training ans test split and the data matrix
+% generate training ans test split and the data matrix ; ALWAYS REMEMBER
+% the X is the [Xtraining ; Xtest ];
 X = [Xtraining; Xtest];
 % center the data, VERY IMPORTANT
 sampleMean = mean(X,1);
@@ -57,7 +58,7 @@ switch( method )
     B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
     [ V D ] = eigs( A , B , bit );
     for i = 1 : size( V , 2 )           % the eigenvectors is scaled by the eigenvalues
-        V( : ,i ) = V( : , i ) / D( i , i );    
+        V( : ,i ) = V( : , i ) / sqrt( D( i , i ) );    
     end
 
     % now use the CCA found Wk == V to project original data
@@ -88,7 +89,7 @@ switch( method )
         B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
         [ V D ] = eigs( A , B , bit );
         for i = 1 : size( V , 2 )           % the eigenvectors is scaled by the eigenvalues
-            V( : ,i ) = V( : , i ) / D( i , i );    
+            V( : ,i ) = V( : , i ) / sqrt( D( i , i ));    
         end
 
         % now use the CCA found Wk == V to project original data
@@ -108,20 +109,22 @@ switch( method )
             Y( i , XtrainingLabels(i) + 1 ) = 1;
         end
 
-        % Apply the CCA, need to prove a little bit later , we find the W == V
+        % Apply the CCA, need to prove a little bit later , we find the 
+        % Wk == VC
         p = 0.0001;                         % follow the author in ITQ
         A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
         B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-        [ V D ] = eigs( A , B , bit );
-        for i = 1 : size( V , 2 )           % the eigenvectors is scaled by the eigenvalues
-            V( : ,i ) = V( : , i ) / D( i , i );    
+        [ VC DI ] = eigs( A , B , bit );
+        for i = 1 : size( VC , 2 )           % the eigenvectors is scaled by the eigenvalues
+            VC( : ,i ) = VC( : , i ) / sqrt( DI( i , i ) );    
         end
 
-        % now use the CCA found Wk == V to project original data
-        X = X * V;
+        % now use the CCA found Wk == VC to project original data
+        X = X * VC;
+        V = X( 1:num_training , :);
         
         %get a rand orthogonal matrix R
-        bit = size(X,2);
+        bit = size( X(1:num_training, :),2);
         R = randn(bit,bit);
         [U11 S2 V2] = svd(R);
         R = U11(:,1:bit);
@@ -145,7 +148,7 @@ switch( method )
                 end
                 [ a b ] = mode( num );
                 num_i = find( num == a );
-                UX( index , : ) = UX( num_i(1) , : );
+                UX( index , : ) = repmat( UX( num_i(1) , : ) , length( index ) , 1 );
             end
             
             %done changing the UX to what we want....                                    
@@ -157,13 +160,13 @@ switch( method )
         Y = UX;
         %Now the R is found! Find the S
         q = 10;                               %q is fro [-q,q] user define boundary
-        Q = eye( size( pc,1 ) );              %q is diag dxd matrix
+        Q = eye( size( V,1 ) );              %q is diag dxd matrix
         Q = ( q^2 / 3 ) * Q ;
-        A1 = pc' * (XX(1:num_training,:))' * XX(1:num_training,:) * pc;
-        A2 = pc' * Q * pc ;
-        S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * XX(1:num_training,:) * pc )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
+        A1 = VC' * (XX(1:num_training,:))' * XX(1:num_training,:) * VC;
+        A2 = VC' * Q * VC ;
+        S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * XX(1:num_training,:) * VC )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
         
-        XX = XX * pc ;
+        XX = XX * V ;
         XX = XX*R;
         XX = XX*S;
         
@@ -172,12 +175,6 @@ switch( method )
         
         Y = compactbit(Y>0);
         
-        
-        
-        
-        Y = zeros(size(XX));
-        Y(XX>=0) = 1;
-        Y = compactbit(Y>0);
 end
 
 % compute Hamming metric and compute recall precision
@@ -194,7 +191,7 @@ switch(method)
     case 'CCAITQRR'
     plot(recall,precision,'-s');
     case 'OURSITQ'
-        
+    plot(recall,precision,'-X');
 end
 
 xlabel('Recall');
