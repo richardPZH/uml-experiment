@@ -34,6 +34,9 @@ switch(method)
     plot( x , avg_precision , '-X' )
 end
 
+xlabel('Number of bits');
+ylabel('mAP');
+
 
 
 
