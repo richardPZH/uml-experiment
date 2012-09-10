@@ -120,14 +120,11 @@ switch( method )
             W( : ,i ) = W( : , i ) / D( i , i );    
         end
 
-        % now use the CCA found Wk == VC to project original data
-        X = X * W;
-        V = X( 1:num_training , :);
-        
+        % now use the CCA found Wk == VC to project original data      
         n_iter = 50;
-        [B R S ] = OURSITQ( X( 1:num_training , : ) , W , V , XtrainingLabels , n_iter );
+        [B R S ] = OURSITQ( X( 1:num_training , : ) , W , XtrainingLabels , n_iter );
         
-        X = X * R * S;
+        X = X * W * R * S;
         Y = zeros(size(X));
         Y(X>=0) = 1;
         
