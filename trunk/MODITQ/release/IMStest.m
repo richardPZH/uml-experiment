@@ -27,14 +27,12 @@ XtrainingLabels = labels( R );
 num_training = size(Xtraining,1);
 clear X;
 
+% get the label true neighbor
 WtrueTestTraining = zeros( num_test , num_training );
-for i = 1 : num_test
-    for j = 1 : num_training
-        if( XtestLabels( i ) == XtrainingLabels(j ) )
-            WtrueTestTraining( i , j ) = 1;
-        end
-    end
-end
+A = repmat( XtestLabels , 1 , size( XtrainingLabels , 1 ) );
+B = repmat( XtrainingLabels' , size( Xtest , 1 ) , 1 );
+A = A - B;
+WtrueTestTraining( A == 0 ) = 1;
 
 
 % generate training ans test split and the data matrix ; ALWAYS REMEMBER
@@ -58,9 +56,7 @@ switch( method )
     A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
     B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
     [ W D ] = eigs( A , B , bit );
-    for i = 1 : size( W , 2 )           % the eigenvectors is scaled by the eigenvalues
-        W( : ,i ) = W( : , i ) / D( i , i );    
-    end
+
 
     % now use the CCA found Wk to project original data
     X = X * W;
@@ -89,9 +85,7 @@ switch( method )
         A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
         B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
         [ W D ] = eigs( A , B , bit );
-        for i = 1 : size( W , 2 )           % the eigenvectors is scaled by the eigenvalues
-            W( : ,i ) = W( : , i ) / D( i , i );    
-        end
+
 
         % now use the CCA found Wk == V to project original data
         X = X * W;
@@ -101,6 +95,24 @@ switch( method )
         [U S V] = svd(R);
         X = X*U(:,1:bit);
         Y = compactbit(X>0);
+        
+   % SKLSH
+   % M. Raginsky, S. Lazebnik. Locality Sensitive Binary Codes from
+   % Shift-Invariant Kernels. NIPS 2009.
+    case 'SKLSH' 
+        RFparam.gamma = 1;
+        RFparam.D = D;
+        RFparam.M = bit;
+        RFparam = RF_train(RFparam);
+        B1 = RF_compress(X(1:num_training,:), RFparam);
+        B2 = RF_compress(X(num_training+1:end,:), RFparam);
+        Y = [B1;B2];
+    % Locality sensitive hashing (LSH)
+     case 'LSH'
+        X = X * randn(size(X,2),bit);
+        Y = zeros(size(X));
+        Y(X>=0)=1;
+        Y = compactbit(Y);
         
     case 'OURSITQ'
         % Convert the label information into the Y¡Ê{0,1}(nxt)
@@ -116,15 +128,13 @@ switch( method )
         A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
         B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
         [ W D ] = eigs( A , B , bit );
-        for i = 1 : size( D , 2 )           % the eigenvectors is scaled by the eigenvalues
-            W( : ,i ) = W( : , i ) / D( i , i );    
-        end
 
-        % now use the CCA found Wk == VC to project original data      
+
+        % now use the CCA found Wk  to project original data      
         n_iter = 50;
         [B R S ] = OURSITQ( X( 1:num_training , : ) , W , XtrainingLabels , n_iter );
         
-        X = X * W * R * S;
+        X = X * W * R ;
         Y = zeros(size(X));
         Y(X>=0) = 1;
         
@@ -145,6 +155,10 @@ switch(method)
     plot(recall,precision,'-o');
     case 'CCAITQRR'
     plot(recall,precision,'-s');
+    case 'SKLSH' 
+    plot(recall,precision,'-d');
+     case 'LSH'
+    plot(recall,precision,'-<');
     case 'OURSITQ'
     plot(recall,precision,'-X');
 end
