@@ -57,13 +57,13 @@ switch( method )
     p = 0.0001;                         % follow the author in ITQ
     A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
     B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-    [ V D ] = eigs( A , B , bit );
-    for i = 1 : size( V , 2 )           % the eigenvectors is scaled by the eigenvalues
-        V( : ,i ) = V( : , i ) / sqrt( D( i , i ) );    
+    [ W D ] = eigs( A , B , bit );
+    for i = 1 : size( W , 2 )           % the eigenvectors is scaled by the eigenvalues
+        W( : ,i ) = W( : , i ) / D( i , i );    
     end
 
-    % now use the CCA found Wk == V to project original data
-    X = X * V;
+    % now use the CCA found Wk to project original data
+    X = X * W;
 
     % ITQ to find optimal rotation
     % default is 50 iterations
@@ -88,13 +88,13 @@ switch( method )
         p = 0.0001;                         % follow the author in ITQ
         A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
         B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-        [ V D ] = eigs( A , B , bit );
-        for i = 1 : size( V , 2 )           % the eigenvectors is scaled by the eigenvalues
-            V( : ,i ) = V( : , i ) / sqrt( D( i , i ));    
+        [ W D ] = eigs( A , B , bit );
+        for i = 1 : size( W , 2 )           % the eigenvectors is scaled by the eigenvalues
+            W( : ,i ) = W( : , i ) / D( i , i );    
         end
 
         % now use the CCA found Wk == V to project original data
-        X = X * V;
+        X = X * W;
     
         % RR
         R = randn(size(X,2),bit);
@@ -111,65 +111,23 @@ switch( method )
         end
 
         % Apply the CCA, need to prove a little bit later , we find the 
-        % Wk == VC
+        % Wk
         p = 0.0001;                         % follow the author in ITQ
         A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
         B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-        [ VC DI ] = eigs( A , B , bit );
-        for i = 1 : size( VC , 2 )           % the eigenvectors is scaled by the eigenvalues
-            VC( : ,i ) = VC( : , i ) / sqrt( DI( i , i ) );    
+        [ W D ] = eigs( A , B , bit );
+        for i = 1 : size( D , 2 )           % the eigenvectors is scaled by the eigenvalues
+            W( : ,i ) = W( : , i ) / D( i , i );    
         end
 
         % now use the CCA found Wk == VC to project original data
-        X = X * VC;
+        X = X * W;
         V = X( 1:num_training , :);
         
-        %get a rand orthogonal matrix R
-        bit = size( X(1:num_training, :),2);
-        R = randn(bit,bit);
-        [U11 S2 V2] = svd(R);
-        R = U11(:,1:bit);
-        
         n_iter = 50;
+        [B R S ] = OURSITQ( X( 1:num_training , : ) , W , V , XtrainingLabels , n_iter );
         
-        % ITQ find optimal rotation, but change the UX according to their
-        % label
-        for iter=0:n_iter
-            Z = V * R;      
-            UX = ones(size(Z,1),size(Z,2)).*-1;
-            UX(Z>=0) = 1;                         
-            %Now the UX is the new B(Y) , we need to change it!
-            for i = 1 : size( Y , 2 )
-                index =  find( XtrainingLabels == ( i-1 ) );   %handle this class label
-                UI = UX( index , : );
-                UI( UI<=0 ) = 0;
-                num = zeros( size( UI , 1 ) , 1 );
-                for l = 1 : size( UI , 2 )
-                    num( : ) = num( : ) * 2 + UI( : , l );
-                end
-                [ a b ] = mode( num );
-                num_i = find( num == a );
-                UX( index , : ) = repmat( UX( num_i(1) , : ) , length( index ) , 1 );
-            end
-            
-            %done changing the UX to what we want....                                    
-            C = UX' * V;
-            [UB,sigma,UA] = svd(C);    
-            R = UA * UB';
-        end
-        
-        Y = UX;
-        %Now the R is found! Find the S
-        q = 10;                               %q is fro [-q,q] user define boundary
-        Q = eye( size( VC,1 ) );              %q is diag dxd matrix
-        Q = ( q^2 / 3 ) * Q ;
-        A1 = VC' * (XX(1:num_training,:))' * XX(1:num_training,:) * VC;
-        A2 = VC' * Q * VC ;
-        S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * XX(1:num_training,:) * VC )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
-        
-        X = X*R;
-        X = X*S;
-        
+        X = X * R * S;
         Y = zeros(size(X));
         Y(X>=0) = 1;
         
