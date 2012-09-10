@@ -1,11 +1,10 @@
-function [B,R,S] = OURSITQ( XX , W , V , Labels , n_iter )
+function [B,R,S] = OURSITQ( XX , W , Labels , n_iter )
 %
 % main function for OURSITQ which finds a rotation of the CCA projected data
 %
 % Input:
 %       XX: the original data, n*d
 %       W: d*c project matrix, CCA project matrix     
-%       V: n*c CCA projected data, n is the number of images and c is the code length; V = XX * W;
 %       Labels: n*t a label matrix {1~n} , can be clean or noisy
 %       n_iter: max number of iterations, 50 is usually enough
 % Output:
@@ -14,6 +13,9 @@ function [B,R,S] = OURSITQ( XX , W , V , Labels , n_iter )
 %       S: the c*c diagnal matrix used fro dragging
 % Author:
 %       IMS@SCUT
+
+% We first get the CCA projected data V;
+V = XX * W;
 
 % initialize with a orthogonal random rotation
 bit = size(V,2);
@@ -28,7 +30,7 @@ for iter=0:n_iter
     UX = ones(size(Z,1),size(Z,2)).*-1;
     UX(Z>=0) = 1;                         
     %Now the UX is the new B , we need to change it!
-    for i = 1 : size( Labels , 2 )
+    for i = 1 : ( max( Labels ) + 1 )
         index =  find( Labels == ( i-1 ) );   %handle this class label, labels is from 0 ~ t
         UI = UX( index , : );
         UI( UI<0 ) = 0;
@@ -50,9 +52,9 @@ end
 Y = UX;
 %Now the R is found! Find the S
 q = 10;                               %q is fro [-q,q] user define boundary
-Q = eye( size( W,1 ) );              %q is diag dxd matrix
+Q = eye( size( W,1 ) );               %q is diag dxd matrix
 Q = ( q^2 / 3 ) * Q ;
-A1 = W' * XX' * XX * W;
+A1 = W' * ( XX' * XX )* W;
 A2 = W' * Q * W;
 S = ( A1 + A1' + A2 + A2' ) \ ( R * Y' * XX * W )';  %omitting (RR')-1 ||  %not to use inv?? || RR' must be eye right?
         
