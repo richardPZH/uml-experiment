@@ -44,7 +44,3 @@ end
 % make B binary
 B = UX;
 B(B<0) = 0;
-
-figure( 2 );
-x = 1 : iter ;
-plot( x , J , 'r.:' );
