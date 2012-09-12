@@ -214,7 +214,7 @@ switch(method)
         [pc, l] = eigs(cov(XX(1:num_training,:)),bit);
         %XX = XX * pc;
         % ITQSensitivy
-        [B R] = ITQSen( XX(1:num_training , : ) , pc , 50 );
+        [B R] = ITQSen( XX(1:num_training , : ) , pc , 60 );
         
         XX = XX * pc * R;
         

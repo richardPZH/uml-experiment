@@ -15,6 +15,11 @@ function [B,R] = ITQSen( X , W , n_iter)
 %       
 %
 
+% used to plot the correct time to stop
+J = zeros( 1 , n_iter );
+Q = diag( sqrt( var( X ) ) );
+%
+
 V = X * W;
 
 % initialize with a orthogonal random rotation
@@ -24,7 +29,7 @@ R = randn(bit,bit);
 R = U11(:,1:bit);
 
 % ITQ to find optimal rotation, R is orthogonal !! I am wrong!
-for iter = 0 : n_iter
+for iter = 1 : n_iter
     Z = V * R;      
     UX = ones(size(Z,1),size(Z,2)).*-1;
     UX(Z>=0) = 1; 
@@ -33,8 +38,13 @@ for iter = 0 : n_iter
     G = sqrtm( D * D' );
     R = inv( G ) * D;       % change inv(D) * G into inv(G)*D
     
+    J(iter) = trace( 1/4 * (UX' * UX) ) - trace( UX' * X * W * R ) + trace( R' * W' * ( X' * X ) * W * R ) +  trace( R' * W' * Q * W * R );
 end
 
 % make B binary
 B = UX;
 B(B<0) = 0;
+
+figure( 2 );
+x = 1 : iter ;
+plot( x , J , 'r.:' );
