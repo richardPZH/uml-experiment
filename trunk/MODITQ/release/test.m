@@ -208,6 +208,20 @@ switch(method)
         Y(XX>=0) = 1;
         
         Y = compactbit(Y>0);
+    %new ITQSensitive
+    case 'ITQSen'
+        % PCA
+        [pc, l] = eigs(cov(XX(1:num_training,:)),bit);
+        %XX = XX * pc;
+        % ITQSensitivy
+        [B R] = ITQSen( XX(1:num_training , : ) , pc , 50 );
+        
+        XX = XX * pc * R;
+        
+        Y = zeros(size(XX));
+        Y(XX>=0) = 1;
+        Y = compactbit(Y>0);
+        
 end
 
 % compute Hamming metric and compute recall precision
@@ -233,6 +247,8 @@ switch(method)
     plot(recall,precision,'-p');
     case 'ITQI'
     plot(recall,precision,'-*'); 
+    case 'ITQSen'
+    plot(recall,precision,'-*');     
 end
 
 xlabel('Recall');
