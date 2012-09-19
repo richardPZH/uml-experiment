@@ -140,6 +140,32 @@ switch( method )
         
         Y = compactbit(Y>0);
         
+        
+    case 'CCAPR'   
+    % Convert the label information into the Y¡Ê{0,1}(nxt)
+    t = max( XtrainingLabels ) + 1;               % Well, I have already known that the CIFAR labels vary from 0 ~ MaxClassNum and they are all clean!
+    Y = zeros( size( XtrainingLabels , 1 ) , t ); % Y is n x t
+    for i = 1 : size( XtrainingLabels , 1 )       % Do we have a much faster way in Matlab use its property or cache?
+        Y( i , XtrainingLabels(i) + 1 ) = 1;
+    end
+
+    % Apply the CCA, need to prove a little bit later , we find the W == V
+    p = 0.0001;                         % follow the author in ITQ
+    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
+    B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
+    [ W D ] = eigs( A , B , bit );       
+
+    % ITQ to find optimal rotation
+    % default is 50 iterations
+    % C is the output code
+    % R is the rotation found by ITQ
+    [C, R] = procrustean( X(1:num_training, :), W , XtrainingLabels , 50 );
+    
+    X = X * W * R;
+    Y = zeros(size(X));
+    Y(X>=0) = 1;
+    Y = compactbit(Y>0);
+        
 end
 
 % compute Hamming metric and compute recall precision
