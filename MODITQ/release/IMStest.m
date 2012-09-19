@@ -82,15 +82,19 @@ switch( method )
             Y( i , XtrainingLabels(i) + 1 ) = 1;
         end
 
-        % Apply the CCA, need to prove a little bit later , we find the W == V
-    p = 0.0001;                         % follow the author in ITQ
-    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
-    B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-    [ W D ] = eigs( A , B , bit );  
+    % Apply the CCA, need to prove a little bit later 
+    [Wx, r] = cca( X(1:num_training , : ) , Y , 0.0001 );
+
+    r = r( 1:bit );
+    r = r';
+    Wx = Wx( : , 1:bit );              % for c bit code , get the leading Wx
+    r = repmat( r , size( Wx , 1 ) , 1 );
+    Wx = Wx .* r;                      % the Wx is scaled by its eigenvalue
+
 
 
         % now use the CCA found Wk == V to project original data
-        X = X * W;
+        X = X * Wx;
     
         % RR
         R = randn(size(X,2),bit);
@@ -124,19 +128,20 @@ switch( method )
             Y( i , XtrainingLabels(i) + 1 ) = 1;
         end
 
-        % Apply the CCA, need to prove a little bit later , we find the 
-        % Wk
-    p = 0.0001;                         % follow the author in ITQ
-    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
-    B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-    [ W D ] = eigs( A , B , bit );  
+    % Apply the CCA, need to prove a little bit later 
+    [Wx, r] = cca( X(1:num_training , : ) , Y , 0.0001 );
 
+    r = r( 1:bit );
+    r = r';
+    Wx = Wx( : , 1:bit );              % for c bit code , get the leading Wx
+    r = repmat( r , size( Wx , 1 ) , 1 );
+    Wx = Wx .* r;                      % the Wx is scaled by its eigenvalue
 
         % now use the CCA found Wk  to project original data      
         n_iter = 50;
-        [B R] = ITQSen( X(1:num_training , : ) , W , n_iter );
+        [B R] = ITQSen( X(1:num_training , : ) , Wx , n_iter );
         
-        X = X * W * R ;
+        X = X * Wx * R ;
         Y = zeros(size(X));
         Y(X>=0) = 1;
         
@@ -151,19 +156,23 @@ switch( method )
         Y( i , XtrainingLabels(i) + 1 ) = 1;
     end
 
-    % Apply the CCA, need to prove a little bit later , we find the W == V
-    p = 0.0001;                         % follow the author in ITQ
-    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
-    B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-    [ W D ] = eigs( A , B , bit );       
+    % Apply the CCA, need to prove a little bit later 
+    [Wx, r] = cca( X(1:num_training , : ) , Y , 0.0001 );
+
+    r = r( 1:bit );
+    r = r';
+    Wx = Wx( : , 1:bit );              % for c bit code , get the leading Wx
+    r = repmat( r , size( Wx , 1 ) , 1 );
+    Wx = Wx .* r;                      % the Wx is scaled by its eigenvalue
+     
 
     % ITQ to find optimal rotation
     % default is 50 iterations
     % C is the output code
     % R is the rotation found by ITQ
-    [C, R] = procrustean( X(1:num_training, :), W , XtrainingLabels , 50 );
+    [C, R] = procrustean( X(1:num_training, :), Wx , XtrainingLabels , 50 );
     
-    X = X * W * R;
+    X = X * Wx * R;
     Y = zeros(size(X));
     Y(X>=0) = 1;
     Y = compactbit(Y>0);
