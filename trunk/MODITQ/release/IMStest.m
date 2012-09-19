@@ -51,10 +51,11 @@ switch( method )
         Y( i , XtrainingLabels(i) + 1 ) = 1;
     end
 
-    % Apply the CCA, need to prove a little bit later , we find the W == V
+    % Apply the CCA, need to prove a little bit later 
     [Wx, r] = cca( X(1:num_training , : ) , Y , 0.0001 );
 
     r = r( 1:bit );
+    r = r';
     Wx = Wx( : , 1:bit );              % for c bit code , get the leading Wx
     r = repmat( r , size( Wx , 1 ) , 1 );
     Wx = Wx .* r;                      % the Wx is scaled by its eigenvalue
