@@ -15,10 +15,6 @@ function [B,R] = ITQSen( X , W , n_iter)
 %       
 %
 
-% used to plot the correct time to stop
-J = zeros( 1 , n_iter );
-Q = diag( sqrt( var( X ) ) );
-%
 
 V = X * W;
 
@@ -38,7 +34,6 @@ for iter = 1 : n_iter
     G = sqrtm( D * D' );
     R = inv( G ) * D;       % change inv(D) * G into inv(G)*D
     
-    J(iter) = trace( 1/4 * (UX' * UX) ) - trace( UX' * X * W * R ) + trace( R' * W' * ( X' * X ) * W * R ) +  trace( R' * W' * Q * W * R );
 end
 
 % make B binary
