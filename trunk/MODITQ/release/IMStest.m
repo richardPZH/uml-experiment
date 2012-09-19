@@ -170,7 +170,7 @@ switch( method )
     % default is 50 iterations
     % C is the output code
     % R is the rotation found by ITQ
-    [C, R] = procrustean( X(1:num_training, :), Wx , XtrainingLabels , 50 );
+    [C, R] = procrustean( X(1:num_training, :), Wx , XtrainingLabels , 500 );
     
     X = X * Wx * R;
     Y = zeros(size(X));
@@ -198,6 +198,8 @@ switch(method)
     plot(recall,precision,'-<');
     case 'OURSITQ'
     plot(recall,precision,'-X');
+    case 'CCAPR'
+    plot(recall , precision,'-p');
 end
 
 xlabel('Recall');
