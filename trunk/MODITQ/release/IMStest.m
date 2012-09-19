@@ -53,9 +53,9 @@ switch( method )
 
     % Apply the CCA, need to prove a little bit later , we find the W == V
     p = 0.0001;                         % follow the author in ITQ
-    A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
+    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
     B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-    [ W D ] = eigs( A , B , bit );
+    [ W D ] = eigs( A , B , bit );       
 
 
     % now use the CCA found Wk to project original data
@@ -81,10 +81,10 @@ switch( method )
         end
 
         % Apply the CCA, need to prove a little bit later , we find the W == V
-        p = 0.0001;                         % follow the author in ITQ
-        A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
-        B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-        [ W D ] = eigs( A , B , bit );
+    p = 0.0001;                         % follow the author in ITQ
+    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
+    B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
+    [ W D ] = eigs( A , B , bit );  
 
 
         % now use the CCA found Wk == V to project original data
@@ -124,15 +124,15 @@ switch( method )
 
         % Apply the CCA, need to prove a little bit later , we find the 
         % Wk
-        p = 0.0001;                         % follow the author in ITQ
-        A = ( X(1:num_training, :)' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
-        B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-        [ W D ] = eigs( A , B , bit );
+    p = 0.0001;                         % follow the author in ITQ
+    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
+    B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
+    [ W D ] = eigs( A , B , bit );  
 
 
         % now use the CCA found Wk  to project original data      
         n_iter = 50;
-        [B R S ] = OURSITQ( X( 1:num_training , : ) , W , XtrainingLabels , n_iter );
+        [B R] = ITQSen( X(1:num_training , : ) , W , n_iter );
         
         X = X * W * R ;
         Y = zeros(size(X));
