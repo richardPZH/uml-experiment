@@ -31,7 +31,7 @@ end
 
 % Apply the CCA, need to prove a little bit later , we find the W == V
 p = 0.0001;                         % follow the author in ITQ
-A = ( X' * Y  ) / ( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X ;         %for matlab no using inv...
+A =  X' * Y * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X ;         
 B = ( X' * X + p * eye( size( X , 2 ) ));
 [ V D ] = eigs( A , B , bit );
 for i = 1 : size( V , 2 )           % the eigenvectors is scaled by the eigenvalues
