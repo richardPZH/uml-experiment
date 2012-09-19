@@ -23,11 +23,17 @@ R = randn(bit,bit);
 [U11 S2 V2] = svd(R);
 R = U11(:,1:bit);
 
-weight = [ size( V , 2 )-1 : 0 ];
+%used to plot the correct time to stop
+J = zeros( 1 , n_iter );
+Q = diag( sqrt( var( X )));
+
+
+weight = ( size( V , 2 )-1) : -1 : 0 ;
 weight = 2.^weight;
+weight = weight';
 % use ITQ to find optimal rotation, but change the UX according to their
 % label
-for iter=0:n_iter
+for iter=1:n_iter
     Z = V * R;      
     UX = ones(size(Z,1),size(Z,2)).*-1;
     UX(Z>=0) = 1;                         
@@ -41,16 +47,23 @@ for iter=0:n_iter
         num_i = find( num == a );
         UX( index , : ) = repmat( UX( num_i(1) , : ) , length( index ) , 1 );
     end
-            
+    
+    J(iter) = trace( 1/4 * (UX' * UX) ) - trace( UX' * X * W * R ) + trace( R' * W' * ( X' * X ) * W * R ) +  trace( R' * W' * Q * W * R );
+   
     D = V' * UX;
     G = sqrtm( D * D' );
-    R = inv( G ) * D;       % change inv(D) * G into inv(G)*D
+    R = pinv( G ) * D;       % change inv(D) * G into inv(G)*D    
     
 end
 
 % make B binary
 B = UX;
 B(B<0) = 0;
+
+figure( 2 );
+x = 1 : n_iter ;
+plot( x , J , 'r.:' );
+
 
 
 
