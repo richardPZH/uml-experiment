@@ -52,14 +52,15 @@ switch( method )
     end
 
     % Apply the CCA, need to prove a little bit later , we find the W == V
-    p = 0.0001;                         % follow the author in ITQ
-    A = ( X(1:num_training, :)' * Y  ) * inv( Y'*Y + p * eye( size( Y , 2 ) ) ) * Y' * X(1:num_training, :) ;         %for matlab no using inv...
-    B = ( X(1:num_training, :)' * X(1:num_training, :) + p * eye( size( X(1:num_training, :) , 2 ) ));
-    [ W D ] = eigs( A , B , bit );       
+    [Wx, r] = cca( X(1:num_training , : ) , Y , 0.0001 );
 
+    r = r( 1:bit );
+    Wx = Wx( : , 1:bit );              % for c bit code , get the leading Wx
+    r = repmat( r , size( Wx , 1 ) , 1 );
+    Wx = Wx .* r;                      % the Wx is scaled by its eigenvalue
 
     % now use the CCA found Wk to project original data
-    X = X * W;
+    X = X * Wx;
 
     % ITQ to find optimal rotation
     % default is 50 iterations
