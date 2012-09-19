@@ -58,7 +58,7 @@ switch( method )
     r = r';
     Wx = Wx( : , 1:bit );              % for c bit code , get the leading Wx
     r = repmat( r , size( Wx , 1 ) , 1 );
-    Wx = Wx .* r;                      % the Wx is scaled by its eigenvalue
+    Wx = Wx ./ r;                      % the Wx is scaled by its eigenvalue
 
     % now use the CCA found Wk to project original data
     X = X * Wx;
@@ -89,7 +89,7 @@ switch( method )
     r = r';
     Wx = Wx( : , 1:bit );              % for c bit code , get the leading Wx
     r = repmat( r , size( Wx , 1 ) , 1 );
-    Wx = Wx .* r;                      % the Wx is scaled by its eigenvalue
+    Wx = Wx ./ r;                      % the Wx is scaled by its eigenvalue
 
 
 
