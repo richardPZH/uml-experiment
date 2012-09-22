@@ -6,10 +6,18 @@ function [ ] = ShowCIFAR( X )
 %
 % Author:
 %       IMS@SCUT Once
+%       2012/09/22
 
 
 %check the X dimension
 [ n d ] = size( X );
+
+% Try to plot the image on the same Figure in the l x l square 
+l = ceil( sqrt( n ) ) ;   
+a = 32 ;
+b = 32 ;
+%figure( 'Units' , 'Pixels' , 'Position' , [100 100 a b ] );
+set( gca , 'Position' , [ 0 0 1 1 ] );
     
 % d should be 1024
 d = d / 3;   
@@ -24,12 +32,9 @@ for i=1:n
     Img = reshape( Img , 32 , 32 ,3 );
 
     % Using image() to show the image to human
-    [ m , n , o ] = size( Img );
-    figure( 'Units' , 'Pixels' , 'Position' , [100 100 m n ] );
-    image( Img );
+    subplot( l , l , i );
+	image( Img );
     axis image off;
-    set( gca , 'Position' , [0 0 1 1 ]);
-
 end
 
 
