@@ -32,7 +32,7 @@ for i=1:n
     Img = reshape( Img , 32 , 32 ,3 );
 
     % Using image() to show the image to human
-    subplot( l , l , i );
+    subplottight( l , l , i );
 	image( Img );
     axis image off;
 end
