@@ -15,6 +15,9 @@ function [ label ] = ChangeLabel( labels , method )
 % Author:
 %       IMS@SCUT Once
 
+% damn it !! remember to use the double the work, not single
+labels = double( labels );
+
 [ n m ] = size( labels );
 
 label = zeros( [ n m ] );  %pre allocate the memory
@@ -30,7 +33,7 @@ case 'vec'
 	label( labels<=1 ) = 1;
 	label( labels>=8 ) = 1;
 
-otherwise 'lsvm'
+otherwise 
 	% I have compute that when Y = -8 * x * x + 72 * x - 112
 	% This will seperate the 0 and 1 using Y>=0 ->0 ; Y<0 ->1
 	% idea like the SVM?
