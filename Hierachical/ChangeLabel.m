@@ -30,7 +30,7 @@ case 'for'
 	end
 
 case 'vec'
-	label( labels<=1 ) = 1;
+	label( labels<=1 ) = 1;    %can this further improve lable( lables<=1 | labels>=8 ) = 1 ?????
 	label( labels>=8 ) = 1;
 
 otherwise 
