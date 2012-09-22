@@ -10,6 +10,7 @@ function [ label ] = ChangeLabel( labels , method )
 %       method different way to invoke this function:
 %       'for' will use for simple the change the lable
 %       'vec' will use vector operation instead of 'for'
+%       'lsvm' will behave like the svm to get linear separable;
 % 
 % Author:
 %       IMS@SCUT Once
@@ -25,7 +26,11 @@ case 'for'
 		label( i ) = labels(i) <=1 || labels(i) >= 8;
 	end
 
-otherwise 'vec'
+case 'vec'
+	label( labels<=1 ) = 1;
+	label( labels>=8 ) = 1;
+
+otherwise 'lsvm'
 	% I have compute that when Y = -8 * x * x + 72 * x - 112
 	% This will seperate the 0 and 1 using Y>=0 ->0 ; Y<0 ->1
 	% idea like the SVM?
