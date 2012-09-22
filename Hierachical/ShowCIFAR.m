@@ -22,7 +22,12 @@ Img = [ Img( : , 1:32 )' Img( : , 33:64 )' Img( : , 65:end )' ];
 Img = reshape( Img , 32 , 32 ,3 );
 
 % Using image() to show the image to human
+[ r , c , d ] = size( Img );
+figure( 'Units' , 'Pixels' , 'Position' , [100 100 c r ] );
 image( Img );
+axis image off;
+set( gca , 'Position' , [0 0 1 1 ]);
+
 
 
 
