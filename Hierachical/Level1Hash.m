@@ -1,4 +1,4 @@
-function [] = Level1Hash(trData,trLabel,teData,teLabel,method )
+function [ classifier ] = Level1Hash(trData,trLabel,teData,teLabel,method )
 % This is a classifier to classify the nonliving and living things
 % We can have many classifier and try...
 %
@@ -8,6 +8,8 @@ function [] = Level1Hash(trData,trLabel,teData,teLabel,method )
 %      teData, the test sample, use to evaluate the classifier
 %      teLabel, the true label of the teData
 %
+% Output:
+%      A classifier that can classify level 1 object into 0 and 1
 % Author:
 %      IMS@SCUT
 
@@ -27,9 +29,28 @@ case 'knnc'
 	K = 10;
 	classifier = knnc( trDS , K );
 
-case 'linear'
+case 'fisherc'
+	% May set parameters
+	classifier = fisherc( trDS );
+
+case 'perlc'
+	% This is a linear classifier too, many parameters can be set
+	% help perlc
+	classifier = perlc( trDS );
 
 case 'bayes'
+	[ dmean , covariance ] = meancov( trDS );
+	classifier = nbayesc( dmean , covariance );
+
+case 'bpxnc'
+	[ classifier historyReport ] = bpxnc( trDS , [320 2 1] , 100 );
+
+case 'rbnc'
+	classifier = rbnc( trDS , 2 );
+
+case 'svc'
+    [classifier , J ] = SVC( trDS , proxm([], 'r') );
+
 
 end
 
