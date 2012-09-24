@@ -30,7 +30,7 @@ thirdBit = hierachin(3);
 
 % split into training Image and search Image
 R = randperm( size( labels , 1 ) );
-num_search = size( labels , 1 ) * sratio;
+num_search = floor ( size( labels , 1 ) * sratio );  %floor or ceil is needed
 num_train  = size(labels , 1 ) - num_search;
 
 trGist = imageGist( R(1:num_train ) , : );
@@ -42,5 +42,55 @@ R( 1:num_train ) = [];
 teGist = imageGist( R , :  );
 teVector = imageVector( R , : );
 telabels = labels( R );
+
+% Strat the hash
+
+% level 1
+
+
+
+% level 2
+
+
+% level 3
+
+
+
+
+
+% Start the test 
+
+
+
+% Plot the Accuracy-Recall curve
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
