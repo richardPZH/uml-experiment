@@ -72,6 +72,8 @@ case 'ITQRR'
 	% Project the nx320 data into n x c data
 	X = X * W1;
 	R = randn( size( X , 2 ) , c );
+    [ R U V ] = svd( R );
+    R = R( : , 1:c );
 
 end
 
