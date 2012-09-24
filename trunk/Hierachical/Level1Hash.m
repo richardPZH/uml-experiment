@@ -1,12 +1,13 @@
 function [ classifier ] = Level1Hash(trData,trLabel,teData,teLabel,method )
 % This is a classifier to classify the nonliving and living things
-% We can have many classifier and try...
+% We can have many classifier and try... She suggest me to try the
+% RandomForest and the MCS
 %
 % Input:
 %      trData, the training data, nxd , n is the number of samples, d is the dimension , On the CIFAR dataset, we use the 320 GIST representation of;
 %      trLabel , the class of the samples in trData , on CIFAR 0-9
 %      teData, the test sample, use to evaluate the classifier
-%      teLabel, the true label of the teData
+%      teLabel, the true label of the teData, from 0-9
 %
 % Output:
 %      A classifier that can classify level 1 object into 0 and 1
