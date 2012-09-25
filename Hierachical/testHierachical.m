@@ -49,7 +49,7 @@ telabels = labels( R );
 [W0 R0 centerPoint0] = Level1Hash2( trGist , trlabels , firstBit , 'ITQ' );
 
 %Calculate the J(R,1) and store the buckets
-XX = X - repmat( centerPoint0 , size( X , 1 ) , 1 );
+XX = trGist - repmat( centerPoint0 , size( trGist , 1 ) , 1 );
 XX = XX * W0 * R0;
 XX( XX >= 0 ) = 1;
 XX( XX <  0 ) = 0;
@@ -68,6 +68,7 @@ end
 
 % level 3
 
+[W0 R0 centerPoint0] = Level1Hash2( trGist , trlabels , firstBit , 'ITQ' );
 
 
 
