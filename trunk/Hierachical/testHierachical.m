@@ -1,4 +1,4 @@
-function [ ] = testHierachical( imageVector , imageGist , labels , sratio, hierachin )
+function [ Entrance1 Entrance2 Entrance3 ] = testHierachical( imageVector , imageGist , labels , sratio, hierachin )
 % embed all the three level hash and perform:
 % 	1.the recall-accuracy plot
 % 	2.the precision plot
@@ -92,11 +92,10 @@ for m = 1 : size( Entrance1 , 1 )
 end
 
 
-
-
 % level 3
-
-
+% This implementation of Hierachical Hashing is bad bad bad!! Can We Do Better?
+% Things are getting out of my control, dota it!
+Entrance3 = cell( 
 
 
 
