@@ -1,5 +1,5 @@
 function [ ] = testHierachical( imageVector , imageGist , labels , sratio, hierachin )
-% emebd all the three level hash and perform:
+% embed all the three level hash and perform:
 % 	1.the recall-accuracy plot
 % 	2.the precision plot
 %   3.may plot the original image, show to human
@@ -46,7 +46,7 @@ telabels = labels( R );
 % Strat the hash
 
 % level 1
-[W0 R0 centerPoint0] = Level1Hash2( trGist , trlabels , firstBit , 'ITQ' );
+[W0 R0 centerPoint0] = Level1Hash2( trGist , trlabels , firstBit , 'OURSITQ' );
 
 %Calculate the J(R,1) and store the buckets
 XX = trGist - repmat( centerPoint0 , size( trGist , 1 ) , 1 );
@@ -68,7 +68,6 @@ end
 
 % level 3
 
-[W0 R0 centerPoint0] = Level1Hash2( trGist , trlabels , firstBit , 'ITQ' );
 
 
 
