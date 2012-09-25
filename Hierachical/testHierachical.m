@@ -48,7 +48,7 @@ telabels = labels( R );
 % level 1
 [W0 R0 centerPoint0] = Level1Hash2( trGist , trlabels , firstBit , 'OURSITQ' );
 
-%Calculate the J(R,1) and store the buckets
+%need to Calculate the J(R,1) and store the buckets
 XX = trGist - repmat( centerPoint0 , size( trGist , 1 ) , 1 );
 XX = XX * W0 * R0;
 XX( XX >= 0 ) = 1;
@@ -64,7 +64,35 @@ end
 
 
 
-% level 2 %This traing is different, This should train those bucket found in Level1 !!!
+% level 2 
+% This training is different, This should train those bucket found in Level1 !!!
+Entrance2 = cell( size( Entrance1 , 1 ) , 2 );
+for m = 1 : size( Entrance1 , 1 )
+	tmpGist = trGist( Entrance{ m , 2} , :);
+	tmplabels = trlabels( Entrance{ m , 2} );
+    [W1 R1 centerPoint1] = Level2Hash(tmpGist,tmplabels,secondBit,'OURSITQ');
+
+	% need to Calculate the J(R,1) and store the buckets
+	XX = tmpGist - repmat( centerPoint1 , size( tmpGist , 1 ) , 1 );
+	XX = XX * W1 * R1;
+	XX( XX >= 0 ) = 1;
+	XX( XX <  0 ) = 0;
+
+
+	[ b i j ] = unique( XX , 'rows' );
+	anoymousEntrance = cell( size( b , 1 ) , 2 );
+	for n = 1 : size( b , 1 )
+		anoymousEntrance{ n , 1 } = b( n , :);
+		anoymousEntrance{ n , 2 } = find( j == n );
+	end
+
+	Entrance2{ m , 1 } = { W1 , R1 , centerPoint1 };
+	Entrance2{ m , 2 } = anoymousEntrance;
+
+end
+
+
+
 
 % level 3
 
