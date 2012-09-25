@@ -7,7 +7,7 @@ function [ ] = testHierachical( imageVector , imageGist , labels , sratio, hiera
 % This may be a buggy file
 %
 % Input :
-%     imageVector, the nx3072 CIFAR original, use for plotting
+%     imageVector, the nx3072 CIFAR original, use for plotting image
 %     imageGist , the nx320 GIST representation of CIFAR
 %     labels , the true class of the image , range from 0-9 (CIFAR)
 %     sratio, the ratio of search/total , 0.05 - 0.3 is recommened
@@ -23,7 +23,7 @@ function [ ] = testHierachical( imageVector , imageGist , labels , sratio, hiera
 %     IMS@SCUT Once 2012/09/24
 %     
 
-% split the hierachical bit sequence
+% split the hierachical bit sequence, firstBit secondBit thirdBit >= 1 is require
 firstBit = hierachin(1);
 secondBit = hierachin(2);
 thirdBit = hierachin(3);
@@ -46,11 +46,9 @@ telabels = labels( R );
 % Strat the hash
 
 % level 1
+[W0 R0 centerPoint0] = Level1Hash2( trGist , trlabels , firstBit , 'ITQ' );
 
-
-
-% level 2
-
+% level 2 %This traing is different, This should train those bucket found in Level1 !!!
 
 % level 3
 
