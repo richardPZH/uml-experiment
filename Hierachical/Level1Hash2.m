@@ -5,13 +5,13 @@ function [ W0 R0 centerPoint0 ] = Level1Hash2( X , labels , c , method )
 % Input:
 %      X , nx320 , the CIFAR dataset represent in the GIST row vector as in ITQ
 %      labels, nx1 , range 0-9 , label information correspond to X, required when using CCA
-%      c , how many bits assigned to the second level, we can go through 2D 3D and can calculate how many bits we need to classify those 
+%      c , how many bits assigned to the first level, we can optimize the whole Hierachical tree 
 %      method, we provide a few method that can compare with each other :
 %      'ITQ' , 'OURSITQ' , 'ITQRR' ...
 %      
 % Output:
 %      W0, the CCA found projection matrix
-%      R0, the OURSITQ or ITQ found orthogonal transformation
+%      R0, the ITQ like or ITQ found orthogonal transformation
 %      centerPoint0, Because the ITQ related must centered the data first
 %
 %
