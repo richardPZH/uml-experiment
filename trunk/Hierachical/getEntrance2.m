@@ -15,7 +15,7 @@ function [ Entrance ] = getEntrance2( E1 , trGist , trlabels , bit , method )
 %
 %
 % Output:
-%     Entrance -> the second levle Entrance, it is a cell( n , 2 ) , 
+%     Entrance -> the second level Entrance, it is a cell( n , 2 ) , 
 %         cell( x , 1 ) stores the w1 r1 cp1 of the E1{ x , : }
 %         cell( x , 2 ) stores a cell( n , 2 )
 %
@@ -48,7 +48,7 @@ for m = 1 : size( E1 , 1 )
 		anoymousEntrance{ n , 2 } = E1{ m , 2 }(  j == n  ); 
 	end
 
-	Entrance{ m , 1 } = { W1 , R1 , cP };
+	Entrance{ m , 1 } = [ W1 , R1 , cP ];
 	Entrance{ m , 2 } = anoymousEntrance;
 
 end
