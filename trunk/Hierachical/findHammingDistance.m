@@ -9,6 +9,7 @@ function [ HCWDD ] = findHammingDistance( X , D )
 % 
 % Output:
 %     HCWDD == Hamming Codes With Distance D
+$          
 %          sequence of code that hammingDistance( X , code )==D
 %
 % Authors:
