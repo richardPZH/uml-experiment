@@ -9,7 +9,7 @@ function [ Distance ] = CalHammingDist( sample , codes , method )
 %         'for', 'vec' is supported
 %
 % Output:
-%     Distance, nx1 column vector, each Distance(i) = dist( sample , codes(i,:);
+%     Distance, nx1 column vector, each Distance(i) = dist( sample , codes(i,:));
 %
 % Authors:
 %     IMS@SCUT Once
