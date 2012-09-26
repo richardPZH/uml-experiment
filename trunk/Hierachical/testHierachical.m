@@ -49,11 +49,12 @@ telabels = labels( R );
 [ W0 R0 centerPoint0 E1 ] = getEntrance1( trGist , trlabels , firstBit , 'OURSITQ' );
 
 
-
 % level 2 
+E2 = getEntrance2( E1 , trGist , trlabels , secondBit , 'OURSITQ' );
 
 
 % level 3 , at level 3 , we assume all the images are in the same class
+E3 = getEntrance3( E2 , trGist , thirdBit , 'OURSITQ' );
 
 
 
