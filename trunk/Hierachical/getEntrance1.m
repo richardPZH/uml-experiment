@@ -15,7 +15,9 @@ function [W0 R0 cP0 E1 ] = getEntrance1( trGist , trlabels , bit , method )
 %     W0 , the projection matrix found using the CCA
 %     R0 , the orthogonal matrix found by ITQ like algorithm
 %     cP0 , centerPoint of the training samples , usefully when searching
-%     E1 , the Entrance table for Level1 , read your design!!
+%     E1 , the Entrance table for Level1 , is a cell( n , 2 );
+%          the E1( x , 1 ) stores the binary code
+%          the E1( x , 2 ) stores the index 
 
 
 [W0 R0 cP0] = Level1Hash2( trGist , trlabels , bit , method );

@@ -25,6 +25,22 @@ function [ recall precision ] = searchImage( inGist , inLabel , inVector , trGis
 %     How to use more vector operation rather than for loop
 
 
+% first level hash
+XX = inGist - repmat( cP0 , size( inGist , 1 ) , 1 );
+
+XX = XX * W0 * R0;
+
+XX( XX >= 0 ) = 1;
+XX( XX <  0 ) = 0;
+
+
+for a = 1 : size( XX , 1 )
+	sample = inGist( a , : );
+	label  = inLabel( a );
+
+
+	L1Code = E1{ : , 1 };
+
 
 
 
