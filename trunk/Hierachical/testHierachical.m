@@ -66,20 +66,10 @@ E3 = getEntrance3( E2 , trGist , thirdBit , 'OURSITQ' );
 % teVector is the original samples that can be display to human
 % teGist is the samples to be tested
 % telabels is the ground true label
-rc_pr = cell( num_search , 2 );
 
-for m = 1 : num_search
-	[ r p ] = searchImage( teGist( m , : ) , telabels( m ) , trGist , trlabels , trVector );
+[ r p ] = searchImage( teGist , telabels , teVector ,  trGist , trlabels , trVector , W0 , R0 , centerPoint0 , E1 , E2 , E3 );
 
 	
-	rc_pr{ m , 1 } = r;
-	rc_pr{ m , 2 } = p;
-end
-
-
-
-
-
 
 
 
