@@ -1,4 +1,4 @@
-function [ Entrance1 Entrance2 Entrance3 ] = testHierachical( imageVector , imageGist , labels , sratio, hierachin )
+function [ E1 E2 E3 ] = testHierachical( imageVector , imageGist , labels , sratio, hierachin )
 % embed all the three level hash and perform:
 % 	1.the recall-accuracy plot
 % 	2.the precision plot
@@ -28,14 +28,19 @@ firstBit = hierachin(1);
 secondBit = hierachin(2);
 thirdBit = hierachin(3);
 
+if ( firstBit < 0 || secondBit < 0 || thirdBit < 0 )
+	disp('testHierachical: Warning! Input Parameter Is Not Set Properly..' );
+	return ; 
+end
+
 % split into training Image and search Image
 R = randperm( size( labels , 1 ) );
-num_search = floor ( size( labels , 1 ) * sratio );  %floor or ceil is needed
-num_train  = size(labels , 1 ) - num_search;
+num_search = floor ( size( labels , 1 ) * sratio ) ;  %floor or ceil is needed
+num_train  = size( labels , 1 ) - num_search ;
 
 trGist = imageGist( R(1:num_train ) , : );
 trVector = imageVector( R(1:num_train ) , : ); 
-trlabels = labels( R(1:num_train ) );
+trlabels = labels( R( 1:num_train ) );
 
 R( 1:num_train ) = [];
 
@@ -57,8 +62,27 @@ E2 = getEntrance2( E1 , trGist , trlabels , secondBit , 'OURSITQ' );
 E3 = getEntrance3( E2 , trGist , thirdBit , 'OURSITQ' );
 
 
-
 % Start the test 
+% teVector is the original samples that can be display to human
+% teGist is the samples to be tested
+% telabels is the ground true label
+rc_pr = cell( num_search , 2 );
+
+for m = 1 : num_search
+	[ r p ] = searchImage( teGist( m , : ) , telabels( m ) , trGist , trlabels , trVector );
+
+	
+	rc_pr{ m , 1 } = r;
+	rc_pr{ m , 2 } = p;
+end
+
+
+
+
+
+
+
+
 
 
 

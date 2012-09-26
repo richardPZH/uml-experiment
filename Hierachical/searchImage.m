@@ -1,0 +1,1 @@
+function [ recall precision ] = searchImage( inGist , label , trGist , trLabels , trVector )
