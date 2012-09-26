@@ -16,8 +16,8 @@ function [W0 R0 cP0 E1 ] = getEntrance1( trGist , trlabels , bit , method )
 %     R0 , the orthogonal matrix found by ITQ like algorithm
 %     cP0 , centerPoint of the training samples , usefully when searching
 %     E1 , the Entrance table for Level1 , is a cell( n , 2 );
-%          the E1( x , 1 ) stores the binary code
-%          the E1( x , 2 ) stores the index 
+%          the E1( x , 1 ) stores the binary code matrix
+%          the E1( x , 2 ) stores a cell contain indice 
 
 
 [W0 R0 cP0] = Level1Hash2( trGist , trlabels , bit , method );
@@ -31,9 +31,17 @@ XX( XX <  0 ) = 0;
 
 [ b i j ] = unique( XX , 'rows' );
 
-E1 = cell( size( b , 1 ) , 2 );
+E1 = cell( 1 , 2 );
+
+
+E1{ 1 , 1 } = b;
+
+anoymous = cell( size( b , 1 ) , 1 );
 
 for m = 1 : size( b , 1 )
-	E1{ m , 1 } = b( m , :);
-	E1{ m , 2 } = find( j == m );
+	anoymous{ m } = find( j == m );
 end
+
+E1{ 1 , 2 } = anoymous;
+
+

@@ -6,8 +6,9 @@ function [ Entrance ] = getEntrance2( E1 , trGist , trlabels , bit , method )
 %      things on in the air -> bird airplane 
 %
 % Input:
-%     E1, the first level Entrance , it is a cell( n , 2 ) , cell( x , 1 ) stores
-%         the hashcode, cell( x , 2 ) stores index of the trGist
+%     E1, the first level Entrance , it is a cell( 1 , 2 ) , 
+%         cell( 1 , 1 ) stores the binary code matrix
+%         cell( 1 , 2 ) stores a cell contain indice of the trGist
 %     trGist, the nx320 CIFAR , Gist represented images as a learning samples
 % 	  trlabels, the nx1 CIFAR labels, 0~9
 %     bit, how many bit is assigned to this hash code
@@ -15,18 +16,22 @@ function [ Entrance ] = getEntrance2( E1 , trGist , trlabels , bit , method )
 %
 %
 % Output:
-%     Entrance -> the second level Entrance, it is a cell( n , 2 ) , 
+%     Entrance -> the second level Entrance, it is a cell( n , 3 ) , 
 %         cell( x , 1 ) stores the w1 r1 cp1 of the E1{ x , : }
-%         cell( x , 2 ) stores a cell( n , 2 )
+%         cell( x , 2 ) stores the binary code matrix b
+%         cell( x , 3 ) stores a cell contains the indice of the trGist
 %
 
-Entrance = cell( size( E1 , 1 ) , 2 );
+indice = E1{ 1 ,2 };
 
-for m = 1 : size( E1 , 1 )
+Entrance = cell( size( indice , 1 ) , 3 );
 
-	tmpGist = trGist( E1{ m , 2} , : );
 
-	tmplabels = trlabels( E1{ m , 2 } );
+for m = 1 : size( indice , 1 )
+
+	tmpGist = trGist( indice{ m } , : );
+
+	tmplabels = trlabels( indice{ m } );
 
     [ W1 R1 cP ] = Level2Hash( tmpGist , tmplabels , bit , method );
 
@@ -38,17 +43,19 @@ for m = 1 : size( E1 , 1 )
 
 
 	[ b i j ] = unique( XX , 'rows' );
-	anoymousEntrance = cell( size( b , 1 ) , 2 );
+
+	anoymousEntrance = cell( size( b , 1 ) , 1 );
 
 	for n = 1 : size( b , 1 )
-		anoymousEntrance{ n , 1 } = b( n , : );
 
 		%Index of trGist % This code I used find and matlab ask me to use
 		%the logical expression j == n to avoid vector generation?? note!
-		anoymousEntrance{ n , 2 } = E1{ m , 2 }(  j == n  ); 
+
+		anoymousEntrance{ n } = indice{ n }(  j == n  ); 
 	end
 
 	Entrance{ m , 1 } = [ W1 , R1 , cP ];
-	Entrance{ m , 2 } = anoymousEntrance;
+	Entrance{ m , 2 } = b;
+	Entrance{ m , 3 } = anoymousEntrance;
 
 end
