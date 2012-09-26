@@ -1,7 +1,7 @@
 function [W0 R0 cP0 E1 ] = getEntrance1( trGist , trlabels , bit , method )
 % 
 % This function performs the first level hashing, its purpose is to roughtly group 
-% the general class together.  e.g. 
+% the general classes together.  e.g. 
 %     living thing vs. nonliving thing;
 %     things on land / on ocean / in the air
 %
@@ -32,6 +32,6 @@ XX( XX <  0 ) = 0;
 E1 = cell( size( b , 1 ) , 2 );
 
 for m = 1 : size( b , 1 )
-	Entrance1{ m , 1 } = b( m , :);
-	Entrance1{ m , 2 } = find( j == m );
+	E1{ m , 1 } = b( m , :);
+	E1{ m , 2 } = find( j == m );
 end
