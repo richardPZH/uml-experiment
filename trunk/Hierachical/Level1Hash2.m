@@ -18,7 +18,7 @@ function [ W0 R0 centerPoint0 ] = Level1Hash2( X , labels , c , method )
 % Author:
 %     IMS@SCUT Once 2012/09/24
 
-X = double( X );
+% X = double( X );
 
 % find the center point
 centerPoint0 = mean( X , 1 );
