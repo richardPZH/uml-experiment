@@ -28,7 +28,7 @@ firstBit = hierachin(1);
 secondBit = hierachin(2);
 thirdBit = hierachin(3);
 
-if ( firstBit < 0 || secondBit < 0 || thirdBit < 0 )
+if ( firstBit <= 0 || secondBit <= 0 || thirdBit <= 0 )
 	disp('testHierachical: Warning! Input Parameter Is Not Set Properly..' );
 	return ; 
 end
@@ -48,10 +48,12 @@ teGist = imageGist( R , :  );
 teVector = imageVector( R , : );
 telabels = labels( R );
 
+trGist = double( trGist );
+teGist = double( teGist );
 % Strat the hash
 
 % level 1
-[ W0 R0 centerPoint0 E1 ] = getEntrance1( trGist , trlabels , firstBit , 'OURSITQ' );
+[ E1 ] = getEntrance1( trGist , trlabels , firstBit , 'OURSITQ' );
 
 
 % level 2 
@@ -67,7 +69,7 @@ E3 = getEntrance3( E2 , trGist , thirdBit , 'OURSITQ' );
 % teGist is the samples to be tested
 % telabels is the ground true label
 
-[ r p ] = searchImage( teGist , telabels , teVector ,  trGist , trlabels , trVector , W0 , R0 , centerPoint0 , E1 , E2 , E3 );
+[ r p ] = searchImage( teGist , telabels , teVector ,  trGist , trlabels , trVector , E1 , E2 , E3 );
 
 	
 

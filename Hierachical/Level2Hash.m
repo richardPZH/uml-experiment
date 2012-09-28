@@ -20,7 +20,7 @@ function [ W1 R centerPoint ] = Level2Hash( X , labels , c , method )
 %      IMS@SCUT 2012/09/23
 
 % This is a bad habit, but we need to handle it because the CIFAR dataset
-X = double( X );  
+% X = double( X );  
 
 % find the center point 
 centerPoint = mean( X );
