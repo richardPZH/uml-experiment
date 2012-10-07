@@ -59,7 +59,7 @@ for m = 1 : size( E2 , 1 )
 		for o = 1 : size( b , 1)
 
 			% think carefully this index the trGist and trlabel! why not find( j == 0 )
-			tmpCell{ o , 2 } = anoymousEntrance{ n }(  j == o  ); 
+			tmpCell{ o , 1 } = anoymousEntrance{ n }(  j == o  ); 
 		end
 
 		

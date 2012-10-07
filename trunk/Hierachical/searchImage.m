@@ -82,20 +82,20 @@ for a = 1 : size( XX , 1 )
 		minDist2 = min( hmd );
 		maxDist2 = max( hmd );
 
+        L3cell = E3{ in2E2( b ) , 1 }; %Since the second levle is known, the third one is known too.
+        
 		for c = minDist2 : maxDist2
 
-			in2E3 = find( hmd == minDist2 );
+			in2E3 = find( hmd == c );
 
 			for d = 1 : length( in2E3 )
 
-				L3cell = E3{ in2E2( b ) , 1 };
-
-                W  = L3cell{ in2E3( c ) , 1 }{ 1 };
-                R  = L3cell{ in2E3( c ) , 1 }{ 2 };
-                cP = L3cell{ in2E3( c ) , 1 }{ 3 };
+                W  = L3cell{ in2E3( d ) , 1 }{ 1 };
+                R  = L3cell{ in2E3( d ) , 1 }{ 2 };
+                cP = L3cell{ in2E3( d ) , 1 }{ 3 };
                 
-				L3Code = L3cell{ in2E3( c ) , 2 };
-				slabels = L3cell{ in2E3( c ) , 3 };
+				L3Code = L3cell{ in2E3( d ) , 2 };
+				slabels = L3cell{ in2E3( d ) , 3 };
 
 				sc = sample - cP;
 				sc = sample * W * R;
@@ -109,7 +109,7 @@ for a = 1 : size( XX , 1 )
 
 				for e = minDist3 : maxDist3
 
-					findLabels = find( hmd == e )
+					findLabels = find( hmd == e );
 
 					for f = 1 : length( findLabels )
 
@@ -118,24 +118,14 @@ for a = 1 : size( XX , 1 )
 						totalReturnImages = totalReturnImages + length( rtLabels );
 						correctImages = correctImages + sum( rtLabels == sampleLabel );
 
-
-
-
-
 					end
 
+					precision = [ precision , ( correctImages / ( totalReturnImages + eps )) ];
+					recall = [ recall , ( correctImages / databaseImages ) ];
 
-					precision = [ precision (correctImages / ( totalReturnImages + eps )) ]
-					recall = [ recall , correctImages / databaseImages ];
-
-
-				end
+                end
 				
-
-			end
-
-			minDist2 = minDist2 + c;
-
+             end
 
 		end
 
