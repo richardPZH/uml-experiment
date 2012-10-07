@@ -80,7 +80,7 @@ E3 = getEntrance3( E2 , trGist , thirdBit , 'OURSITQ' );
 
 % Plot the Accuracy-Recall curve
 
-
+plot( r , p , 'x' );
 
 
 
