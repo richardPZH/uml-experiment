@@ -42,12 +42,12 @@ XX( XX <  0 ) = 0;
 
 for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have size( XX,1 ) samples to query
 
-	sample = inGist( a , : );
-	code = XX( a , : );
-	sampleLabel  = inLabel( a );
+	sample = inGist( a , : );       %the sample is the query sample..
+	code = XX( a , : );             %this is the sample first level hash code
+	sampleLabel  = inLabel( a );    %sample true label
 
 	totalReturnImages = 0 ;
-	correctImages = 0;
+	correctImages = 0 ;
 	databaseImages = sum( trLabels == sampleLabel ); 
 
 	% In the Entrace 1 , E1{1,2} is the binary code matrix, one row, one point
