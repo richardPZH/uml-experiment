@@ -35,7 +35,7 @@ Entrance = cell( size( E2 , 1 ) , 1 );
 
 for m = 1 : size( E2 , 1 )
 
-	anoymousEntrance = E2( m , 3 );
+	anoymousEntrance = E2{ m , 3 };
 
 	L3cell = cell( size( anoymousEntrance , 1 ) , 3 );
 
