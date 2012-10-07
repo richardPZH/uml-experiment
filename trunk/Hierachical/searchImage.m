@@ -53,11 +53,11 @@ for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have 
 	% In the Entrace 1 , E1{1,2} is the binary code matrix, one row, one point
 	L1Code = E1{ 1 , 2 };
 
- 	hmd = CalHammingDist( code , L1Code , 'vec' );
-	minDist1 = min( hmd );
-	maxDist1 = max( hmd );
+ 	hmd1 = CalHammingDist( code , L1Code , 'vec' );
+	minDist1 = min( hmd1 );
+	maxDist1 = max( hmd1 );
 
-	in2E2 = find( hmd == minDist1 );
+	in2E2 = find( hmd1 == minDist1 );
 
 	for b = 1 : 1 : length( in2E2 )  %careful for this for loop, not going downward
 		
@@ -75,16 +75,16 @@ for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have 
 		L2Code = E2{ in2E2( b ) , 2 };
 		%E2anoymous = E2{ in2E2( b ) , 3 }; 
 
-		hmd = CalHammingDist( sc , L2Code , 'vec' ); 
+		hmd2 = CalHammingDist( sc , L2Code , 'vec' ); 
 
-		minDist2 = min( hmd );
-		maxDist2 = max( hmd );
+		minDist2 = min( hmd2 );
+		maxDist2 = max( hmd2 );
 
         L3cell = E3{ in2E2( b ) , 1 }; %Since the second levle is known, the third one is known too.
         
-		for c = minDist2 : maxDist2
+		for c = minDist2 : 1 : maxDist2
 
-			in2E3 = find( hmd == c );
+			in2E3 = find( hmd2 == c );
 
 			for d = 1 : 1 : length( in2E3 )
 
@@ -100,14 +100,14 @@ for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have 
 				sc( sc >= 0 ) = 1;
 				sc( sc <  0 ) = 0;
 
-				hmd = CalHammingDist( sc , L3Code , 'vec' );
+				hmd3 = CalHammingDist( sc , L3Code , 'vec' );
 
-				minDist3 = min( hmd );
-				maxDist3 = max( hmd );
+				minDist3 = min( hmd3 );
+				maxDist3 = max( hmd3 );
 
 				for e = minDist3 : maxDist3
 
-					findLabels = find( hmd == e );
+					findLabels = find( hmd3 == e );
 
 					for f = 1 : length( findLabels )
 
@@ -121,19 +121,10 @@ for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have 
 					precision = [ precision , ( correctImages / ( totalReturnImages + eps )) ];
 					recall = [ recall , ( correctImages / databaseImages ) ];
 
-               end
-				
+                end	
             end
-
-		end
-
-
-
+        end
 	end
-
-
-
-
 end
 
 
