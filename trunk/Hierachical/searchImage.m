@@ -95,7 +95,7 @@ for a = 1 : size( XX , 1 )
                 cP = L3cell{ in2E3( d ) , 1 }{ 3 };
                 
 				L3Code = L3cell{ in2E3( d ) , 2 };
-				slabels = L3cell{ in2E3( d ) , 3 };
+				sindex = L3cell{ in2E3( d ) , 3 };
 
 				sc = sample - cP;
 				sc = sample * W * R;
@@ -113,10 +113,10 @@ for a = 1 : size( XX , 1 )
 
 					for f = 1 : length( findLabels )
 
-						rtLabels = slabels{ findLabels( f ) };
+						rtindex = sindex{ findLabels( f ) };
 
-						totalReturnImages = totalReturnImages + length( rtLabels );
-						correctImages = correctImages + sum( rtLabels == sampleLabel );
+						totalReturnImages = totalReturnImages + length( rtindex );
+						correctImages = correctImages + sum( trLabels( rtindex ) == sampleLabel );
 
 					end
 
