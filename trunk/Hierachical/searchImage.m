@@ -27,9 +27,9 @@ function [ recall precision ] = searchImage( inGist , inLabel , inVector , trGis
 precision = 1;
 recall = 0;
 
-W0=  E1{ 1 , 1 }( 1 );
-R0 = E1{ 1 , 1 }( 2 );
-cP0 = E1{ 1 , 1 }( 3 );
+W0=  E1{ 1 , 1 }{ 1 };
+R0 = E1{ 1 , 1 }{ 2 };
+cP0 = E1{ 1 , 1 }{ 3 };
 
 % first level hash
 XX = inGist - repmat( cP0 , size( inGist , 1 ) , 1 );
@@ -52,10 +52,10 @@ for a = 1 : size( XX , 1 )
 	correctImages = 0;
 	databaseImages = sum( trLabels == sampleLabel ); 
 
-	% In the Entrace 1 , E1{1,1} is the binary code matrix, one row, one point
-	L1Code = E1{ 1 , 1 };
+	% In the Entrace 1 , E1{1,2} is the binary code matrix, one row, one point
+	L1Code = E1{ 1 , 2 };
 
-	hmd = CalHammingDist( code , L1Code , 'vec' );
+ 	hmd = CalHammingDist( code , L1Code , 'vec' );
 	minDist1 = min( hmd );
 	maxDist1 = max( hmd );
 
@@ -64,9 +64,9 @@ for a = 1 : size( XX , 1 )
 	for b = 1 : length( in2E2 )
 		
         ch = E2{ in2E2( b ) , 1 };
-        W  = ch(1);
-        R  = ch(2);
-        cP = ch(3);
+        W  = ch{ 1 };
+        R  = ch{ 2 };
+        cP = ch{ 3 };
 
 		sc = sample - cP;      %center the point
 		sc = sample * W * R ;  %project and rotate
@@ -82,7 +82,7 @@ for a = 1 : size( XX , 1 )
 		minDist2 = min( hmd );
 		maxDist2 = max( hmd );
 
-		for c = minDist2 : ( maxDist2 - minDist2 + 1 )
+		for c = minDist2 : maxDist2
 
 			in2E3 = find( hmd == minDist2 );
 
@@ -90,9 +90,9 @@ for a = 1 : size( XX , 1 )
 
 				L3cell = E3{ in2E2( b ) , 1 };
 
-                W  = L3cell{ in2E3( c ) , 1 }(1);
-                R  = L3cell{ in2E3( c ) , 1 }(2);
-                cP = L3cell{ in2E3( c ) , 1 }(3);
+                W  = L3cell{ in2E3( c ) , 1 }{ 1 };
+                R  = L3cell{ in2E3( c ) , 1 }{ 2 };
+                cP = L3cell{ in2E3( c ) , 1 }{ 3 };
                 
 				L3Code = L3cell{ in2E3( c ) , 2 };
 				slabels = L3cell{ in2E3( c ) , 3 };
