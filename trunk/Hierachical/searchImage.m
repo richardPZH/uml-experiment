@@ -27,7 +27,9 @@ function [ recall precision ] = searchImage( inGist , inLabel , inVector , trGis
 precision = 1;
 recall = 0;
 
-[W0 R0 cP0 ] = E1{ 1 , 1 };
+W0=  E1{ 1 , 1 }( 1 );
+R0 = E1{ 1 , 1 }( 2 );
+cP0 = E1{ 1 , 1 }( 3 );
 
 % first level hash
 XX = inGist - repmat( cP0 , size( inGist , 1 ) , 1 );
@@ -61,7 +63,10 @@ for a = 1 : size( XX , 1 )
 
 	for b = 1 : length( in2E2 )
 		
-		[ W , R , cP ] = E2{ in2E2( b ) , 1 };
+        ch = E2{ in2E2( b ) , 1 };
+        W  = ch(1);
+        R  = ch(2);
+        cP = ch(3);
 
 		sc = sample - cP;      %center the point
 		sc = sample * W * R ;  %project and rotate
@@ -85,7 +90,10 @@ for a = 1 : size( XX , 1 )
 
 				L3cell = E3{ in2E2( b ) , 1 };
 
-				[ W , R , cP ] = L3cell{ in2E3( c ) , 1 };
+                W  = L3cell{ in2E3( c ) , 1 }(1);
+                R  = L3cell{ in2E3( c ) , 1 }(2);
+                cP = L3cell{ in2E3( c ) , 1 }(3);
+                
 				L3Code = L3cell{ in2E3( c ) , 2 };
 				slabels = L3cell{ in2E3( c ) , 3 };
 
