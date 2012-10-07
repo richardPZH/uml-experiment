@@ -63,7 +63,7 @@ for m = 1 : size( E2 , 1 )
 		end
 
 		
-		L3cell{ n , 1 } = [ W2 , R2 , cP ];
+		L3cell{ n , 1 } = { W2 , R2 , cP };
 		L3cell{ n , 2 } = b;
 		L3cell{ n , 3 } = tmpCell;
 
