@@ -74,8 +74,9 @@ E2( : , 3 ) = [];
 % teGist is the samples to be tested
 % telabels is the ground true label
 
-[ r p ] = searchImage( teGist , telabels , teVector ,  trGist , trlabels , trVector , E1 , E2 , E3 );
+[ r , p ] = searchImage( teGist , telabels , teVector ,  trGist , trlabels , trVector , E1 , E2 , E3 );
 
+[ r , p ] = avgRPPlot( r , p , 0.05 );
 
 % Plot the Accuracy-Recall curve
 % How to plot the average curve instead of plotting every queries
