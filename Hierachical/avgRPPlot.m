@@ -62,6 +62,8 @@ while( m <= l )
 
 end
 
+r( n : end ) = [];
+p( n : end ) = [];
 
 
 
