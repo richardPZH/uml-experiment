@@ -65,8 +65,8 @@ E3 = getEntrance3( E2 , trGist , thirdBit , 'ITQ' );
 
 % E1 , E2 , their index to the trGist is no longer useful, delete them
 % But E3 is useful for precision-recall calculation
-E1( 1 , 3 ) = [];
-E2( : , 3 ) = [];
+%E1( 1 , 3 ) = [];
+%E2( : , 3 ) = [];
 
 
 % Start the test 
@@ -81,7 +81,9 @@ E2( : , 3 ) = [];
 % Plot the Accuracy-Recall curve
 % How to plot the average curve instead of plotting every queries
 
-plot( r , p , 'x' );
+plot( r , p , '-o' );
+axis( [0 1 0 1] );
+
 
 
 
