@@ -63,6 +63,11 @@ E2 = getEntrance2( E1 , trGist , trlabels , secondBit , 'ITQ' );
 % level 3 , at level 3 , we assume all the images are in the same class
 E3 = getEntrance3( E2 , trGist , thirdBit , 'ITQ' );
 
+% E1 , E2 , their index to the trGist is no longer useful, delete them
+% But E3 is useful for precision-recall calculation
+E1( 1 , 3 ) = [];
+E2( : , 3 ) = [];
+
 
 % Start the test 
 % teVector is the original samples that can be display to human
@@ -71,14 +76,9 @@ E3 = getEntrance3( E2 , trGist , thirdBit , 'ITQ' );
 
 [ r p ] = searchImage( teGist , telabels , teVector ,  trGist , trlabels , trVector , E1 , E2 , E3 );
 
-	
-
-
-
-
-
 
 % Plot the Accuracy-Recall curve
+% How to plot the average curve instead of plotting every queries
 
 plot( r , p , 'x' );
 
