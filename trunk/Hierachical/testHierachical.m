@@ -79,10 +79,10 @@ E3 = getEntrance3( E2 , trGist , thirdBit , 'ITQ' );
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 
 % Plot the Accuracy-Recall curve
-% How to plot the average curve instead of plotting every queries
-
 plot( r , p , '-o' );
 axis( [0 1 0 1] );
+grid on;
+hold on;
 
 
 
