@@ -53,7 +53,7 @@ teGist = double( teGist );
 % Strat the hash
 
 % level 1
-[ E1 ] = getEntrance1( trGist , trlabels , firstBit , 'ITQ' );
+E1 = getEntrance1( trGist , trlabels , firstBit , 'ITQ' );
 
 
 % level 2 
