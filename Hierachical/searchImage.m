@@ -40,7 +40,7 @@ XX( XX >= 0 ) = 1;
 XX( XX <  0 ) = 0;
 
 
-for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have size( XX,1 ) samples to query
+for a = 1 : size( XX , 1 )   %step is one, incase it goes downward, we have size( XX,1 ) samples to query
 
 	sample = inGist( a , : );       %the sample is the query sample..
 	code = XX( a , : );             %this is the sample first level hash code
@@ -49,6 +49,9 @@ for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have 
 	totalReturnImages = 0 ;
 	correctImages = 0 ;
 	databaseImages = sum( trLabels == sampleLabel ); 
+    
+    curPrecision = 1;
+    curRecall = 0;
 
 	% In the Entrace 1 , E1{1,2} is the binary code matrix, one row, one point
 	L1Code = E1{ 1 , 2 };
@@ -118,13 +121,19 @@ for a = 1 : 1 : size( XX , 1 )   %step is one, incase it goes downward, we have 
 
 					end
 
-					precision = [ precision , ( correctImages / ( totalReturnImages + eps )) ];
-					recall = [ recall , ( correctImages / databaseImages ) ];
+					curPrecision = [ curPrecision , ( correctImages / ( totalReturnImages + eps )) ];
+					curRecall = [ curRecall , ( correctImages / databaseImages ) ];
 
                 end	
             end
         end
-	end
+    end
+    
+    [ r p ] = avgRPPlot( curRecall , curPrecision , 0.05 );
+    
+    precision = [ precision p ];
+    recall = [ recall r ];
+    
 end
 
 
