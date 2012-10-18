@@ -1,4 +1,4 @@
-function [ E1 E2 E3 ] = testHierachical( imageVector , imageGist , labels , sratio, hierachin )
+function [ ] = testHierachical( imageVector , imageGist , labels , sratio, hierachin )
 % embed all the three level hash and perform:
 % 	1.the recall-accuracy plot
 % 	2.the precision plot
