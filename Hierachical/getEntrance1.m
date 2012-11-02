@@ -23,7 +23,8 @@ function [ E1 ] = getEntrance1( trGist , trlabels , bit , method )
 
 [W0 R0 cP0] = Level1Hash2( trGist , trlabels , bit , method );
 
-%need to Calculate the J(R,1) and store the buckets
+%need to Calculate the J(R,1) and store the buckets This will use to
+%evaluate good or bad of a [ a b c ]
 
 XX =  trGist - repmat( cP0 , size( trGist , 1 ) , 1 );
 XX = XX * W0 * R0;
