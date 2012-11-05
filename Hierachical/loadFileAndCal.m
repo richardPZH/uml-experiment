@@ -81,7 +81,8 @@ teLabels = teLabels( R );
 % teGist is the samples to be tested
 % telabels is the ground true label
 
-[ r , p ] = searchImage( teGist , teLabels , teVector , trGist , trLabels , trVector , E1 , E2 , E3 );
+% Use the searchImage2 function to find the recall-precision; hierachical to search
+[ r , p ] =  searchImage2( teGist , teLabels , teVector , trGist , trLabels , trVector , E1 , E2 , E3 );
 
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 
