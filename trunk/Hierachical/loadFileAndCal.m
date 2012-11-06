@@ -10,8 +10,6 @@ function [ ]  = loadFileAndCal( sratio , hierachin )
 % Author:
 %      IMS@SCUT Once
 
-clear all
-
 % This will create variable : gist label
 load CIFAR10_GrayScale320_gist.mat
 trGist = gist( 1:50000 , :);
