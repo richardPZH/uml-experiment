@@ -10,10 +10,11 @@ function [ ] = Level3Search( imageGist , imageVector , imageLabel , trGist , trL
 % the hamming distance in level 2, which we need to perdefine
 
 %Some evil global variables
-global numOfRet;
-global numOfHit;
-global recall;
-global precision;
+global numOfRet
+global numOfHit
+global numOfSam
+global recall
+global precision
 
 L3Dis = 5;
 
@@ -40,8 +41,15 @@ for k = 0 : L3Dis
    
    for a = 1 : size( vec , 1 )
        
+       retCell = L3Label{ vec(a) };
+       
+       numOfRet = numOfRet + size( retCell , 1 );
+       numOfHit = numOfHit + sum( trLabels( retCell ) == imageLabel );
        
    end
+   
+   recall =[ recall , numOfHit / numOfSam ];
+   precision =[ precision , numOfHit / numOfRet ];
    
    %level 2 end
 end
