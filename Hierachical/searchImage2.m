@@ -30,8 +30,6 @@ global numOfSam
 global recall
 global precision
 
-numOfRet = eps;
-numOfHit = 0;
 r = 0;
 p = 1;
 
@@ -62,6 +60,8 @@ for numOfImage = 1 : size( inLabel , 1 )
     imageLabel = inLabel( numOfImage );       %search image label
     
     numOfSam = sum( trLabels == imageLabel );
+    numOfRet = eps;
+    numOfHit = 0;
     
     recall = 0;
     precision = 1;
@@ -82,9 +82,9 @@ for numOfImage = 1 : size( inLabel , 1 )
         % handle distance of dist ends
     end
     
-    [ recall , precision ] = avgRPPlot( recall , precision , 0.05 );    
-    r = [ r , recall ];
-    p = [ p , precision ];
+    [ rr , pp ] = avgRPPlot( recall , precision , 0.05 );    
+    r = [ r , rr ];
+    p = [ p , pp ];
     %search one image finishes
     
 end
