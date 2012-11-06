@@ -1,4 +1,4 @@
-function [ ] = searchImage2( inGist , inLabel , inVector , trGist , trLabels , trVector , E1 , E2 , E3 )
+function [ r p ] = searchImage2( inGist , inLabel , inVector , trGist , trLabels , trVector , E1 , E2 , E3 )
 %
 % This function use the testing image to evaluate the performance 
 % of the Hierachical hashing method... 
@@ -26,13 +26,14 @@ function [ ] = searchImage2( inGist , inLabel , inVector , trGist , trLabels , t
 
 global numOfRet
 global numOfHit
+global numOfSam
 global recall
 global precision
 
 numOfRet = 0;
 numOfHit = eps;
-recall = 0;
-precision = 1;
+r = 0;
+p = 1;
 
 % the hamming distance in level 1, which we need to perdefine
 L1Dis = 2;
@@ -60,6 +61,11 @@ for numOfImage = 1 : size( inLabel , 1 )
     imageVector = inVector( numOfImage , : ); %search image in RGB
     imageLabel = inLabel( numOfImage );       %search image label
     
+    numOfSam = sum( trLabels == imageLabel );
+    
+    recall = 0;
+    precision = 1;
+    
     %search one image starts
     hmd = CalHammingDist( imageL1Code , L1Code , 'vec' );
     
@@ -76,8 +82,9 @@ for numOfImage = 1 : size( inLabel , 1 )
         % handle distance of dist ends
     end
     
-    
-    
+    [ recall , precision ] = avgRPPlot( recall , precision , 0.05 );    
+    r = [ r , recall ];
+    p = [ p , precision ];
     %search one image finishes
     
 end
