@@ -74,6 +74,8 @@ teGist = teGist( R , : );
 teVector = teVector( R , :);
 teLabels = teLabels( R );
 
+clear R;
+
 % Start the test 
 % teVector is the original samples that can be display to human
 % teGist is the samples to be tested
