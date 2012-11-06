@@ -30,8 +30,8 @@ global numOfSam
 global recall
 global precision
 
-numOfRet = 0;
-numOfHit = eps;
+numOfRet = eps;
+numOfHit = 0;
 r = 0;
 p = 1;
 
