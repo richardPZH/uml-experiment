@@ -1,4 +1,4 @@
-function [ recall precision ] = searchImage2( inGist , inLabel , inVector , trGist , trLabels , trVector , E1 , E2 , E3 )
+function [ ] = searchImage2( inGist , inLabel , inVector , trGist , trLabels , trVector , E1 , E2 , E3 )
 %
 % This function use the testing image to evaluate the performance 
 % of the Hierachical hashing method... 
@@ -24,7 +24,13 @@ function [ recall precision ] = searchImage2( inGist , inLabel , inVector , trGi
 % Advices:
 %     How to use more vector operation rather than for loop
 
+global numOfRet
+global numOfHit
+global recall
+global precision
 
+numOfRet = 0;
+numOfHit = eps;
 recall = 0;
 precision = 1;
 
@@ -63,7 +69,7 @@ for numOfImage = 1 : size( inLabel , 1 )
         
         for a = 1 : size( vec , 1 )
             
-            [ recall precision ] = Level2Search( recall , precision , imageGist , imageVector , imageLabel , trGist , trLabels , trVector , vec( a ) , E2 , E3 );
+            Level2Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , vec( a ) , E2 , E3 );
             
         end
         
