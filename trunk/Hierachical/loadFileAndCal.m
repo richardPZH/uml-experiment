@@ -74,6 +74,14 @@ teGist = teGist( R , : );
 teVector = teVector( R , :);
 teLabels = teLabels( R );
 
+% DEBUG TRICK
+teGist = [ trGist( 1 , : ) ; teGist ];
+
+teVector = [ trVector( 1 , : ) ; teVector ];
+teLabels = [ trLabels( 1 ) ; teLabels ];
+
+% DEBUG TRICK
+
 clear R;
 
 % Start the test 
