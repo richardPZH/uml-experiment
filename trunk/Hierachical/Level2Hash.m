@@ -23,7 +23,7 @@ function [ W1 R centerPoint ] = Level2Hash( X , labels , c , method )
 % X = double( X );  
 
 % find the center point 
-centerPoint = mean( X , 2 );
+centerPoint = mean( X , 1 );
 
 % make the data zero centered
 X = X - repmat( centerPoint , size( X , 1 ) , 1 );
