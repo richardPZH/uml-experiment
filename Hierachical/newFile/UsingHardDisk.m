@@ -70,6 +70,8 @@ buildStructure( trGist , trLabels , secondBit , thirdBit , E1 , 'ITQ' );
 % clear E1 {1,3} useless information 
 E1{ 1 , 3 } = [];
 
+save 'EE1' E1
+
 % Get the random search images
 R = randperm( size( teGist , 1 ) );
 R = R( 1 : floor(size( teGist , 1 ) * sratio ));
@@ -92,8 +94,9 @@ clear R;
 % telabels is the ground true label
 
 % Use the searchImage function to find the recall-precision; hierachical to search
+[ r p ] = searchImage3( teGist , teLabels , teVector , E1 );
 
-
+[ r , p ] = avgRPPlot( r , p , 0.05 );
 
 % Plot the Accuracy-Recall curve
 plot( r , p , '-o' );
