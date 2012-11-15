@@ -1,4 +1,4 @@
-function [ ] = SearchImageOnly( )
+function [ ] = SearchImageOnly( sratio )
 % Only use for search Image!
 
 % load the test vector , this will create variable : batch_label data labels

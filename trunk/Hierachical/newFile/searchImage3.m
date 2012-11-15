@@ -1,4 +1,4 @@
-function [ r p ] = searchImage3( inGist , inLabel , trLabels , inVector , E1 )
+function [ r p ] = searchImage3( inGist , inLabel ,  inVector , trGist , trVector ,trLabels , E1 )
 %
 % This function use the testing image to evaluate the performance 
 % of the Hierachical hashing method... 
@@ -75,7 +75,7 @@ for numOfImage = 1 : size( inLabel , 1 )
         
         for a = 1 : size( vec , 1 )
             
-            fileName = [ 'E' num2str( vec(a) ) ];
+            fileName = [ 'E' num2str( vec(a) ) '.mat' ];
             load fileName;
             
             Level2Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , vec( a ) , E2 , E3 );
