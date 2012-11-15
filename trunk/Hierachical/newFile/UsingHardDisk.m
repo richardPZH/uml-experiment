@@ -64,10 +64,11 @@ teGist = double( teGist );
 E1 = getEntrance1( trGist , trLabels , firstBit , 'ITQ' );
 
 % Build the structure in the hard disk 
-
-
-
+buildStructure( trGist , trLabels , secondBit , thirdBit , E1 , 'ITQ' );
 % end building structure
+
+% clear E1 {1,3} useless information 
+E1{ 1 , 3 } = [];
 
 % Get the random search images
 R = randperm( size( teGist , 1 ) );
@@ -83,7 +84,6 @@ teVector = [ trVector( 1 , : ) ; teVector ];
 teLabels = [ trLabels( 1 ) ; teLabels ];
 
 % DEBUG TRICK
-
 clear R;
 
 % Start the test 
@@ -91,10 +91,9 @@ clear R;
 % teGist is the samples to be tested
 % telabels is the ground true label
 
-% Use the searchImage2 function to find the recall-precision; hierachical to search
-[ r , p ] = searchImage2( teGist , teLabels , teVector , trGist , trLabels , trVector , E1 , E2 , E3 );
+% Use the searchImage function to find the recall-precision; hierachical to search
 
-[ r , p ] = avgRPPlot( r , p , 0.05 );
+
 
 % Plot the Accuracy-Recall curve
 plot( r , p , '-o' );
