@@ -1,4 +1,4 @@
-function [ r p ] = searchImage3( inGist , inLabel , inVector , E1 )
+function [ r p ] = searchImage3( inGist , inLabel , trLabels , inVector , E1 )
 %
 % This function use the testing image to evaluate the performance 
 % of the Hierachical hashing method... 
