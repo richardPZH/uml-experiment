@@ -76,7 +76,7 @@ for numOfImage = 1 : size( inLabel , 1 )
         for a = 1 : size( vec , 1 )
             
             fileName = [ 'E' num2str( vec(a) ) '.mat' ];
-            load fileName;
+            load( fileName );
             
             Level2Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , vec( a ) , E2 , E3 );
             

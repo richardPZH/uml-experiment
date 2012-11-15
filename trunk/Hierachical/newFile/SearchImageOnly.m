@@ -1,6 +1,16 @@
 function [ ] = SearchImageOnly( sratio )
 % Only use for search Image!
 
+% This will create variable : gist label
+load CIFAR10_GrayScale320_gist.mat
+trGist = gist( 1:50000 , :);
+trLabels = label( 1:50000 );
+teGist = gist( 50001 : end , : );
+
+teGist = double( teGist );
+%telabels = label( 50001 : end );
+clear gist label trGist trLabels 
+
 % load the test vector , this will create variable : batch_label data labels
 load cifar-10-batches-mat\test_batch.mat
 teVector = data;
@@ -27,7 +37,7 @@ clear R;
 load 'EE1.mat'
 
 % Use the searchImage function to find the recall-precision; hierachical to search
-[ r p ] = searchImage3( teGist , teLabels , teVector , trLabels , E1 );
+[ r p ] = searchImage3( teGist , teLabels , teVector ,  trGist , trVector ,trLabels , E1 );
 
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 
