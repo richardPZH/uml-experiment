@@ -1,4 +1,4 @@
-function [ ] = Level2Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , index , E2 , E3 )
+function [ ] = Level2Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , E2 , E3 )
 %
 % This function will search into the second level 
 %
@@ -10,11 +10,11 @@ function [ ] = Level2Search( imageGist , imageVector , imageLabel , trGist , trL
 L2Dis = 3;
 
 % Get Level 2 info
-W1=  E2{ index , 1 }{ 1 };
-R1 = E2{ index , 1 }{ 2 };
-cP1 = E2{ index , 1 }{ 3 };
+W1=  E2{ 1 , 1 }{ 1 };
+R1 = E2{ 1 , 1 }{ 2 };
+cP1 = E2{ 1 , 1 }{ 3 };
 
-L2Code = E2{ index , 2 };
+L2Code = E2{ 1 , 2 };
 
 % This imageGist's binary code in Level2
 code = ( imageGist - cP1  ) * W1 * R1;
@@ -29,7 +29,7 @@ for k = 0 : L2Dis
    
    for a = 1 : size( vec , 1 )
        
-        Level3Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , index , vec( a ) , E3 );
+        Level3Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , vec( a ) , E3 );
        
    end
    

@@ -1,4 +1,4 @@
-function [ ] = Level3Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , index1 , index2 , E3 )
+function [ ] = Level3Search( imageGist , imageVector , imageLabel , trGist , trLabels , trVector , index2 , E3 )
 %
 % This will search in the third level
 %
@@ -18,15 +18,14 @@ global precision
 
 L3Dis = 5;
 
-anoymousEntrance = E3{ index1 };
 
 % Get Level 3 info
-W2=  anoymousEntrance{ index2 , 1 }{ 1 };
-R2 = anoymousEntrance{ index2 , 1 }{ 2 };
-cP2 = anoymousEntrance{ index2 , 1 }{ 3 };
+W2=  E3{ index2 , 1 }{ 1 };
+R2 = E3{ index2 , 1 }{ 2 };
+cP2 = E3{ index2 , 1 }{ 3 };
 
-L3Code = anoymousEntrance{ index2 , 2 };
-L3Label = anoymousEntrance{ index2 , 3};
+L3Code = E3{ index2 , 2 };
+L3Label = E3{ index2 , 3};
 
 % This imageGist's binary code in Level3
 code = ( imageGist - cP2  ) * W2 * R2;
@@ -44,7 +43,7 @@ for k = 0 : L3Dis
        retCell = L3Label{ vec(a) };
        
        numOfRet = numOfRet + size( retCell , 1 );
-       numOfHit = numOfHit + sum( trLabels( retCell ) == imageLabel );
+       numOfHit = numOfHit + sum( trLabels( retCell ) == imageLabel ); %because the retCell stores the label information 
        
    end
    

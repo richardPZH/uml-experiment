@@ -3,7 +3,7 @@ function [ ] = buildStructure( trGist , trLabels , secondBit , thirdBit , E1 , m
 %  This function will use the E1 and build all the rest structure in disk
 %  
 %  IMS@SCUT
-%  2012/11/15
+%  2012/11/13
 
 ent = E1{ 1 , 3 };
 
@@ -40,7 +40,8 @@ for a = 1 : size( ent , 1 )
             anoymousEntrance = cell( size( b , 1 ) , 1 );
 
             for n = 1 : size( b , 1 )
-                anoymousEntrance{ n } = labels( indice{ m }(  j == n  ) );    % final level we save the labels instead!
+                anoymousEntrance{ n } = indice{ m }(  j == n  );    % final level we store index of the trGist
+                anoymousEntrance{ n } = index( anoymousEntrance{ n } ) ;
             end
 
             E3{ m , 1 } = { W1 , R1 , cP };
