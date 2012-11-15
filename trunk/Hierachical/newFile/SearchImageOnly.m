@@ -27,7 +27,7 @@ clear R;
 load 'EE1.mat'
 
 % Use the searchImage function to find the recall-precision; hierachical to search
-[ r p ] = searchImage3( teGist , teLabels , teVector , E1 );
+[ r p ] = searchImage3( teGist , teLabels , teVector , trLabels , E1 );
 
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 

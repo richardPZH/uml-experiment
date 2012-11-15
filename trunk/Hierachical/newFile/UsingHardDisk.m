@@ -70,7 +70,7 @@ buildStructure( trGist , trLabels , secondBit , thirdBit , E1 , 'ITQ' );
 % clear E1 {1,3} useless information 
 E1{ 1 , 3 } = [];
 
-save 'EE1' E1
+save 'EE1' E1 trLabels 
 
 % Get the random search images
 R = randperm( size( teGist , 1 ) );
@@ -94,7 +94,7 @@ clear R;
 % telabels is the ground true label
 
 % Use the searchImage function to find the recall-precision; hierachical to search
-[ r p ] = searchImage3( teGist , teLabels , teVector , E1 );
+[ r p ] = searchImage3( teGist , teLabels , teVector , trLabels , E1 );
 
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 
