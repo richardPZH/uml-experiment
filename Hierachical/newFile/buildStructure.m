@@ -60,7 +60,7 @@ for a = 1 : size( ent , 1 )
             R1 = zeros( thirdBit , thirdBit );
             b = zeros( 1 , thirdBit );
             anoymousEntrance = cell( 1 , 1 );
-            anoymousEntrance{ 1, 1 } = tmplabels;
+            anoymousEntrance{ 1, 1 } = index( indice{m} ) ;
             
             E3{ m , 1 } = { W1 , R1 , cP };
             E3{ m , 2 } = b;
