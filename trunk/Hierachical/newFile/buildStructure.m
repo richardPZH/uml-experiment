@@ -5,6 +5,9 @@ function [ ] = buildStructure( trGist , trLabels , secondBit , thirdBit , E1 , m
 %  IMS@SCUT
 %  2012/11/13
 
+% The ITQ related algorithm should work with samples more than THRESHOLD
+THRESHOLD = 1;
+
 ent = E1{ 1 , 3 };
 
 for a = 1 : size( ent , 1 )
@@ -13,6 +16,7 @@ for a = 1 : size( ent , 1 )
     samples = trGist( index , : );
     labels = trLabels( index );
     
+    %Second Hash 
     E2 = getEntrance1( samples , labels , secondBit , method );
     
     indice = E2{ 1 ,3 };
@@ -25,7 +29,7 @@ for a = 1 : size( ent , 1 )
 
         tmplabels = labels( indice{ m } );
 
-        if size( tmplabels , 1 ) > 1  
+        if size( tmplabels , 1 ) > THRESHOLD
         
             [ W1 R1 cP ] = Level2Hash( tmpGist , tmplabels , thirdBit , method );
 
@@ -49,14 +53,12 @@ for a = 1 : size( ent , 1 )
             E3{ m , 3 } = anoymousEntrance;
         
         else
-            % when the third level only have one image , we have to handle
+            % when the third level images smaller than threshold , we have to handle
             % it like this
             cP = zeros( 1 , size( tmpGist , 2 ) );
             W1 = zeros( size( tmpGist , 2 ) , thirdBit );
-            R1 = zeros( thirdBit );
-            
+            R1 = zeros( thirdBit , thirdBit );
             b = zeros( 1 , thirdBit );
-            
             anoymousEntrance = cell( 1 , 1 );
             anoymousEntrance{ 1, 1 } = tmplabels;
             
