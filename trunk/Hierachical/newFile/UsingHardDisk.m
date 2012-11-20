@@ -98,6 +98,9 @@ clear R;
 
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 
+% Plot the Average precision for top 500 retrieved images
+precision500( r , p );
+
 % Plot the Accuracy-Recall curve
 plot( r , p , '-o' );
 axis( [0 1 0 1] );

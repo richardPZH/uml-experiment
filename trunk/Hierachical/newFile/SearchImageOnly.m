@@ -41,6 +41,9 @@ load 'EE1.mat'
 
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 
+% Plot average precision for top 500 retrieved images
+precision500( r , p );
+
 % Plot the Accuracy-Recall curve
 plot( r , p , '-o' );
 axis( [0 1 0 1] );
