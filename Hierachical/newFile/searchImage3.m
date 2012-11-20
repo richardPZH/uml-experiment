@@ -33,8 +33,10 @@ global precision
 r = 0;
 p = 1;
 
-% the hamming distance in level 1, which we need to perdefine
-L1Dis = 2;
+% the hamming distance in level 1, which we need to perdefine, but how to
+% find a good L1Dis??
+global hierachin
+L1Dis = floor( hierachin(1) * 0.5 );
 
 %get the first level hash code
 W0=  E1{ 1 , 1 }{ 1 };

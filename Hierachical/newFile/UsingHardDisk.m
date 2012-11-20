@@ -70,7 +70,7 @@ buildStructure( trGist , trLabels , secondBit , thirdBit , E1 , 'ITQ' );
 % clear E1 {1,3} useless information 
 E1{ 1 , 3 } = [];
 
-save 'EE1' E1 trLabels trVector trGist
+save 'EE1' E1 trLabels trVector trGist hierachin
 
 % Get the random search images
 R = randperm( size( teGist , 1 ) );
