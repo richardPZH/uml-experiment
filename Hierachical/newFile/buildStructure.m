@@ -58,7 +58,7 @@ for a = 1 : size( ent , 1 )
             cP = zeros( 1 , size( tmpGist , 2 ) );
             W1 = zeros( size( tmpGist , 2 ) , thirdBit );
             R1 = zeros( thirdBit , thirdBit );
-            b = zeros( 1 , thirdBit );
+            b = ones( 1 , thirdBit );
             anoymousEntrance = cell( 1 , 1 );
             anoymousEntrance{ 1, 1 } = index( indice{m} ) ;
             
