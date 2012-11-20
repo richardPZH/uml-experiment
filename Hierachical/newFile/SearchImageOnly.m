@@ -45,9 +45,13 @@ hiera = hierachin;
 [ r , p ] = avgRPPlot( r , p , 0.05 );
 
 % Plot average precision for top 500 retrieved images
+figure( 1 );
+title( 'precision@500' );
 precision500( r , p );
 
 % Plot the Accuracy-Recall curve
+figure( 2 );
+title( 'recall-precision' );
 plot( r , p , '-o' );
 axis( [0 1 0 1] );
 grid on;
