@@ -36,6 +36,9 @@ clear R;
 % load the EE1 file to get the E1
 load 'EE1.mat'
 
+global hiera
+hiera = hierachin;
+
 % Use the searchImage function to find the recall-precision; hierachical to search
 [ r p ] = searchImage3( teGist , teLabels , teVector ,  trGist , trVector ,trLabels , E1 );
 

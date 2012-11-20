@@ -12,6 +12,10 @@ function [ ]  = UsingHardDisk( sratio , hierachin )
 %      IMS@SCUT Once
 %      2012/11/15
 
+% Used to search
+global hiera
+hiera = hierachin
+
 % This will create variable : gist label
 load CIFAR10_GrayScale320_gist.mat
 trGist = gist( 1:50000 , :);
