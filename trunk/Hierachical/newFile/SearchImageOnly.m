@@ -46,7 +46,6 @@ hiera = hierachin;
 
 % Plot average precision for top 500 retrieved images
 figure( 1 );
-title( 'precision@500' );
 precision500( r , p );
 
 % Plot the Accuracy-Recall curve
