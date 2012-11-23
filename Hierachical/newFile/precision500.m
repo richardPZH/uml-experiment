@@ -13,4 +13,5 @@ numOfSam = 5000;
 numOfRet = ( numOfSam * recall ) ./ precision ;
 
 plot( numOfRet , precision , '-x' );
+title( 'precision@500' );
 grid on;
