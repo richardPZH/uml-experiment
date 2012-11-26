@@ -21,8 +21,8 @@ index = 1;
 length = size( numOfRet , 1 );
 level = 1;
 
-while index < length
-    while ( index < length ) && ( totalReturn < interval*level )
+while index <= length
+    while ( index <= length ) && ( totalHit <= interval*level )
         totalReturn = totalReturn + numOfRet( index );
         totalHit = totalHit + numOfHit( index );
         index = index + 1;
