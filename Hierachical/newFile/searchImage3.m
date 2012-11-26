@@ -91,10 +91,9 @@ for numOfImage = 1 : size( inLabel , 1 )
     % curve
     [ recall precision ] = processNumOfHitNumOfRet( numOfHit , numOfReturn );
     %
-    
-    [ rr , pp ] = avgRPPlot( recall , precision , 0.05 );    
-    r = [ r , rr ];
-    p = [ p , pp ];
+        
+    r = [ r , recall ];
+    p = [ p , precision ];
     %search one image finishes
     
 end
