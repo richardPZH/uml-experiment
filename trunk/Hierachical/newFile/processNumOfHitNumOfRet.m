@@ -18,10 +18,10 @@ precision = 1;
 totalReturn = 0;
 totalHit = 0;
 index = 1;
-length = size( numOfRet , 1 );
+length = size( numOfRet , 2 );
 level = 1;
 
-while index <= length
+while ( index <= length )
     while ( index <= length ) && ( totalHit <= interval*level )
         totalReturn = totalReturn + numOfRet( index );
         totalHit = totalHit + numOfHit( index );

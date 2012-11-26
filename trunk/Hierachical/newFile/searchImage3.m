@@ -89,7 +89,7 @@ for numOfImage = 1 : size( inLabel , 1 )
     
     % We use the numOfRet and numOfHit vector to get the recall-precision
     % curve
-    [ recall precision ] = processNumOfHitNumOfRet( numOfHit , numOfReturn );
+    [ recall precision ] = processNumOfHitNumOfRet( numOfHit , numOfRet );
     %
         
     r = [ r , recall ];
