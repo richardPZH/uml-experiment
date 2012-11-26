@@ -87,6 +87,11 @@ for numOfImage = 1 : size( inLabel , 1 )
         % handle distance of dist ends
     end
     
+    % We use the numOfRet and numOfHit vector to get the recall-precision
+    % curve
+    [ recall precision ] = processNumOfHitNumOfRet( numOfHit , numOfReturn );
+    %
+    
     [ rr , pp ] = avgRPPlot( recall , precision , 0.05 );    
     r = [ r , rr ];
     p = [ p , pp ];
