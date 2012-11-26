@@ -79,15 +79,15 @@ save 'EE1' E1 trLabels trVector trGist hierachin
 % Get the random search images
 R = randperm( size( teGist , 1 ) );
 R = R( 1 : floor(size( teGist , 1 ) * sratio ));
-teGist = teGist( R , : );
-teVector = teVector( R , :);
-teLabels = teLabels( R );
+teGist = trGist( R , : );
+teVector = trVector( R , :);
+teLabels = trLabels( R );
 
 % DEBUG TRICK
-teGist = [ trGist( 1 , : ) ; teGist ];
-
-teVector = [ trVector( 1 , : ) ; teVector ];
-teLabels = [ trLabels( 1 ) ; teLabels ];
+% teGist = [ trGist( 1 , : ) ; teGist ];
+% 
+% teVector = [ trVector( 1 , : ) ; teVector ];
+% teLabels = [ trLabels( 1 ) ; teLabels ];
 
 % DEBUG TRICK
 clear R;
