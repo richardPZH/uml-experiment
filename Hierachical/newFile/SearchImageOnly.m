@@ -5,25 +5,20 @@ function [ ] = SearchImageOnly( sratio )
 load CIFAR10_GrayScale320_gist.mat
 trGist = gist( 1:50000 , :);
 trLabels = label( 1:50000 );
-teGist = gist( 50001 : end , : );
 
-teGist = double( teGist );
+teGist = double( trGist );
+
 %telabels = label( 50001 : end );
-clear gist label trGist trLabels 
-
-% load the test vector , this will create variable : batch_label data labels
-load cifar-10-batches-mat\test_batch.mat
-teVector = data;
-teLabels = labels;
-clear batch_label labels data
+clear gist label %trGist trLabels 
 
 % Get the random search images
 R = randperm( size( teGist , 1 ) );
-R = R( 1 : floor(size( teGist , 1 ) * sratio ));
+R = R( 1 : floor( 10000 * sratio ));
 
+%Now we can use the trGist or tGist toget the test samples
 teGist = teGist( R , : );
-teVector = teVector( R , :);
-teLabels = teLabels( R );
+teVector = trLabels( R );
+teLabels = trLabels( R );
 
 % DEBUG TRICK
 clear R;
