@@ -1,4 +1,4 @@
-function [ recall precision ] = processNumOfHitNumOfRet( numOfHit , numOfRet )
+function [ recall precision precs topRet ] = processNumOfHitNumOfRet( numOfHit , numOfRet )
 % We have the numOfHit and numOfRet variabel
 % numbers of return images [ 10 6 13 ... ]
 % numbers of hit images    [ 10 2 5  ... ] 
@@ -33,4 +33,33 @@ while ( index <= length )
     level = level + 1;
         
 end
+
+interval = 50;
+totalReturn = 0;
+totalHit = 0;
+index = 1;
+length = size( numOfRet , 2 );
+level = 1;
+precs = 1;
+topRet = 0;
+
+while ( index <= length )
+    while ( index <= length ) && ( totalReturn <= interval*level )
+        totalReturn = totalReturn + numOfRet( index );
+        totalHit = totalHit + numOfHit( index );
+        index = index + 1;
+    end
+    
+    precs = [ precs totalHit/totalReturn ];
+    topRet = [ topRet totalReturn ];
+        
+    level = level + 1;
+        
+end
+
+precs( 1 ) = [];
+topRet( 1 ) = [];
+
+
+
 
