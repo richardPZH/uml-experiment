@@ -7,6 +7,9 @@ function [ recall precision precs topRet ] = processNumOfHitNumOfRet( numOfHit ,
 % 
 % We use this information to calculate the recall-precision
 
+% The precs and topRet is used to plot the number of top returned images
+% and the precision graph.
+
 % We know that numOfSam = 5000, and we use 0.05 interval,
 % So 5000*0.05 = 250
 
