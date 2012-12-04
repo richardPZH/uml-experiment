@@ -98,14 +98,14 @@ clear R;
 % telabels is the ground true label
 
 % Use the searchImage function to find the recall-precision; hierachical to search
-[ r p ] = searchImage3( teGist , teLabels , teVector , trGist , trVector ,trLabels , E1 );
+[ r p pre top ] = searchImage3( teGist , teLabels , teVector , trGist , trVector ,trLabels , E1 );
 
-%[ r , p ] = avgRPPlot( r , p , 0.05 );
+[ r , p ] = avgRPPlot( r , p , 0.05 );
 
 % Plot average precision for top 500 retrieved images
 figure( 1 );
 title( 'precision@500' );
-precision500( r , p );
+precision500( pre , top );
 
 % Plot the Accuracy-Recall curve
 figure( 2 );
