@@ -1,4 +1,4 @@
-function [ r p ] = searchImage3( inGist , inLabel ,  inVector , trGist , trVector ,trLabels , E1 )
+function [ r p  pre top ] = searchImage3( inGist , inLabel ,  inVector , trGist , trVector ,trLabels , E1 )
 %
 % This function use the testing image to evaluate the performance 
 % of the Hierachical hashing method... 
@@ -32,6 +32,8 @@ global precision
 
 r = 0;
 p = 1;
+pre = 1;
+top = 0;
 
 % the hamming distance in level 1, which we need to perdefine, but how to
 % find a good L1Dis??
@@ -88,12 +90,20 @@ for numOfImage = 1 : size( inLabel , 1 )
     end
     
     % We use the numOfRet and numOfHit vector to get the recall-precision
-    % curve
+    % and the precision-numberOfTopReturnedImages
     [ recall precision precs topRet ] = processNumOfHitNumOfRet( numOfHit , numOfRet );
     %
-        
+    
+    pre = [ pre , precs ];
+    top = [ top , topRet ];
+    
     r = [ r , recall ];
     p = [ p , precision ];
     %search one image finishes
     
 end
+
+r( 1 ) = [];
+p( 1 ) = [];
+pre( 1 ) = [];
+top( 1 ) = [];
