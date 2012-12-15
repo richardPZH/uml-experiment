@@ -32,7 +32,13 @@ n = floor( windowSize(2) / 2 );
 
 %rect = getrect( hdl );
 title('Press Enter to End Selecting Points');
+% Need the switch X and Y
 [X,Y] = getpts( hdl );
+Z = X;
+X = Y;
+Y = Z;
+clear Z; 
+%[X,Y] = ginput( 1 );
     
 %no subsample of the selected windows, we may subsample too!
 index = 1;
@@ -45,14 +51,18 @@ for a = 1 : length( X )
    tmp = frame( ( X(a) - m ) :( X(a) + m ) , ( Y(a) - n ) : ( Y(a) + n ) , : );
    r( index : index + l ) = reshape( tmp( : , : , 1 ) , 1 , [] );
    g( index : index + l ) = reshape( tmp( : , : , 2 ) , 1 , [] );
-   b( index : index + l ) = reshape( tmp( : , : , 2 ) , 1 , [] );
+   b( index : index + l ) = reshape( tmp( : , : , 3 ) , 1 , [] );
    
    index = index + l + 1;
 end
 
 rgbHdl = figure( 3 );
-plot3( r , g , b , 'o' , 'makerfacecolor' , 'b' );
-axis( [ -10 300 -10 300 -10 300 ] );
+plot3( r , g , b , 'o' , 'markerfacecolor' , 'b' );
+axis( [ 0 300 0 300 0 300 ] );
+grid on;
+xlabel('red');
+ylabel('green');
+zlabel('blue');
 
 
 
