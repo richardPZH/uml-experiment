@@ -18,7 +18,7 @@ set( obj , 'ReturnedColorSpace' , 'rgb' );
 
 figure( 2 );
 
-while ( 0 )
+while ( 1 )
     frame = getsnapshot( obj );
     
     imshow( frame );
