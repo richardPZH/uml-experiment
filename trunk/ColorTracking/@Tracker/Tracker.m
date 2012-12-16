@@ -32,12 +32,15 @@ classdef Tracker
        
        %
        function [ tk ] = constructHelp( tk , varargin )
-           data = varargin{1}.data;
-           tk.Location = varargin{1}.location;
+           varargin = varargin{1}; %because we do it twice
+           
+           data = varargin{2}.data;
+           tk.Location = varargin{2}.location;
+           tk.speed = [ 0 0 ];
            
            switch tk.tkType
                case 'sphere'
-                   %varargin{ 2 } may be : 'a' 'b' 'c' 'avg' preOfavg 
+                   %varargin{ 3 } may be : 'a' 'b' 'c' 'avg' preOfavg 
                    %find a proper sphere to fit the color!
                    %how to filter out some bad RGP points, it's too noisy
                    
@@ -59,8 +62,8 @@ classdef Tracker
                    c = max( poj ) - min( poj );
                    c = c / 2;                %c is the shortest axis
                    
-                   if isa( varargin{1} , 'char' )
-                       switch varargin{2}
+                   if isa( varargin{3} , 'char' )
+                       switch varargin{3}
                            case 'a'
                                tk.Radius = a;
                            case 'b'
@@ -87,19 +90,19 @@ classdef Tracker
                        dist =sum( P1.^2 + P2.^2 , 2 ) - 2 * R;
                        dist =sqrt( dist );
                                
-                       tk.Radius = mean( dist ) * varargin{2} ;
+                       tk.Radius = mean( dist ) * varargin{3} ;
                        
                    end
                    
                                       
                case 'ellipsoid'
-                   %varargin{ 2 3 4 5} should be : scale of a b c, and di
+                   %varargin{ 3 4 5 6} should be : scale of a b c, and di
                    %find a proper ellipsoid to fit the color!
                    %how to filter out some bad RGP points, it's too noisy
-                   sa = varargin{2};
-                   sb = varargin{3};
-                   sc = varargin{4};
-                   di  = varargin{5};
+                   sa = varargin{3};
+                   sb = varargin{4};
+                   sc = varargin{5};
+                   di  = varargin{6};
                    
                    
                    cp = mean( data );
@@ -132,15 +135,15 @@ classdef Tracker
 
                    A = P * B * inv( P );
 
-                   tk.rvA = inv( A );   % ( x - cp )' * ivA * ( x - cp ) = 1 or > 1 or < 1
+                   tk.ivA = inv( A );   % ( x - cp )' * ivA * ( x - cp ) = 1 or > 1 or < 1
                    tk.d = di;
                        
                case 'cylinder'
-                   %varargin{ 2 3} should be : scale of a, di
+                   %varargin{ 3 4 } should be : scale of a, di
                    %find a proper ellipsoid to fit the color!
                    %how to filter out some bad RGP points, it's too noisy
-                   sa = varargin{2};
-                   di  = varargin{3};
+                   sa = varargin{3};
+                   di  = varargin{4};
                    
                    cp = mean( data );
                    tk.CenterPoint= cp';
@@ -166,11 +169,11 @@ classdef Tracker
        function [ ] = showBoundary( tk )
            switch tk.tkType
                case 'sphere'
-                   
+                   showMySphere( tk );
                case 'ellipsoid'
-                   
+                   showMyEllipsoid( tk );
                case 'cylinder'
-                   
+                   showMyCylinder( tk );
            end
                  
        end %end of showType

@@ -1,6 +1,6 @@
-function [] = showMyEllipsoid( tk , range )
+function [] = showMyCylinder( tk , range )
 
-% show the Ellipsoid that I find
+% show the Cylinder that I find
 % In the RGB space
 % range is 0-255 default
 
@@ -8,9 +8,10 @@ if nargin < 2
     range = [ 0 255 ];
 end
 
-v = tk.CenterOfEllipsoid;
-ivA = tk.ivA;
-d = tk.d;
+v = tk.CenterPoint;
+P  = tk.DirOfA;
+leng = tk.la;
+radius = tk.dc;
 
 step = 8;
 mi = range( 1 );
@@ -26,7 +27,11 @@ for x = mi : step : ma
             
             rgb = [x y z]';
             
-            if( (rgb - v)' * ivA * (rgb -v ) < d )
+            dist2 = sum( rgb.^2 + v.^2 ) - 2 * rgb' * v;
+            pl = abs( (rgb - v)' * P  );
+            hl = sqrt( dist2 - pl*pl );
+                        
+            if( pl <= leng && hl <= radius )
                 X = [X x ];
                 Y = [Y y ];
                 Z = [Z z ];

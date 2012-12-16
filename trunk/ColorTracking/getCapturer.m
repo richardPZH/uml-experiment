@@ -147,3 +147,12 @@ switch method
         error('Error Using getCapturer'); %haha I got error instead of disp
                 
 end
+
+figure;
+plot3( data(:,1) , data(:,2) , data(:,3) , 'o' , 'markerfacecolor' , 'r' )
+title('RGB-Space, Original SamplePoints');
+grid on;
+axis( [0 255 0 255 0 255 ] );
+xlabel('reg');
+ylabel('green');
+zlabel('blue');
