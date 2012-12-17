@@ -27,7 +27,7 @@ classdef Tracker
     methods
        function [ boool ] = isTargetColor( tk , x ) %ask if the point x [ r g b ]' support the objcet
            tk.tkType
-           boool = 1;
+           boool = ones( 1 , 1 , uint
        end
        
        %
@@ -36,6 +36,7 @@ classdef Tracker
            
            data = varargin{2}.data;
            tk.Location = varargin{2}.location;
+           tk.speed = [ 0 0 ];
            
            switch tk.tkType
                case 'sphere'
@@ -134,7 +135,7 @@ classdef Tracker
 
                    A = P * B * inv( P );
 
-                   tk.rvA = inv( A );   % ( x - cp )' * ivA * ( x - cp ) = 1 or > 1 or < 1
+                   tk.ivA = inv( A );   % ( x - cp )' * ivA * ( x - cp ) = 1 or > 1 or < 1
                    tk.d = di;
                        
                case 'cylinder'
