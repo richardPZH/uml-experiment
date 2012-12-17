@@ -37,17 +37,21 @@ switch method
         windowSize = [ 14 14 ];       % the open window
                                       % each click will grabs a mxn pixel centrered at the pointer location
         %
-        hdl = figure();
-        frame = getsnapshot( inputObj );
+        %hdl = figure();              % select points in the video input
+        %frame = getsnapshot( inputObj );
 
-        imshow( frame );
+        %imshow( frame );
 
         m = floor( windowSize(1) / 2 );
         n = floor( windowSize(2) / 2 );
         
-        title('Click To Select Points And Press Enter to End Selecting');
+        %title('Click To Select Points And Press Enter to End Selecting');
         % Need the switch X and Y, X is row, Y is col in the image matrix
+        hdl = figure( 1 );
         [X,Y] = getpts( hdl );
+        
+        frame = getsnapshot( inputObj );
+
         Z = floor( X );
         X = floor( Y );
         Y = Z;
@@ -83,6 +87,8 @@ switch method
         
         capturer.location = centerPoint;
         capturer.data = data;
+        
+%         clear hdl;
         
    case 'getrect'
         %we can use several getrect to capture more color
@@ -142,6 +148,8 @@ switch method
         
         capturer.location = floor( mean( centerPoint ) );
         capturer.data = data;
+        
+        clear hdl;
         
     otherwise
         error('Error Using getCapturer'); %haha I got error instead of disp
