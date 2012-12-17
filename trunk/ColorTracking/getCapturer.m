@@ -148,6 +148,7 @@ switch method
                 
 end
 
+title('Finished Selecting');
 figure;
 plot3( data(:,1) , data(:,2) , data(:,3) , 'o' , 'markerfacecolor' , 'r' )
 title('RGB-Space, Original SamplePoints');

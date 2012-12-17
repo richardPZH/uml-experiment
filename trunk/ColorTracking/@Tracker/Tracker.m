@@ -27,13 +27,14 @@ classdef Tracker
     methods
        function [ boool ] = isTargetColor( tk , x ) %ask if the point x [ r g b ]' support the objcet
            boool = zeros( 1 , 1 , 'uint8' );
+           x = double( x );
            
            switch tk.tkType
                case 'sphere'
                    v = tk.CenterOfSphere;
                    r = tk.Radius;
                    r2 = r * r;
-                   if ( sum( x.^2 + v.^2 ) - 2 * rgb' * v ) < r2
+                   if ( sum( x.^2 + v.^2 ) - 2 * x' * v ) < r2
                        boool = 1;
                    end
                    
@@ -70,7 +71,7 @@ classdef Tracker
        function [ tk ] = constructHelp( tk , varargin )
            varargin = varargin{1}; %because we do it twice
            
-           data = varargin{2}.data;
+           data = double( varargin{2}.data );
            tk.Location = varargin{2}.location;
            tk.speed = [ 0 0 ];
            
