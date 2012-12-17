@@ -42,7 +42,7 @@ Z(1) = [];
 
 figure;
 plot3( X , Y , Z , 'o' , 'markerfacecolor' , 'b' );
-title('RGB-Sphere, Within Sphere is Accepted');
+title('RGB-Ellipsoid, Within Ellipsoid is Accepted');
 grid on;
 axis( [0 255 0 255 0 255 ] );
 xlabel('reg');
