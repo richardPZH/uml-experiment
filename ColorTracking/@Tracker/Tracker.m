@@ -26,8 +26,44 @@ classdef Tracker
 
     methods
        function [ boool ] = isTargetColor( tk , x ) %ask if the point x [ r g b ]' support the objcet
-           tk.tkType
-           boool = 1;
+           boool = zeros( 1 , 1 , 'uint8' );
+           
+           switch tk.tkType
+               case 'sphere'
+                   v = tk.CenterOfSphere;
+                   r = tk.Radius;
+                   r2 = r * r;
+                   if ( sum( x.^2 + v.^2 ) - 2 * rgb' * v ) < r2
+                       boool = 1;
+                   end
+                   
+               case 'ellipsoid'
+                   
+                   v = tk.CenterOfEllipsoid;
+                   rvA = tk.ivA;
+                   di = tk.d;
+                   
+                   if ( ( x - v)' * rvA * ( x -v ) < di )
+                       boool = 1;
+                   end
+                   
+               case 'cylinder'
+                   
+                   v = tk.CenterPoint;
+                   P  = tk.DirOfA;
+                   leng = tk.la;
+                   radius = tk.dc;
+                   
+                   dist2 = sum( x.^2 + v.^2 ) - 2 * x' * v;
+                   pl = abs( ( x - v)' * P  );
+                   hl = sqrt( dist2 - pl*pl );
+                        
+                   if( pl <= leng && hl <= radius )
+                       boool = 1;                    
+                   end
+           end
+           
+           
        end
        
        %
