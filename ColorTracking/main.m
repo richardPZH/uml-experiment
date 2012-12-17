@@ -43,7 +43,7 @@ stepC = floor( SubSample(2) / 2 );
 
 m = floor( TrackingWindow( 1 ) / 2 );
 n = floor( TrackingWindow( 2 ) / 2 );
-figure(2);
+figure(3);
 title('Tracking Window');
 
 frame = getsnapshot( obj );
