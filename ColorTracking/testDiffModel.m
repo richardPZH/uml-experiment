@@ -7,7 +7,7 @@ function [] = testDiffModel()
 
 info = imaqhwinfo
 winfo = imaqhwinfo('winvideo')
-obj = videoinput( 'winvideo' , 1 ,  'YUY2_320x240' ); %'RGB24_320x240' );
+obj = videoinput( 'winvideo' , 1 ,  'YUY2_640x480' ); %'YUY2_320x240' ); %'RGB24_320x240' );
 himage = preview( obj );
 video = figure(1);
 set( obj , 'ReturnedColorSpace' , 'rgb' );
