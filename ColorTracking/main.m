@@ -32,10 +32,11 @@ tk = Tracker( 'ellipsoid' , capturer , 1 , 0.6 , 0.6 , 0.7 );
 %radius = 5;
 %color = white
 
-alpha = 30;  %this is ¦Á, the threshold defined the LOSS of target, vital!
-winWidth = 5; %this is the width of the target white border width, vital!
+alphaArea = 2;   %this is ¦Á, the threshold( the min support area ) defined the LOSS of target, vital!
+winWidth = 5;     %this is the width of the target white border width, vital!
 
-TrackingWindow = [ 100 , 100 ];
+
+TrackingWindow = [ 128 , 128 ];
 SubSample = [ 8 , 8 ];
 
 stepR = floor( SubSample(1) / 2 );
@@ -48,6 +49,7 @@ title('Tracking Window');
 
 frame = getsnapshot( obj );
 [ maxR maxC maxColor ] = size( frame );
+
 
 X = zeros( ( m + m + 1 ) * ( n + n + 1 ) , 1 );
 Y = zeros( ( m + m + 1 ) * ( n + n + 1 ) , 1);
@@ -107,39 +109,76 @@ while( 1 ) %endless loop
         end
     end
     
-    if index < alpha
+    if index < alphaArea
         %This is LOST, we need to recover
-        continue;
-    end
+        tk = Recover( tk , obj , alphaArea , [ 10 , 10 ] );
+        xrow = tk.Location(1);
+        ycol = tk.Location(2);
+        speed = tk.speed;
+    else
+        index = index - 1;
+        %Find new Center 
+        ncenterR = floor( sum( X(1:index)) / index ) ; %floor is better that ceiling
+        ncenterC = floor( sum( Y(1:index) ) / index );
+        speed = [ ncenterR - xrow , ncenterC - ycol ];
     
-    index = index - 1;
-    %Find new Center 
-    ncenterR = floor( sum( X(1:index)) / index ) ; %floor is better that ceiling
-    ncenterC = floor( sum( Y(1:index) ) / index );
-    speed = [ ncenterR - xrow , ncenterC - ycol ];
+        xrow = ncenterR;
+        ycol = ncenterC;
+        tk.Location = [ xrow , ycol ];
     
-    xrow = ncenterR;
-    ycol = ncenterC;
+        %the area to fill, we need to save time
+        %assume all the support point is average distribute in a circle, find radius
+        radius = floor( findRadius( [xrow ycol ] , X(1:index) , Y(1:index) , 'hyper' ) );  %the radius must recalculate
+        mir = xrow - radius - winWidth;
+        mar = xrow + radius + winWidth;
+        mic = ycol - radius - winWidth;
+        mac = ycol + radius + winWidth;
+        w1 = winWidth;
+        w2 = winWidth;
+        h1 = winWidth;
+        h2 = winWidth;
     
-    %the area to fill, we need to save time
-    %assume all the support point is average distribute in a circle, find radius
-    radius = floor( sqrt( length( index ) / 4 ) );
-    border = zeros( 2*radius + 2*winWidth , 'uint8' );
-    border( 1:winWidth , : ) = 255;
-    border( end-winWidth+1 : end , : ) = 255;
-    border( : , 1:winWidth ) = 255;
-    border( : , end-winWidth+1 : end ) = 255;
+        if mir < 1
+            mir = 1;
+        end
+        if mir + winWidth > maxR
+            w1 = maxR - mir;
+        end
+        if mar > maxR
+            mar = maxR;
+        end
+        if mar - winWidth < 1
+            w2 = mar - 1;
+        end
+        if mic < 1
+            mic = 1;
+        end
+        if mic + winWidth > maxC
+            h1 = maxC - mir;
+        end
+        if mac > maxC
+            mac = maxC;
+        end
+        if mac - winWidth < 1
+            h2 = mac - 1;
+        end
     
-    %This can be wrong!!!
-    frame( xrow - radius - winWidth : xrow + radius + winWidth - 1 , ycol - radius - winWidth : ycol + radius + winWidth - 1 , 1 ) ...
-        = frame( xrow - radius - winWidth : xrow + radius + winWidth - 1 , ycol - radius - winWidth : ycol + radius + winWidth - 1 , 1 ) + border;
+        border = zeros( mar - mir + 1 , mac - mic + 1 , 'uint8' );
+        border( 1:w1 , : ) = 255;
+        border( end-w2+1 : end , : ) = 255;
+        border( : , 1:h1 ) = 255;
+        border( : , end-h2+1 :end ) = 255;
     
-%     frame( xrow - radius - winWidth : xrow + radius + winWidth - 1 , ycol - radius - winWidth : ycol + radius + winWidth - 1 , 2 ) ...
+        %This can be wrong!!!
+        frame( mir:mar , mic:mac ) = frame( mir:mar , mic:mac ) + border;
+    
+%       frame( xrow - radius - winWidth : xrow + radius + winWidth - 1 , ycol - radius - winWidth : ycol + radius + winWidth - 1 , 2 ) ...
 %         = frame( xrow - radius - winWidth : xrow + radius + winWidth - 1 , ycol - radius - winWidth : ycol + radius + winWidth - 1 , 2 ) + border;
 %     
 %     frame( xrow - radius - winWidth : xrow + radius + winWidth - 1 , ycol - radius - winWidth : ycol + radius + winWidth - 1 , 3 ) ...
 %         = frame( xrow - radius - winWidth : xrow + radius + winWidth - 1 , ycol - radius - winWidth : ycol + radius + winWidth - 1 , 3 ) + border;
-
+    end
+    
     hdl = figure( 3 );
     imshow( frame );
     %Get anotehr new frame and update variables, vital
