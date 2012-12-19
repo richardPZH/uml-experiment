@@ -1,4 +1,4 @@
-function [] = showSupportSpace( frame , tk , step ) 
+function [] = showSupportSpace( hdl , SubPlotNum frame , tk , step ) 
 
 % The showSupportSpace is used to evaluate the different tk performance
 
@@ -22,5 +22,6 @@ for m = 1 : step : row
     end
 end
 
-figure(2);
+figure( hdl );
+subplot( 1 , 3 , SubPlotNum );
 imshow( nframe );
