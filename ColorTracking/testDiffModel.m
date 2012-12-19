@@ -21,7 +21,7 @@ frame = getsnapshot( obj );
 %                                   %varargin{ 3 } may be : 'a' 'b' 'c' 'avg' preOfavg 
 % tk = Tracker( 'sphere' , capturer , 0.6 ); 
 % tk.showBoundary();
-%showSupportSpace( frame , tk , 1 );  % third 1 is the step
+%%showSupportSpace( frame , tk , 1 );  % third 1 is the step
 
 %We show how the machine see the world
 %
@@ -32,20 +32,24 @@ frame = getsnapshot( obj );
 %
 
 %ellipsoid paramater:               %varargin{ 3 4 5 6} should be: scale of a b c, and di
-tk = Tracker( 'ellipsoid' , capturer , 1.3 , 0.7 , 0.7 , 0.7 );
+% tk = Tracker( 'ellipsoid' , capturer , 1.3 , 0.7 , 0.7 , 0.7 );
+% tk.showBoundary();
+% %showSupportSpace( frame , tk , 1 );
+% while( 1 )
+%     frame = getsnapshot( obj );
+%     showSupportSpace( frame , tk , 7 );
+% end
+%
+%
+
+%cylinder paramater:                %varargin{ 3 4 } should be : scale of a, di
+tk = Tracker( 'cylinder' , capturer , 1.2 , 9 );
 tk.showBoundary();
 %showSupportSpace( frame , tk , 1 );
 while( 1 )
     frame = getsnapshot( obj );
     showSupportSpace( frame , tk , 7 );
 end
-%
-%
-
-%cylinder paramater:                %varargin{ 3 4 } should be : scale of a, di
-%tk = Tracker( 'cylinder' , capturer , 1.2 , 9 );
-%tk.showBoundary();
-%showSupportSpace( frame , tk , 1 );
 %
 
 
