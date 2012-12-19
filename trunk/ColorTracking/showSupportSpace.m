@@ -1,4 +1,4 @@
-function [] = showSupportSpace( hdl , SubPlotNum frame , tk , step ) 
+function [] = showSupportSpace( hdl , SubPlotNum , frame , tk , step ) 
 
 % The showSupportSpace is used to evaluate the different tk performance
 
