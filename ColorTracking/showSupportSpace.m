@@ -1,4 +1,4 @@
-function [] = showSupportSpace( obj ,  tk , step ) 
+function [] = showSupportSpace( frame , tk , step ) 
 
 % The showSupportSpace is used to evaluate the different tk performance
 
@@ -6,8 +6,6 @@ function [] = showSupportSpace( obj ,  tk , step )
 if nargin < 3
     step = 8;
 end
-
-frame = getsnapshot( obj );
 
 [row col color] = size( frame ); %always remember a RGB image is mxnxl
 
@@ -24,5 +22,5 @@ for m = 1 : step : row
     end
 end
 
-figure;
+figure(2);
 imshow( nframe );
