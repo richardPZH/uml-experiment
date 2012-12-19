@@ -13,14 +13,14 @@ video = figure(1);
 set( obj , 'ReturnedColorSpace' , 'rgb' );
 
 %getCapturer paramaters:           %'default_red' | 'getpts' | 'getrect'
-%capturer = getCapturer( obj , 'getpts' );
+capturer = getCapturer( obj , 'getpts' );
 
 %This read the same data
 %
-load 'green.mat'     % get data , a mx3 [ r g b ] vector
-        
-capturer.location = [ 128 , 128 ];  %give this initial location is row=128,col=128
-capturer.data = data;
+% load 'green.mat'     % get data , a mx3 [ r g b ] vector
+%         
+% capturer.location = [ 128 , 128 ];  %give this initial location is row=128,col=128
+% capturer.data = data;
 %
 %end reading data
 frame = getsnapshot( obj );
@@ -37,16 +37,16 @@ frame = getsnapshot( obj );
 % end
 
 
-%ellipsoid paramater:               %varargin{ 3 4 5 6} should be: scale of a b c, and di
-tk = Tracker( 'ellipsoid' , capturer , 1.3 , 0.7 , 0.7 , 0.7 );
-tk.showBoundary();
-%showSupportSpace( frame , tk , 1 );
-while( 1 )
-    frame = getsnapshot( obj );
-    showSupportSpace( frame , tk , 7 );
-end
-%
-%
+% %ellipsoid paramater:               %varargin{ 3 4 5 6} should be: scale of a b c, and di
+% tk = Tracker( 'ellipsoid' , capturer , 1.3 , 0.7 , 0.7 , 0.7 );
+% tk.showBoundary();
+% %showSupportSpace( frame , tk , 1 );
+% while( 1 )
+%     frame = getsnapshot( obj );
+%     showSupportSpace( frame , tk , 7 );
+% end
+% %
+% %
 
 %cylinder paramater:                %varargin{ 3 4 } should be : scale of a, di
 % tk = Tracker( 'cylinder' , capturer , 1.2 , 9 );
@@ -56,6 +56,24 @@ end
 %     frame = getsnapshot( obj );
 %     showSupportSpace( frame , tk , 7 );
 % end
-%
+
+% This test them all !!!
+hdl = figure( 4 );
+
+tk_sphere    = Tracker( 'sphere' , capturer , 0.6 ); 
+tk_ellipsoid = Tracker( 'ellipsoid' , capturer , 1.3 , 0.7 , 0.7 , 0.7 );
+tk_cylinder  = Tracker( 'cylinder' , capturer , 1.2 , 9 );
+
+while( 1 )
+    frame = getsnapshot( obj );
+    
+    showSupportSpace( hdl , 1 ,  frame , tk_sphere   , 7 );
+    
+    showSupportSpace( hdl , 2 , frame , tk_ellipsoid , 7 );
+    
+    showSupportSpace( hdl , 3 , frame , tk_cylinder , 7 );
+    
+end
+
 
 
