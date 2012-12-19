@@ -24,4 +24,14 @@ end
 
 figure( hdl );
 subplot( 1 , 3 , SubPlotNum );
+
+switch tk.tkType
+    case 'sphere'
+        title('Sphere');
+    case 'ellipsoid'
+        title('Ellipsoid');        
+    case 'cylinder'
+        title('Cylinder');        
+end
+
 imshow( nframe );
