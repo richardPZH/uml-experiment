@@ -25,6 +25,9 @@ end
 figure( hdl );
 subplot( 1 , 3 , SubPlotNum );
 
+imshow( nframe );
+
+
 switch tk.tkType
     case 'sphere'
         title('Sphere');
@@ -34,4 +37,3 @@ switch tk.tkType
         title('Cylinder');        
 end
 
-imshow( nframe );
