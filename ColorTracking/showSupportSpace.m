@@ -7,7 +7,7 @@ persistent walker;       %declare a static-like variable walker
 if isempty( walker )     %if walker is not assigned yet, we initial it
     walker = 0;
 else
-    walker = walker + 1;
+    walker = walker + 0;
 end
 
 turn = floor( walker / 3 );
