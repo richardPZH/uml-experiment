@@ -1,6 +1,23 @@
 function [] = showSupportSpace( hdl , SubPlotNum , frame , tk , step ) 
 
 % The showSupportSpace is used to evaluate the different tk performance
+% we use a persistent variable to act like a static in c, useful to test
+
+persistent walker;       %declare a static-like variable walker
+if isempty( walker )     %if walker is not assigned yet, we initial it
+    walker = 0;
+else
+    walker = walker + 1;
+end
+
+turn = floor( walker / 3 );
+if turn == step * step 
+    turn = 1;
+    walker = 0;
+end
+
+mStart = floor( turn / step + 1 );
+nStart = floor( mod( turn ,step ) + 1 );
 
 % default argument step
 if nargin < 3
@@ -11,8 +28,8 @@ end
 
 nframe = zeros( row , col , 'uint8' );
 
-for m = 1 : step : row
-    for n = 1 : step : col
+for m = mStart : step : row
+    for n = nStart : step : col
         tmp = frame( m , n , : );
         
         x = [ tmp(1) ; tmp(2); tmp(3) ];

@@ -67,11 +67,11 @@ tk_cylinder  = Tracker( 'cylinder' , capturer , 1.2 , 9 );
 while( 1 )
     frame = getsnapshot( obj );
     
-    showSupportSpace( hdl , 1 ,  frame , tk_sphere  , 8 );
+    showSupportSpace( hdl , 1 ,  frame , tk_sphere  , 4 );
     
-    showSupportSpace( hdl , 2 , frame , tk_ellipsoid , 8 );
+    showSupportSpace( hdl , 2 , frame , tk_ellipsoid , 4 );
     
-    showSupportSpace( hdl , 3 , frame , tk_cylinder , 8 );
+    showSupportSpace( hdl , 3 , frame , tk_cylinder , 4 );
     
 end
 
