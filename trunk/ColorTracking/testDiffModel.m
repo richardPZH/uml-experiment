@@ -60,9 +60,29 @@ frame = getsnapshot( obj );
 % This test them all !!!
 hdl = figure( 4 );
 
-tk_sphere    = Tracker( 'sphere' , capturer , 0.6 ); 
-tk_ellipsoid = Tracker( 'ellipsoid' , capturer , 1.3 , 0.7 , 0.7 , 0.7 );
-tk_cylinder  = Tracker( 'cylinder' , capturer , 1.2 , 9 );
+tk_sphere    = Tracker( 'sphere' , capturer , 0.7 ); 
+tk_ellipsoid = Tracker( 'ellipsoid' , capturer , 1.3 , 0.68 , 0.68 , 0.68 );
+tk_cylinder  = Tracker( 'cylinder' , capturer , 1.3 , 9.5 );
+
+%we make a smart planet
+% while( 1 )
+%     frame = getsnapshot( obj );
+%     
+%     showSupportSpace( hdl , 1 ,  frame , tk_sphere  , 2 );
+%     
+%     showSupportSpace( hdl , 2 , frame , tk_ellipsoid , 2 );
+%     
+%     showSupportSpace( hdl , 3 , frame , tk_cylinder , 2 );
+%     
+%     %we use the ginput( 1 ) to premote use to continue
+%     [ X , Y ] = ginput( 1 );
+%     if X < 1 || X > size( frame , 2 ) ||  Y < 1 || Y > size( frame , 1 )
+%         error('End Of Test');
+%     end
+%     %
+%     
+% end
+
 
 while( 1 )
     frame = getsnapshot( obj );
