@@ -17,11 +17,11 @@ capturer = getCapturer( obj , 'getpts' );
 %
 
 %ellipsoid paramater:               %varargin{ 3 4 5 6} should be: scale of a b c, and di
-%tk = Tracker( 'ellipsoid' , capturer , 1 , 0.6 , 0.6 , 0.7 );
+tk = Tracker( 'ellipsoid' , capturer , 1 , 0.6 , 0.6 , 0.7 );
 %
 
 %cylinder paramater:                %varargin{ 3 4 } should be : scale of a, di
-tk = Tracker( 'cylinder' , capturer , 1 , 10 );
+%tk = Tracker( 'cylinder' , capturer , 1 , 10 );
 %
 
 %tk.showBoundary();
