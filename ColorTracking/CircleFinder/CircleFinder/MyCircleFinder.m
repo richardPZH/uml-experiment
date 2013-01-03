@@ -30,8 +30,7 @@ while( 1 )
     
     frame = getsnapshot( obj );
     hframe = rgb2gray( frame );
-    hframe = hframe( : , : , 1 );
-        
+         
     rmin = window.r - window.radius;
     rmax = window.r + window.radius;
     cmin = window.c - window.radius;
@@ -51,6 +50,8 @@ while( 1 )
     end
     
     searchArea = hframe( rmin:rmax , cmin:cmax , : );
+    %searchArea = medfilt2( searchArea , [15 15] );
+    %searchArea = edge( searchArea , 'canny' );
     
     [ r , c , rad ] = circlefinder( searchArea , 30 , 35 );
     
